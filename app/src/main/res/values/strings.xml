@@ -1,0 +1,24 @@
+<resources>
+    <string name="app_name">CashFlowApp</string>
+    <string name="action_settings">Settings</string>
+    <string name="cat_caption">Категория</string>
+
+    <string-array name="catlist">
+        <item>Барсик</item>
+        <item>Мурзик</item>
+        <item>Васька</item>
+        <item>Рыжик</item>
+        <item>Барсик1</item>
+        <item>Мурзик1</item>
+        <item>Васька1</item>
+        <item>Рыжик1</item>
+        <item>Барсик2</item>
+        <item>Мурзик2</item>
+        <item>Васька2</item>
+        <item>Рыжик2</item>
+        <item>Барсик3</item>
+        <item>Мурзик3</item>
+        <item>Васька3</item>
+        <item>Рыжик3</item>
+    </string-array>
+</resources>
