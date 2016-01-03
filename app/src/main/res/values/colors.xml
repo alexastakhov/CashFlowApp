@@ -6,4 +6,7 @@
     <color name="colorBorder1">#c6ccef</color>
 
     <color name="spinDropTextColor">#000000</color>
+
+    <color name="newRecCaptionBgColor">#74e6ff</color>
+    <color name="newRecCaptionTextColor">#020000</color>
 </resources>

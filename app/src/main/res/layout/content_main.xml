@@ -14,6 +14,18 @@
     android:orientation="vertical"
     android:weightSum="1">
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Новая запись"
+        android:id="@+id/newrecTextView"
+        android:textSize="18sp"
+        android:textColor="@color/newRecCaptionTextColor"
+        android:paddingLeft="9sp"
+        android:paddingTop="3sp"
+        android:paddingBottom="4sp"
+        android:background="@color/newRecCaptionBgColor" />
+
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -27,14 +39,13 @@
         android:textColor="#010150"
         android:text="0.00"
         android:gravity="center"
-        android:layout_marginTop="20dp" />
+        android:layout_marginTop="14dp" />
 
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textAppearance="?android:attr/textAppearanceMedium"
         android:text="Категория"
-        android:id="@+id/textView"
+        android:id="@+id/categoryTextView"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="5dp"
         android:textSize="18sp" />
@@ -66,6 +77,8 @@
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
+        android:paddingTop="15sp"
+        android:paddingBottom="15sp"
         android:text="ДОБАВИТЬ ЗАПИСЬ"
         android:id="@+id/addRecButton"
         android:layout_marginTop="30dp"
