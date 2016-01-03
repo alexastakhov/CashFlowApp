@@ -14,9 +14,8 @@ import android.widget.Spinner;
 public class MainActivity extends AppCompatActivity {
 
     private Spinner categorySpinner;
-    private ArrayAdapter<String> spinnerAdapter;
-    private String[] array = { "Барсик", "Мурзик", "Васька", "Рыжик", "Барсик1", "Мурзик1", "Васька1",
-            "Рыжик1", "Барсик2", "Мурзик2", "Васька2", "Рыжик2", "Барсик3", "Мурзик3", "Васька3", "Рыжик3"};
+    private ArrayAdapter<CharSequence> spinnerAdapter;
+    String[] arr = new String[] {"aaa1", "aaa2", "aaa3", "a444", "bbb1", "bbb2", "bbb4"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,10 +24,9 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        spinnerAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_item, android.R.id.text1, arr);
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         categorySpinner = (Spinner)findViewById(R.id.categorySpinner);
-        //spinnerAdapter = new ArrayAdapter<String>(this, R.layout.spinner_layout, R.id.spinTextView, array);
-        spinnerAdapter = new ArrayAdapter<String>(this, android.R.layout.simple_spinner_item, array);
-        spinnerAdapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         categorySpinner.setAdapter(spinnerAdapter);
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);

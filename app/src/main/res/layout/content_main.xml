@@ -23,7 +23,7 @@
         android:enabled="true"
         android:numeric="decimal"
         android:singleLine="true"
-        android:textSize="45dp"
+        android:textSize="45sp"
         android:textColor="#010150"
         android:text="0.00"
         android:gravity="center"
@@ -37,20 +37,15 @@
         android:id="@+id/textView"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="5dp"
-        android:textSize="18dp" />
+        android:textSize="18sp" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/categorySpinner"
         android:layout_gravity="center_horizontal"
-        android:clickable="false"
-        android:scrollIndicators="top|bottom"
-        android:spinnerMode="dropdown"
-        android:background="@drawable/cat_spinner_style"
-        android:paddingTop="15dp"
-        android:paddingBottom="15dp"
-        android:transitionGroup="true" />
+        android:spinnerMode="dialog"
+        android:background="@drawable/cat_spinner_style" />
 
     <EditText
         android:layout_width="match_parent"
@@ -65,15 +60,16 @@
         android:maxLines="3"
         android:maxLength="128"
         android:hint="Комментарий"
-        android:textSize="18dp"
+        android:textSize="18sp"
         android:padding="7dp" />
 
     <Button
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
-        android:text="Добавить запись"
+        android:text="ДОБАВИТЬ ЗАПИСЬ"
         android:id="@+id/addRecButton"
         android:layout_marginTop="30dp"
+        android:textSize="16sp"
         android:background="@drawable/addrec_btn_style"
         android:textColor="#ffffff" />
 

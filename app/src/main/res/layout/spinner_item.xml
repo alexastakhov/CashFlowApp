@@ -8,4 +8,7 @@
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
     android:textSize="18sp"
+    android:paddingTop="12sp"
+    android:paddingBottom="12sp"
+    android:drawableRight="@mipmap/ic_expand_more_black_24dp"
     android:textAlignment="inherit"/>
