@@ -3,8 +3,21 @@
     xmlns:tools="http://schemas.android.com/tools"
     tools:context="com.lunokhod.java.android.cashflowapp.MainActivity">
     <item
+        android:id="@+id/action_records"
+        android:orderInCategory="1"
+        android:icon="@mipmap/ic_reorder_white_24dp"
+        android:title="@string/action_records"
+        app:showAsAction="always" />
+    <item
+        android:id="@+id/action_categories"
+        android:orderInCategory="2"
+        android:icon="@mipmap/ic_import_contacts_white_24dp"
+        android:title="@string/action_categories"
+        app:showAsAction="always" />
+    <item
         android:id="@+id/action_settings"
-        android:orderInCategory="100"
+        android:orderInCategory="3"
+        android:icon="@mipmap/ic_settings_white_24dp"
         android:title="@string/action_settings"
-        app:showAsAction="never" />
+        app:showAsAction="always" />
 </menu>

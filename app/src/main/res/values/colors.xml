@@ -6,4 +6,7 @@
     <color name="colorBorder1">#c6ccef</color>
 
     <color name="spinDropTextColor">#000000</color>
+    <color name="labelPrimaryColor">#797979</color>
+    <color name="labelHintPrimaryColor">#a4a4a4</color>
+    <color name="editTextPrimaryColor">#000000</color>
 </resources>

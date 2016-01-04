@@ -18,7 +18,7 @@ public class MainActivity extends AppCompatActivity {
     private Spinner categorySpinner;
     private ArrayAdapter<CharSequence> spinnerAdapter;
     private TextView commentEditText;
-
+    private TextView catField;
 
     String[] arr = new String[] {"aaa1", "aaa2", "aaa3", "a444", "bbb1", "bbb2", "bbb4"};
 

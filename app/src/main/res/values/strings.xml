@@ -1,9 +1,11 @@
 <resources>
     <string name="app_name">CashFlowApp</string>
-    <string name="action_settings">Settings</string>
     <string name="cat_caption">Категория</string>
-
     <string name="comment_textview_hint">Комментарий</string>
+
+    <string name="action_records">Записи</string>
+    <string name="action_categories">Категории</string>
+    <string name="action_settings">Настройки</string>
 
     <string-array name="catlist">
         <item>Барсик</item>

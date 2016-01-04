@@ -36,7 +36,8 @@
         android:id="@+id/categoryTextView"
         android:layout_marginTop="30dp"
         android:layout_marginBottom="5dp"
-        android:textSize="18sp" />
+        android:textSize="18sp"
+        android:textColor="@color/labelPrimaryColor" />
 
     <Spinner
         android:layout_width="match_parent"
@@ -60,7 +61,9 @@
         android:maxLength="128"
         android:hint="@string/comment_textview_hint"
         android:textSize="18sp"
-        android:padding="7dp" />
+        android:padding="7dp"
+        android:textColorHint="@color/labelHintPrimaryColor"
+        android:textColor="@color/editTextPrimaryColor" />
 
     <Button
         android:layout_width="fill_parent"
