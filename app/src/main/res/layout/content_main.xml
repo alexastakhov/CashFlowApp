@@ -14,18 +14,6 @@
     android:orientation="vertical"
     android:weightSum="1">
 
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Новая запись"
-        android:id="@+id/newrecTextView"
-        android:textSize="18sp"
-        android:textColor="@color/newRecCaptionTextColor"
-        android:paddingLeft="9sp"
-        android:paddingTop="3sp"
-        android:paddingBottom="4sp"
-        android:background="@color/newRecCaptionBgColor" />
-
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -39,7 +27,7 @@
         android:textColor="#010150"
         android:text="0.00"
         android:gravity="center"
-        android:layout_marginTop="14dp" />
+        android:layout_marginTop="17dp" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -70,7 +58,7 @@
         android:gravity="top|left"
         android:maxLines="3"
         android:maxLength="128"
-        android:hint="Комментарий"
+        android:hint="@string/comment_textview_hint"
         android:textSize="18sp"
         android:padding="7dp" />
 

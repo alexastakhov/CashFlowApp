@@ -1,5 +1,6 @@
 package com.lunokhod.java.android.cashflowapp;
 
+import android.app.ActionBar;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -10,11 +11,15 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.ArrayAdapter;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
 
     private Spinner categorySpinner;
     private ArrayAdapter<CharSequence> spinnerAdapter;
+    private TextView commentEditText;
+
+
     String[] arr = new String[] {"aaa1", "aaa2", "aaa3", "a444", "bbb1", "bbb2", "bbb4"};
 
     @Override
@@ -24,10 +29,23 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        this.setTitle("Новая запись");
+
         spinnerAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_item, android.R.id.text1, arr);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         categorySpinner = (Spinner)findViewById(R.id.categorySpinner);
         categorySpinner.setAdapter(spinnerAdapter);
+
+        commentEditText = (TextView)findViewById(R.id.commentEditText);
+        commentEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if (hasFocus) commentEditText.setHint("");
+                else commentEditText.setHint(R.string.comment_textview_hint);
+            }
+        });
+
+        initActionBar();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -59,5 +77,12 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void initActionBar() {
+        ActionBar actionBar = getActionBar();
+
+        //actionBar.setDisplayShowTitleEnabled(true);
+        //actionBar.setTitle("Новая запись");
     }
 }
