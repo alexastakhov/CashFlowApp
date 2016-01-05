@@ -25,4 +25,7 @@
         <item>Васька3</item>
         <item>Рыжик3</item>
     </string-array>
+    <string name="title_activity_records">RecordsActivity</string>
+    <string name="title_activity_category">CategoryActivity</string>
+    <string name="title_activity_records_edit">RecordsEditActivity</string>
 </resources>

@@ -1,6 +1,7 @@
 package com.lunokhod.java.android.cashflowapp;
 
-import android.app.ActionBar;
+import android.support.v7.app.ActionBar;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
@@ -29,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        this.setTitle("Новая запись");
+        ActionBar actionBar = getSupportActionBar();
+        actionBar.setTitle("Новая запись");
 
         spinnerAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_item, android.R.id.text1, arr);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -45,8 +47,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        initActionBar();
-
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -61,28 +61,36 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
+
         return true;
     }
 
     @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
+    public boolean onPrepareOptionsMenu(Menu menu) {
+        return super.onPrepareOptionsMenu(menu);
+    }
 
-        //noinspection SimplifiableIfStatement
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        int id = item.getItemId();
+        Intent intent = new Intent();
+
         if (id == R.id.action_settings) {
             return true;
         }
 
+        if (id == R.id.action_categories) {
+            intent.setClass(getApplicationContext(), CategoryActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
+        if (id == R.id.action_records) {
+            intent.setClass(getApplicationContext(), RecordsActivity.class);
+            startActivity(intent);
+            return true;
+        }
+
         return super.onOptionsItemSelected(item);
-    }
-
-    private void initActionBar() {
-        ActionBar actionBar = getActionBar();
-
-        //actionBar.setDisplayShowTitleEnabled(true);
-        //actionBar.setTitle("Новая запись");
     }
 }
