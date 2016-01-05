@@ -27,17 +27,33 @@
         android:textColor="#010150"
         android:text="0.00"
         android:gravity="center"
-        android:layout_marginTop="17dp" />
+        android:layout_marginTop="12dp" />
 
-    <TextView
-        android:layout_width="wrap_content"
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Категория"
-        android:id="@+id/categoryTextView"
-        android:layout_marginTop="30dp"
-        android:layout_marginBottom="5dp"
-        android:textSize="18sp"
-        android:textColor="@color/labelPrimaryColor" />
+        android:layout_marginTop="25sp"
+        android:focusable="false">
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="date"
+            android:ems="10"
+            android:id="@+id/dateEditText"
+            android:focusable="false"
+            android:editable="false"
+            android:layout_weight="2" />
+
+        <ImageView
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:id="@+id/dateImageButton"
+            android:layout_weight="12"
+            android:src="@mipmap/ic_date_range_black_24dp"
+            android:padding="5sp" />
+    </LinearLayout>
 
     <Spinner
         android:layout_width="match_parent"
@@ -45,7 +61,8 @@
         android:id="@+id/categorySpinner"
         android:layout_gravity="center_horizontal"
         android:spinnerMode="dialog"
-        android:background="@drawable/cat_spinner_style" />
+        android:background="@drawable/cat_spinner_style"
+        android:layout_marginTop="30sp" />
 
     <EditText
         android:layout_width="match_parent"

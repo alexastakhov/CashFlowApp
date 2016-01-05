@@ -7,6 +7,8 @@
     <string name="action_categories">Категории</string>
     <string name="action_settings">Настройки</string>
 
+    <string name="category_spin_hint">Категория</string>
+
     <string-array name="catlist">
         <item>Барсик</item>
         <item>Мурзик</item>

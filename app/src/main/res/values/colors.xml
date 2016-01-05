@@ -8,5 +8,6 @@
     <color name="spinDropTextColor">#000000</color>
     <color name="labelPrimaryColor">#646464</color>
     <color name="labelHintPrimaryColor">#a4a4a4</color>
+    <color name="spinHintPrimaryColor">#919191</color>
     <color name="editTextPrimaryColor">#000000</color>
 </resources>

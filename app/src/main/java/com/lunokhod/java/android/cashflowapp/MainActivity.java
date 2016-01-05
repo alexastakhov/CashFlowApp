@@ -1,5 +1,6 @@
 package com.lunokhod.java.android.cashflowapp;
 
+import android.app.DatePickerDialog;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -7,19 +8,30 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
+import android.widget.DatePicker;
+import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+
+import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
     private Spinner categorySpinner;
-    private ArrayAdapter<CharSequence> spinnerAdapter;
+    private CustomArrayAdapter spinnerAdapter;
     private TextView commentEditText;
     private TextView catField;
+    private ImageView dateImageButton;
+    private Calendar selectedDate;
+    private EditText dateEditText;
+    private EditText priceEditText;
 
     String[] arr = new String[] {"aaa1", "aaa2", "aaa3", "a444", "bbb1", "bbb2", "bbb4"};
 
@@ -33,10 +45,28 @@ public class MainActivity extends AppCompatActivity {
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Новая запись");
 
-        spinnerAdapter = new ArrayAdapter<CharSequence>(this, R.layout.spinner_item, android.R.id.text1, arr);
+        selectedDate = Calendar.getInstance();
+
+        dateEditText = (EditText)findViewById(R.id.dateEditText);
+        priceEditText = (EditText)findViewById(R.id.priceEditText);
+
+        spinnerAdapter = new CustomArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, arr);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         categorySpinner = (Spinner)findViewById(R.id.categorySpinner);
         categorySpinner.setAdapter(spinnerAdapter);
+        dateImageButton = (ImageView)findViewById(R.id.dateImageButton);
+
+        categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+            @Override
+            public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                spinnerAdapter.setSelected(true);
+            }
+
+            @Override
+            public void onNothingSelected(AdapterView<?> parent) {
+
+            }
+        });
 
         commentEditText = (TextView)findViewById(R.id.commentEditText);
         commentEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
@@ -46,6 +76,22 @@ public class MainActivity extends AppCompatActivity {
                 else commentEditText.setHint(R.string.comment_textview_hint);
             }
         });
+
+        dateImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDateFromPicker();
+            }
+        });
+
+        dateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDateFromPicker();
+            }
+        });
+
+        setInitialDate();
 
         FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
@@ -92,5 +138,24 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void setDateFromPicker() {
+        new DatePickerDialog(MainActivity.this, d, selectedDate.get(Calendar.YEAR),
+                selectedDate.get(Calendar.MONTH), selectedDate.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            selectedDate.set(Calendar.YEAR, year);
+            selectedDate.set(Calendar.MONTH, monthOfYear);
+            selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            setInitialDate();
+        }
+    };
+
+    private void setInitialDate() {
+        dateEditText.setText(DateUtils.formatDateTime(getApplicationContext(), selectedDate.getTimeInMillis(),
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
     }
 }
