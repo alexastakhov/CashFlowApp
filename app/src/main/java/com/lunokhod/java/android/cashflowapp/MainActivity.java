@@ -52,12 +52,15 @@ public class MainActivity extends AppCompatActivity {
 
         dateEditText = (EditText)findViewById(R.id.dateEditText);
         priceEditText = (EditText)findViewById(R.id.priceEditText);
+        categorySpinner = (Spinner)findViewById(R.id.categorySpinner);
+        dateImageButton = (ImageView)findViewById(R.id.dateImageButton);
+        commentEditText = (TextView)findViewById(R.id.commentEditText);
 
         spinnerAdapter = new CustomArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, arr);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
-        categorySpinner = (Spinner)findViewById(R.id.categorySpinner);
         categorySpinner.setAdapter(spinnerAdapter);
-        dateImageButton = (ImageView)findViewById(R.id.dateImageButton);
+
+        priceEditText.addTextChangedListener(new NumericWatcher(priceEditText));
 
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -71,7 +74,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        commentEditText = (TextView)findViewById(R.id.commentEditText);
         commentEditText.setOnFocusChangeListener(new View.OnFocusChangeListener() {
             @Override
             public void onFocusChange(View v, boolean hasFocus) {
@@ -91,24 +93,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setDateFromPicker();
-            }
-        });
-
-        priceEditText.setOnKeyListener(new View.OnKeyListener() {
-            @Override
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                //double dbl;
-
-                //try {
-                //    dbl = Double.parseDouble(priceEditText.getText().toString());
-                //}
-                //catch(NumberFormatException e) {
-                //    dbl = 0;
-                //}
-
-                //priceEditText.setText(String.format("%.2f", dbl));
-
-                return false;
             }
         });
 

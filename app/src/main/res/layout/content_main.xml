@@ -26,7 +26,8 @@
         android:textSize="45sp"
         android:textColor="#010150"
         android:gravity="center"
-        android:layout_marginTop="12dp" />
+        android:layout_marginTop="12dp"
+        android:maxLength="12" />
 
     <LinearLayout
         android:orientation="horizontal"
