@@ -21,7 +21,7 @@
         android:id="@+id/priceEditText"
         android:editable="false"
         android:enabled="true"
-        android:numeric="decimal"
+        android:numeric="signed|decimal"
         android:singleLine="true"
         android:textSize="45sp"
         android:textColor="#010150"

@@ -14,9 +14,9 @@ public class NumericWatcher implements TextWatcher {
     private DecimalFormat dfnd;
     private boolean hasFractionalPart;
     private EditText editText;
+    private boolean plusFlag;
 
-    public NumericWatcher(EditText editText)
-    {
+    public NumericWatcher(EditText editText) {
         df = new DecimalFormat("#,###.##");
         df.setMaximumFractionDigits(2);
         df.setMaximumIntegerDigits(7);
@@ -29,16 +29,16 @@ public class NumericWatcher implements TextWatcher {
         dfnd = new DecimalFormat("#,###");
         this.editText = editText;
         hasFractionalPart = true;
+        plusFlag = false;
     }
 
     @SuppressWarnings("unused")
     private static final String TAG = "NumericWatcher";
 
     @Override
-    public void afterTextChanged(Editable s)
-    {
-        Log.i(TAG, "afterTextChanged; s == " + s.toString());
+    public void afterTextChanged(Editable s) {
         editText.removeTextChangedListener(this);
+        plusFlag = false;
 
         try {
             int inilen, endlen;
@@ -46,27 +46,30 @@ public class NumericWatcher implements TextWatcher {
             String v = s.toString().replace(String.valueOf(df.getDecimalFormatSymbols().getGroupingSeparator()), "");
             String sp = String.valueOf(df.getDecimalFormatSymbols().getDecimalSeparator());
 
-            if (v.contains(sp)) {
-                Log.i(TAG, "v.contains(sp); v == " + v);
+            v = v.replace("-", "");
 
+            if(v.contains("+")) {
+                v = v.replace("+", "");
+                plusFlag = true;
+            }
+
+            if (v.contains(sp)) {
                 if (v.length() - v.lastIndexOf(sp) == 4) {
                     v = v.substring(0, v.length() - 1);
-                    Log.i(TAG, "v.substring; v == " + v);
                 }
             }
 
-            Log.i(TAG, editText.getText().toString());
-
             Number num = df.parse(v);
             int selectionStart = editText.getSelectionStart();
-
-            Log.i(TAG, "num == " + num.toString());
+            
+            if (plusFlag) v = "+";
+            else v = "";
 
             if (hasFractionalPart) {
-                editText.setText(df.format(num));
+                editText.setText(v + df.format(num));
             }
             else {
-                editText.setText(dfnd.format(num));
+                editText.setText(v + dfnd.format(num));
             }
 
             endlen = editText.getText().length();
@@ -89,25 +92,21 @@ public class NumericWatcher implements TextWatcher {
     }
 
     @Override
-    public void beforeTextChanged(CharSequence s, int start, int count, int after)
-    {
-        Log.i(TAG, "beforeTextChanged; s == " + s.toString());
-
+    public void beforeTextChanged(CharSequence s, int start, int count, int after) {
     }
 
     @Override
-    public void onTextChanged(CharSequence s, int start, int before, int count)
-    {
-        Log.i(TAG, "onTextChanged");
-        Log.i(TAG, "getDecimalSeparator() == " + String.valueOf(df.getDecimalFormatSymbols().getDecimalSeparator()));
+    public void onTextChanged(CharSequence s, int start, int before, int count) {
         if (s.toString().contains(String.valueOf(df.getDecimalFormatSymbols().getDecimalSeparator())))
         {
             hasFractionalPart = true;
-            Log.i(TAG, "hasFractionalPart = true; s == " + s.toString());
         }
         else {
             hasFractionalPart = false;
-            Log.i(TAG, "hasFractionalPart = false; s == " + s.toString());
         }
+    }
+
+    public boolean getPlusFlag() {
+        return plusFlag;
     }
 }
