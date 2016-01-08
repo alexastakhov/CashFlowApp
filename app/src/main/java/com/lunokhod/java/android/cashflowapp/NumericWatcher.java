@@ -47,6 +47,11 @@ public class NumericWatcher implements TextWatcher {
             String sp = String.valueOf(df.getDecimalFormatSymbols().getDecimalSeparator());
 
             v = v.replace("-", "");
+            if (v.length() == 0) {
+                editText.setText(v);
+                editText.addTextChangedListener(this);
+                return;
+            }
 
             if(v.contains("+")) {
                 v = v.replace("+", "");
@@ -61,7 +66,7 @@ public class NumericWatcher implements TextWatcher {
 
             Number num = df.parse(v);
             int selectionStart = editText.getSelectionStart();
-            
+
             if (plusFlag) v = "+";
             else v = "";
 

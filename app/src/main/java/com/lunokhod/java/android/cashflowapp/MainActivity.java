@@ -8,15 +8,11 @@ import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.text.format.DateUtils;
-import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -34,7 +30,8 @@ public class MainActivity extends AppCompatActivity {
     private ImageView dateImageButton;
     private Calendar selectedDate;
     private EditText dateEditText;
-    private EditText priceEditText;
+    private EditText amountEditText;
+    private DataManager dataManager;
 
     String[] arr = new String[] {"aaa1", "aaa2", "aaa3", "a444", "bbb1", "bbb2", "bbb4"};
 
@@ -45,13 +42,16 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        if (DataManager.getInstance() == null)
+            dataManager = new DataManager();
+
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Новая запись");
 
         selectedDate = Calendar.getInstance();
 
         dateEditText = (EditText)findViewById(R.id.dateEditText);
-        priceEditText = (EditText)findViewById(R.id.priceEditText);
+        amountEditText = (EditText)findViewById(R.id.amountEditText);
         categorySpinner = (Spinner)findViewById(R.id.categorySpinner);
         dateImageButton = (ImageView)findViewById(R.id.dateImageButton);
         commentEditText = (TextView)findViewById(R.id.commentEditText);
@@ -60,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         categorySpinner.setAdapter(spinnerAdapter);
 
-        priceEditText.addTextChangedListener(new NumericWatcher(priceEditText));
+        amountEditText.addTextChangedListener(new NumericWatcher(amountEditText));
 
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
@@ -143,6 +143,10 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public DataManager getDataManager() {
+        return dataManager;
     }
 
     private void setDateFromPicker() {

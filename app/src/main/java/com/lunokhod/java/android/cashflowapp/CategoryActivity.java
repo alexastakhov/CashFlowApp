@@ -12,12 +12,19 @@ import android.view.View;
 
 public class CategoryActivity extends AppCompatActivity {
 
+    private CategoryListViewAdapter categoryListViewAdapter;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        if (DataManager.getInstance() == null)
+            new DataManager();
+
+        categoryListViewAdapter = new CategoryListViewAdapter(this.getApplicationContext(), DataManager.getInstance());
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

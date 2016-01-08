@@ -18,7 +18,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:ems="10"
-        android:id="@+id/priceEditText"
+        android:id="@+id/amountEditText"
         android:editable="false"
         android:enabled="true"
         android:numeric="signed|decimal"
@@ -26,7 +26,8 @@
         android:textSize="45sp"
         android:textColor="#010150"
         android:gravity="center"
-        android:layout_marginTop="12dp"
+        android:textCursorDrawable="@drawable/amount_edit_cursor"
+        android:layout_marginTop="10dp"
         android:maxLength="12" />
 
     <LinearLayout
@@ -65,13 +66,13 @@
         android:layout_gravity="center_horizontal"
         android:spinnerMode="dialog"
         android:background="@drawable/cat_spinner_style"
-        android:layout_marginTop="30sp" />
+        android:layout_marginTop="25sp" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/commentEditText"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         android:editable="true"
         android:lines="3"
         android:layout_weight="0.09"
@@ -92,7 +93,7 @@
         android:paddingBottom="15sp"
         android:text="ДОБАВИТЬ ЗАПИСЬ"
         android:id="@+id/addRecButton"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="25dp"
         android:textSize="16sp"
         android:background="@drawable/addrec_btn_style"
         android:textColor="#ffffff" />
