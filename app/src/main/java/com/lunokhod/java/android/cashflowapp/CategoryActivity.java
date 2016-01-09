@@ -9,10 +9,12 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ListView;
 
 public class CategoryActivity extends AppCompatActivity {
 
     private CategoryListViewAdapter categoryListViewAdapter;
+    private ListView categoryListView;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,8 @@ public class CategoryActivity extends AppCompatActivity {
             new DataManager();
 
         categoryListViewAdapter = new CategoryListViewAdapter(this.getApplicationContext(), DataManager.getInstance());
+        categoryListView = (ListView)findViewById(R.id.categoryListView);
+        categoryListView.setAdapter(categoryListViewAdapter);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {

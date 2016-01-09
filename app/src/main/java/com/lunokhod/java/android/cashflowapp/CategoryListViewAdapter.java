@@ -2,51 +2,42 @@ package com.lunokhod.java.android.cashflowapp;
 
 import android.content.Context;
 import android.database.DataSetObserver;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ListAdapter;
+import android.widget.BaseAdapter;
+import android.widget.ImageView;
+import android.widget.TextView;
 
 /**
  * Created by alex on 08.01.2016.
  */
-public class CategoryListViewAdapter implements ListAdapter {
+public class CategoryListViewAdapter extends BaseAdapter {
 
+    private LayoutInflater inflater;
     private Context appContext;
     private DataManager dataManager;
+    private CategoryItem[] categories;
 
     public CategoryListViewAdapter(Context context, DataManager dataManager) {
+        inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         appContext = context;
         this.dataManager = dataManager;
-    }
 
-    @Override
-    public boolean areAllItemsEnabled() {
-        return false;
-    }
-
-    @Override
-    public boolean isEnabled(int position) {
-        return false;
-    }
-
-    @Override
-    public void registerDataSetObserver(DataSetObserver observer) {
-
-    }
-
-    @Override
-    public void unregisterDataSetObserver(DataSetObserver observer) {
-
+        if (dataManager != null)
+            categories = dataManager.getCategories();
+        else
+            categories = null;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return categories.length;
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public CategoryItem getItem(int position) {
+        return categories[position];
     }
 
     @Override
@@ -55,27 +46,24 @@ public class CategoryListViewAdapter implements ListAdapter {
     }
 
     @Override
-    public boolean hasStableIds() {
-        return false;
-    }
-
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-        return null;
+        View view = convertView;
+        CategoryItem item = categories[position];
+
+        if (convertView == null) {
+            view = inflater.inflate(R.layout.category_list_row, null);
+        }
+
+        TextView text = (TextView)view.findViewById(R.id.categoryTextView);
+        ImageView image = (ImageView)view.findViewById(R.id.categoryPrioImageView);
+
+        text.setText(item.getName());
+
+        return view;
     }
 
-    @Override
-    public int getItemViewType(int position) {
-        return 0;
-    }
-
-    @Override
-    public int getViewTypeCount() {
-        return 0;
-    }
-
-    @Override
-    public boolean isEmpty() {
-        return false;
+    public void refreshData() {
+        categories = dataManager.getCategories();
+        this.notifyDataSetChanged();
     }
 }

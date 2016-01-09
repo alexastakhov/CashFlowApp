@@ -36,6 +36,8 @@ public class DataManager {
         //p_categories = new ArrayList<CategoryItem>();
 
         lastDataManager = this;
+
+        testCategoryListView();
     }
 
     public static DataManager getInstance() {
@@ -111,6 +113,24 @@ public class DataManager {
                     REC_CATEGORY_COLUMN + " INTEGER);";
             sqLiteDatabase.execSQL(qs);
         }
+    }
+
+
+    private void testCategoryListView() {
+        categories.add(new CategoryItem("Первая", false));
+        categories.add(new CategoryItem("Вторая", false));
+        categories.add(new CategoryItem("Третья", false));
+        categories.add(new CategoryItem("Четвертая", false));
+        categories.add(new CategoryItem("Пятая", false));
+        categories.add(new CategoryItem("Шестая", false));
+        categories.add(new CategoryItem("Седьмая", false));
+        categories.add(new CategoryItem("Восьмая", false));
+        categories.add(new CategoryItem("Девятая", false));
+        categories.add(new CategoryItem("Десятая", false));
+        categories.add(new CategoryItem("Одиннадцатая", false));
+        categories.add(new CategoryItem("Двенадцатая", false));
+        categories.add(new CategoryItem("Тринадцатая", false));
+        categories.add(new CategoryItem("Четырнадцатая", false));
     }
 }
 
