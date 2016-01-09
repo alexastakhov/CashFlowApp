@@ -19,6 +19,9 @@ public class CustomArrayAdapter extends ArrayAdapter {
     private boolean selected = false;
     private int selectedColor;
 
+    @SuppressWarnings("unused")
+    private static final String TAG = "CustomArrayAdapter";
+
     public CustomArrayAdapter(Context context, int resource, String[] objects) {
         super(context, resource, objects);
         this.context = context;

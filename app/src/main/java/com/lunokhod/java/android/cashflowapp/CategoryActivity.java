@@ -16,6 +16,9 @@ public class CategoryActivity extends AppCompatActivity {
     private CategoryListViewAdapter categoryListViewAdapter;
     private ListView categoryListView;
 
+    @SuppressWarnings("unused")
+    private static final String TAG = "CategoryActivity";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);

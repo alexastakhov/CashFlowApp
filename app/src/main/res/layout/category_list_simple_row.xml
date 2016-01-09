@@ -3,20 +3,11 @@
     android:orientation="horizontal" android:layout_width="fill_parent"
     android:layout_height="wrap_content">
 
-    <ImageView
-        android:layout_width="fill_parent"
-        android:layout_height="fill_parent"
-        android:id="@+id/categoryPrioImageView"
-        android:layout_weight="8"
-        android:src="@mipmap/ic_check_box_black_24dp"
-        android:paddingLeft="15sp"
-        android:paddingRight="5sp" />
-
     <TextView
         style="@style/CategoryListTextViewStyle"
         android:layout_width="fill_parent"
-        android:layout_height="65sp"
+        android:layout_height="62sp"
         android:text="Medium Text"
         android:id="@+id/categoryTextView"
-        android:layout_weight="1" />
+        android:paddingLeft="25sp" />
 </LinearLayout>

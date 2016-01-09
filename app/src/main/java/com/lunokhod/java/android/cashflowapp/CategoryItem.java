@@ -8,6 +8,9 @@ public class CategoryItem {
     private String groupName;
     private boolean priority;
 
+    @SuppressWarnings("unused")
+    private static final String TAG = "CategoryItem";
+
     public CategoryItem() {
         name = "";
         groupName = "";

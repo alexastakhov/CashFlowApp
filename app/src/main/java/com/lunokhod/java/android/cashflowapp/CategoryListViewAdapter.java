@@ -19,6 +19,9 @@ public class CategoryListViewAdapter extends BaseAdapter {
     private DataManager dataManager;
     private CategoryItem[] categories;
 
+    @SuppressWarnings("unused")
+    private static final String TAG = "CategoryListViewAdapter";
+
     public CategoryListViewAdapter(Context context, DataManager dataManager) {
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         appContext = context;
@@ -51,18 +54,12 @@ public class CategoryListViewAdapter extends BaseAdapter {
         CategoryItem item = categories[position];
 
         if (convertView == null) {
-            view = inflater.inflate(R.layout.category_list_row, null);
+            view = inflater.inflate(R.layout.category_list_simple_row, null);
         }
 
         TextView text = (TextView)view.findViewById(R.id.categoryTextView);
-        ImageView image = (ImageView)view.findViewById(R.id.categoryPrioImageView);
 
         text.setText(item.getName());
-        if (item.getPriority())
-            image.setImageResource(R.mipmap.ic_star_rate_black_18dp);
-        else
-            image.setImageResource(R.drawable.empty_icon);
-
         return view;
     }
 

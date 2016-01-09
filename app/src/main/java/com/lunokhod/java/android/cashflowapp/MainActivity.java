@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -33,7 +34,8 @@ public class MainActivity extends AppCompatActivity {
     private EditText amountEditText;
     private DataManager dataManager;
 
-    String[] arr = new String[] {"aaa1", "aaa2", "aaa3", "a444", "bbb1", "bbb2", "bbb4"};
+    @SuppressWarnings("unused")
+    private static final String TAG = "MainActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +44,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (DataManager.getInstance() == null)
-            dataManager = new DataManager();
+        dataManager = new DataManager();
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle("Новая запись");
@@ -56,7 +57,7 @@ public class MainActivity extends AppCompatActivity {
         dateImageButton = (ImageView)findViewById(R.id.dateImageButton);
         commentEditText = (TextView)findViewById(R.id.commentEditText);
 
-        spinnerAdapter = new CustomArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, arr);
+        spinnerAdapter = new CustomArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, dataManager.getCategoriesAsStrings());
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         categorySpinner.setAdapter(spinnerAdapter);
 

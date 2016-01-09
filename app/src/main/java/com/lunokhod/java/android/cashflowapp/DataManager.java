@@ -31,6 +31,9 @@ public class DataManager {
     private ArrayList<CategoryItem> categories;
     //private ArrayList<CategoryItem> p_categories;
 
+    @SuppressWarnings("unused")
+    private static final String TAG = "DataManager";
+
     public DataManager() {
         categories = new ArrayList<CategoryItem>();
         //p_categories = new ArrayList<CategoryItem>();

@@ -16,6 +16,9 @@ public class NumericWatcher implements TextWatcher {
     private EditText editText;
     private boolean plusFlag;
 
+    @SuppressWarnings("unused")
+    private static final String TAG = "NumericWatcher";
+
     public NumericWatcher(EditText editText) {
         df = new DecimalFormat("#,###.##");
         df.setMaximumFractionDigits(2);
@@ -31,9 +34,6 @@ public class NumericWatcher implements TextWatcher {
         hasFractionalPart = true;
         plusFlag = false;
     }
-
-    @SuppressWarnings("unused")
-    private static final String TAG = "NumericWatcher";
 
     @Override
     public void afterTextChanged(Editable s) {
