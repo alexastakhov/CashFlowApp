@@ -58,6 +58,10 @@ public class CategoryListViewAdapter extends BaseAdapter {
         ImageView image = (ImageView)view.findViewById(R.id.categoryPrioImageView);
 
         text.setText(item.getName());
+        if (item.getPriority())
+            image.setImageResource(R.mipmap.ic_star_rate_black_18dp);
+        else
+            image.setImageResource(R.drawable.empty_icon);
 
         return view;
     }

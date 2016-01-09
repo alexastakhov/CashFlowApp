@@ -45,7 +45,7 @@ public class DataManager {
     }
 
     public CategoryItem[] getCategories() {
-        return (CategoryItem[])categories.toArray();
+        return categories.toArray(new CategoryItem[categories.size()]);
     }
 
     public String[] getCategoriesAsStrings() {
@@ -120,17 +120,17 @@ public class DataManager {
         categories.add(new CategoryItem("Первая", false));
         categories.add(new CategoryItem("Вторая", false));
         categories.add(new CategoryItem("Третья", false));
-        categories.add(new CategoryItem("Четвертая", false));
+        categories.add(new CategoryItem("Четвертая", true));
         categories.add(new CategoryItem("Пятая", false));
-        categories.add(new CategoryItem("Шестая", false));
-        categories.add(new CategoryItem("Седьмая", false));
-        categories.add(new CategoryItem("Восьмая", false));
+        categories.add(new CategoryItem("Шестая", true));
+        categories.add(new CategoryItem("Седьмая", true));
+        categories.add(new CategoryItem("Восьмая", true));
         categories.add(new CategoryItem("Девятая", false));
-        categories.add(new CategoryItem("Десятая", false));
+        categories.add(new CategoryItem("Десятая", true));
         categories.add(new CategoryItem("Одиннадцатая", false));
-        categories.add(new CategoryItem("Двенадцатая", false));
-        categories.add(new CategoryItem("Тринадцатая", false));
-        categories.add(new CategoryItem("Четырнадцатая", false));
+        categories.add(new CategoryItem("Двенадцатая", true));
+        categories.add(new CategoryItem("Тринадцатая", true));
+        categories.add(new CategoryItem("Четырнадцатая", true));
     }
 }
 
