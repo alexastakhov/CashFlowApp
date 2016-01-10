@@ -47,7 +47,7 @@ public class MainActivity extends AppCompatActivity {
         dataManager = new DataManager();
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle("Новая запись");
+        actionBar.setTitle(R.string.main_caption);
 
         selectedDate = Calendar.getInstance();
 

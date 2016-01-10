@@ -3,12 +3,12 @@ package com.lunokhod.java.android.cashflowapp;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
 
 public class CategoryActivity extends AppCompatActivity {
@@ -33,6 +33,13 @@ public class CategoryActivity extends AppCompatActivity {
         categoryListView = (ListView)findViewById(R.id.categoryListView);
         categoryListView.setAdapter(categoryListViewAdapter);
 
+        categoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                showItemEditDialog(categoryListViewAdapter.getItem(position));
+            }
+        });
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle("Категории");
@@ -44,8 +51,7 @@ public class CategoryActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
+                //
             }
         });
     }
@@ -69,5 +75,9 @@ public class CategoryActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
+    }
+
+    private void showItemEditDialog(CategoryItem item) {
+        CategoryEditDialog.getInstance(item.getName(), item.getPriority()).show(getFragmentManager(), "catDiag");
     }
 }

@@ -1,5 +1,6 @@
 <resources>
     <string name="app_name">CashFlowApp</string>
+    <string name="main_caption">"Новая запись"</string>
     <string name="cat_caption">Категория</string>
     <string name="comment_textview_hint">Комментарий</string>
 
@@ -8,6 +9,12 @@
     <string name="action_settings">Настройки</string>
 
     <string name="category_spin_hint">Категория</string>
+
+    <string name="category_dialog_header">Изменить категорию</string>
+    <string name="category_dialog_check">Приоритетная категория</string>
+    <string name="category_dialog_cancel_text">Отменить</string>
+    <string name="category_dialog_save_text">Сохранить</string>
+    <string name="category_dialog_delete_text">Удалить</string>
 
     <string-array name="catlist">
         <item>Барсик</item>

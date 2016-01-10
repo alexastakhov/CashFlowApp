@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="@string/category_dialog_header"
+        android:id="@+id/textView"
+        android:layout_gravity="center_horizontal"
+        android:textSize="18sp"
+        android:padding="12sp"
+        android:background="@color/categoryDialogHeaderColor"
+        android:textColor="@color/categoryDialogHeaderTextColor" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/categoryEditText"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="20sp"
+        android:layout_marginRight="15sp"
+        android:layout_marginLeft="15sp" />
+
+    <CheckBox
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/category_dialog_check"
+        android:id="@+id/categoryPrioCheckBox"
+        android:layout_gravity="left|center_horizontal"
+        android:layout_marginTop="15sp"
+        android:layout_marginLeft="25sp"
+        android:textSize="16sp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25sp"
+        android:background="@color/categoryDialogBtnPadLayoutColor">
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/category_dialog_delete_text"
+            android:id="@+id/categoryDeleteButton"
+            android:layout_weight="1"
+            android:background="@drawable/cat_dialog_btn"
+            android:textAllCaps="false"
+            android:layout_marginRight="1sp"
+            android:textSize="16sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/category_dialog_cancel_text"
+            android:id="@+id/categoryCancelButton"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:background="@drawable/cat_dialog_btn"
+            android:textSize="16sp" />
+
+        <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/category_dialog_save_text"
+            android:id="@+id/categorySaveButton"
+            android:layout_weight="1"
+            android:background="@drawable/cat_dialog_btn"
+            android:textAllCaps="false"
+            android:layout_marginLeft="1sp"
+            android:textSize="16sp" />
+    </LinearLayout>
+</LinearLayout>

@@ -12,4 +12,9 @@
     <color name="editTextPrimaryColor">#000000</color>
 
     <color name="categoryListTextColor">#000000</color>
+
+    <color name="categoryDialogHeaderColor">#8a81f5</color>
+    <color name="categoryDialogHeaderTextColor">#ffffff</color>
+    <color name="categoryDialogBtnPadLayoutColor">#ffffff</color>
+
 </resources>
