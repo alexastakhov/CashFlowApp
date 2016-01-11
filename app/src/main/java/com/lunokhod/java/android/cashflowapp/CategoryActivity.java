@@ -29,7 +29,7 @@ public class CategoryActivity extends AppCompatActivity {
         if (DataManager.getInstance() == null)
             new DataManager();
 
-        categoryListViewAdapter = new CategoryListViewAdapter(this.getApplicationContext(), DataManager.getInstance());
+        categoryListViewAdapter = new CategoryListViewAdapter(this.getApplicationContext(), DataManager.getInstance().getCategories());
         categoryListView = (ListView)findViewById(R.id.categoryListView);
         categoryListView.setAdapter(categoryListViewAdapter);
 
@@ -51,7 +51,7 @@ public class CategoryActivity extends AppCompatActivity {
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                //
+                showItemNewDialog();
             }
         });
     }
@@ -78,6 +78,19 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void showItemEditDialog(CategoryItem item) {
-        CategoryEditDialog.getInstance(item.getName(), item.getPriority()).show(getFragmentManager(), "catDiag");
+        CategoryEditDialog.getInstance(item.getName(), item.getPriority()).show(getFragmentManager(), "categoryDialog");
+    }
+
+    private void showItemNewDialog() {
+        CategoryNewDialog.getInstance().show(getFragmentManager(), "categoryDialog");
+    }
+
+    private void showMsgDlg(String title, String msg) {
+        MessageDialog.newInstance(title, msg).show(getFragmentManager(), "messageDialog");
+    }
+
+    public void deleteCategory(String categoryName) {
+        DataManager.getInstance().deleteCategory(categoryName);
+        categoryListViewAdapter.setDataObjects(DataManager.getInstance().getCategories());
     }
 }

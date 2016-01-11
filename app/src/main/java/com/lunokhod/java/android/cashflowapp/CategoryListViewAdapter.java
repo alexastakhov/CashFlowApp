@@ -16,21 +16,15 @@ public class CategoryListViewAdapter extends BaseAdapter {
 
     private LayoutInflater inflater;
     private Context appContext;
-    private DataManager dataManager;
     private CategoryItem[] categories;
 
     @SuppressWarnings("unused")
     private static final String TAG = "CategoryListViewAdapter";
 
-    public CategoryListViewAdapter(Context context, DataManager dataManager) {
+    public CategoryListViewAdapter(Context context, CategoryItem[] objects) {
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         appContext = context;
-        this.dataManager = dataManager;
-
-        if (dataManager != null)
-            categories = dataManager.getCategories();
-        else
-            categories = null;
+        categories = objects;
     }
 
     @Override
@@ -63,8 +57,8 @@ public class CategoryListViewAdapter extends BaseAdapter {
         return view;
     }
 
-    public void refreshData() {
-        categories = dataManager.getCategories();
-        this.notifyDataSetChanged();
+    public void setDataObjects(CategoryItem[] objects) {
+        categories = objects;
+        notifyDataSetChanged();
     }
 }

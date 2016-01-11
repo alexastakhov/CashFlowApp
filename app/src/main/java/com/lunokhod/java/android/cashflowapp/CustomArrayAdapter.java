@@ -11,31 +11,30 @@ import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+
 public class CustomArrayAdapter extends ArrayAdapter {
     private Context context;
     private int resource;
     private int textViewResourceId;
-    private String[] objects;
     private boolean selected = false;
     private int selectedColor;
 
     @SuppressWarnings("unused")
     private static final String TAG = "CustomArrayAdapter";
 
-    public CustomArrayAdapter(Context context, int resource, String[] objects) {
+    public CustomArrayAdapter(Context context, int resource, ArrayList<String> objects) {
         super(context, resource, objects);
         this.context = context;
         this.resource = resource;
-        this.objects = objects;
         selectedColor = Color.BLACK;
     }
 
-    public CustomArrayAdapter(Context context, int resource, int textViewResourceId, String[] objects) {
+    public CustomArrayAdapter(Context context, int resource, int textViewResourceId, ArrayList<String> objects) {
         super(context, resource, textViewResourceId, objects);
         this.context = context;
         this.resource = resource;
         this.textViewResourceId = textViewResourceId;
-        this.objects = objects;
         selectedColor = Color.BLACK;
     }
 
@@ -46,7 +45,7 @@ public class CustomArrayAdapter extends ArrayAdapter {
 
         if (selected) {
             TextView textView = (TextView) convertView;
-            textView.setText(objects[position]);
+            textView.setText((String)getItem(position));
             textView.setTextColor(selectedColor);
         }
         return convertView;

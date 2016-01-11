@@ -20,6 +20,8 @@ import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
@@ -27,12 +29,12 @@ public class MainActivity extends AppCompatActivity {
     private Spinner categorySpinner;
     private CustomArrayAdapter spinnerAdapter;
     private TextView commentEditText;
-    private TextView catField;
     private ImageView dateImageButton;
     private Calendar selectedDate;
     private EditText dateEditText;
     private EditText amountEditText;
     private DataManager dataManager;
+    private ArrayList<String> spinnerList;
 
     @SuppressWarnings("unused")
     private static final String TAG = "MainActivity";
@@ -45,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         dataManager = new DataManager();
+        spinnerList = new ArrayList<String>(Arrays.asList(dataManager.getCategoriesAsStrings()));
 
         ActionBar actionBar = getSupportActionBar();
         actionBar.setTitle(R.string.main_caption);
@@ -57,7 +60,7 @@ public class MainActivity extends AppCompatActivity {
         dateImageButton = (ImageView)findViewById(R.id.dateImageButton);
         commentEditText = (TextView)findViewById(R.id.commentEditText);
 
-        spinnerAdapter = new CustomArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, dataManager.getCategoriesAsStrings());
+        spinnerAdapter = new CustomArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, spinnerList);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
         categorySpinner.setAdapter(spinnerAdapter);
 
@@ -107,6 +110,22 @@ public class MainActivity extends AppCompatActivity {
                         .setAction("Action", null).show();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        updateSpinnerData();
+    }
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
     }
 
     @Override
@@ -167,5 +186,20 @@ public class MainActivity extends AppCompatActivity {
     private void setInitialDate() {
         dateEditText.setText(DateUtils.formatDateTime(getApplicationContext(), selectedDate.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+    }
+
+    private void updateSpinnerData() {
+        String[] array = dataManager.getCategoriesAsStrings();
+
+        spinnerList.clear();
+
+        for (int i =0; i < array.length; i++)
+            spinnerList.add(array[i]);
+
+        categorySpinner.setEnabled(spinnerList.size() != 0);
+    }
+
+    private void showMsgDlg(String title, String msg) {
+        MessageDialog.newInstance(title, msg).show(getFragmentManager(), "messageDialog");
     }
 }

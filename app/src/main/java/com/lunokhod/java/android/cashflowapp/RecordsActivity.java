@@ -50,4 +50,8 @@ public class RecordsActivity extends AppCompatActivity {
         }
         return super.onOptionsItemSelected(item);
     }
+
+    private void showMsgDlg(String title, String msg) {
+        MessageDialog.newInstance(title, msg).show(getFragmentManager(), "messageDialog");
+    }
 }

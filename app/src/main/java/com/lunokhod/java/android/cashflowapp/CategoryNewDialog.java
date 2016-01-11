@@ -13,35 +13,20 @@ import android.widget.EditText;
 /**
  * Created by alex on 10.01.2016.
  */
-public class CategoryEditDialog extends DialogFragment {
-    String category;
-    boolean priority;
+public class CategoryNewDialog extends DialogFragment {
 
-    public static CategoryEditDialog getInstance(String category, boolean prio) {
-        CategoryEditDialog dialog = new CategoryEditDialog();
-        Bundle args = new Bundle();
-
-        args.putString("cat", category);
-        args.putBoolean("pri", prio);
-        dialog.setArguments(args);
+    public static CategoryNewDialog getInstance() {
+        CategoryNewDialog dialog = new CategoryNewDialog();
 
         return dialog;
-    }
-
-    @Override
-    public void onCreate(Bundle savedInstanceState) {
-        super.onCreate(savedInstanceState);
-
-        category = getArguments().getString("cat");
-        priority = getArguments().getBoolean("pri");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.category_edit_dialog, container, false);
+        final View view = inflater.inflate(R.layout.category_new_dialog, container, false);
 
-        getDialog().setTitle(R.string.category_dialog_header);
+        getDialog().setTitle(R.string.category_dialog_header2);
 
         int dHeigt = getDialog().getWindow().getAttributes().height;
         int dWidth = 350;
@@ -51,7 +36,6 @@ public class CategoryEditDialog extends DialogFragment {
         CheckBox checkBox = (CheckBox)view.findViewById(R.id.categoryPrioCheckBox);
         Button saveBtn = (Button)view.findViewById(R.id.categorySaveButton);
         Button cancelBtn = (Button)view.findViewById(R.id.categoryCancelButton);
-        Button deleteBtn = (Button)view.findViewById(R.id.categoryDeleteButton);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,17 +50,6 @@ public class CategoryEditDialog extends DialogFragment {
                 closeDialog();
             }
         });
-
-        deleteBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                deleteCategory(category);
-                closeDialog();
-            }
-        });
-
-        editText.setText(category);
-        checkBox.setChecked(priority);
 
         return view;
     }

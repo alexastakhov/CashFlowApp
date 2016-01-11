@@ -11,6 +11,7 @@
     <string name="category_spin_hint">Категория</string>
 
     <string name="category_dialog_header">Изменить категорию</string>
+    <string name="category_dialog_header2">Новая категория</string>
     <string name="category_dialog_check">Приоритетная категория</string>
     <string name="category_dialog_cancel_text">Отменить</string>
     <string name="category_dialog_save_text">Сохранить</string>

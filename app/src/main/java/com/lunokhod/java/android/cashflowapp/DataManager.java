@@ -47,6 +47,10 @@ public class DataManager {
         return lastDataManager;
     }
 
+    public int getCategoryCount() {
+        return categories.size();
+    }
+
     public CategoryItem[] getCategories() {
         return categories.toArray(new CategoryItem[categories.size()]);
     }
