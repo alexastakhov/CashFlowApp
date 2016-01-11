@@ -17,4 +17,6 @@
     <color name="categoryDialogHeaderTextColor">#ffffff</color>
     <color name="categoryDialogBtnPadLayoutColor">#ffffff</color>
 
+    <color name="errorTextColor">#ff0000</color>
+
 </resources>

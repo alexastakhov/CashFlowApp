@@ -23,6 +23,18 @@
         android:layout_marginLeft="25sp"
         android:textSize="16sp" />
 
+    <TextView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="New Text"
+        android:id="@+id/errorTextView"
+        android:layout_marginLeft="15sp"
+        android:layout_marginRight="15sp"
+        android:layout_marginTop="25sp"
+        android:textSize="18sp"
+        android:visibility="gone"
+        android:textColor="@color/errorTextColor" />
+
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
