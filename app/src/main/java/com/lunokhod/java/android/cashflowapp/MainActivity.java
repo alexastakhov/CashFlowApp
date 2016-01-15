@@ -193,10 +193,11 @@ public class MainActivity extends AppCompatActivity {
 
         spinnerList.clear();
 
-        for (int i =0; i < array.length; i++)
+        for (int i = 0; i < array.length; i++)
             spinnerList.add(array[i]);
 
-        categorySpinner.setEnabled(spinnerList.size() != 0);
+        spinnerAdapter.setSelected(false);
+        categorySpinner.setSelection(0);
     }
 
     private void showMsgDlg(String title, String msg) {
