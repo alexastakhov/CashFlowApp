@@ -10,11 +10,13 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class CategoryActivity extends AppCompatActivity {
 
     private CategoryListViewAdapter categoryListViewAdapter;
     private ListView categoryListView;
+    private DataManager dataManager;
 
     @SuppressWarnings("unused")
     private static final String TAG = "CategoryActivity";
@@ -26,12 +28,11 @@ public class CategoryActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        if (DataManager.getInstance() == null)
-            new DataManager();
-
         categoryListViewAdapter = new CategoryListViewAdapter(this.getApplicationContext(), DataManager.getInstance().getCategories());
-        categoryListView = (ListView)findViewById(R.id.categoryListView);
+        categoryListView = (ListView) findViewById(R.id.categoryListView);
         categoryListView.setAdapter(categoryListViewAdapter);
+
+        dataManager = DataManager.getInstance();
 
         categoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -89,8 +90,38 @@ public class CategoryActivity extends AppCompatActivity {
         MessageDialog.newInstance(title, msg).show(getFragmentManager(), "messageDialog");
     }
 
-    public void deleteCategory(String categoryName) {
-        DataManager.getInstance().deleteCategory(categoryName);
+    private void updateListAdapter() {
         categoryListViewAdapter.setDataObjects(DataManager.getInstance().getCategories());
+    }
+
+    public boolean isCategoryExists(String name) {
+        for (String s : dataManager.getCategoriesAsStrings())
+            if (name.equals(s))
+                return true;
+        return false;
+    }
+
+    public void changeCategory(String oldName, String newName, boolean prio) {
+        if (isCategoryExists(oldName))
+            dataManager.deleteCategory(oldName);
+        dataManager.addCategory(newName, prio);
+        updateListAdapter();
+        Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_saved, Toast.LENGTH_SHORT).show();
+    }
+
+    public void addCategory(String name, boolean prio) {
+        if (!isCategoryExists(name)) {
+            dataManager.addCategory(name, prio);
+            updateListAdapter();
+            Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_added, Toast.LENGTH_SHORT).show();
+        }
+        else
+            Toast.makeText(CategoryActivity.this, R.string.debug_error_category_exists, Toast.LENGTH_SHORT).show();
+    }
+
+    public void deleteCategory(String categoryName) {
+        dataManager.deleteCategory(categoryName);
+        updateListAdapter();
+        Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_deleted, Toast.LENGTH_SHORT).show();
     }
 }

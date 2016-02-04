@@ -9,13 +9,23 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.TextView;
 
 /**
  * Created by alex on 10.01.2016.
  */
 public class CategoryEditDialog extends DialogFragment {
-    String category;
-    boolean priority;
+
+    private int initHeigth;
+    private int initWidth = 350;
+    private String category;
+    private boolean priority;
+    private View view;
+    private TextView errorText;
+    private EditText editText;
+    private CheckBox checkBox;
+
+    private static final String TAG = "CategoryEditDialog";
 
     public static CategoryEditDialog getInstance(String category, boolean prio) {
         CategoryEditDialog dialog = new CategoryEditDialog();
@@ -39,24 +49,36 @@ public class CategoryEditDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.category_edit_dialog, container, false);
-
-        getDialog().setTitle(R.string.category_dialog_header);
-
-        int dHeigt = getDialog().getWindow().getAttributes().height;
-        int dWidth = 350;
-        getDialog().getWindow().setLayout(dWidth, dHeigt);
-
-        EditText editText = (EditText)view.findViewById(R.id.categoryEditText);
-        CheckBox checkBox = (CheckBox)view.findViewById(R.id.categoryPrioCheckBox);
+        view = inflater.inflate(R.layout.category_edit_dialog, container, false);
+        errorText = (TextView)view.findViewById(R.id.errorTextView);
+        editText = (EditText)view.findViewById(R.id.categoryEditText);
+        checkBox = (CheckBox)view.findViewById(R.id.categoryPrioCheckBox);
         Button saveBtn = (Button)view.findViewById(R.id.categorySaveButton);
         Button cancelBtn = (Button)view.findViewById(R.id.categoryCancelButton);
         Button deleteBtn = (Button)view.findViewById(R.id.categoryDeleteButton);
 
+        getDialog().setTitle(R.string.category_dialog_header);
+
+        initHeigth = getDialog().getWindow().getAttributes().height;
+        getDialog().getWindow().setLayout(initWidth, initHeigth);
+
+
+
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                closeDialog();
+                String text = editText.getText().toString();
+
+                if (editText.getText().length() == 0) {
+                    showNameErrorText();
+                }
+                else if (!category.equals(text) && isCategoryExists(text)) {
+                    showCategoryExistsErrorText();
+                }
+                else {
+                    saveCategory(category, text, checkBox.isChecked());
+                    closeDialog();
+                }
             }
         });
 
@@ -86,10 +108,28 @@ public class CategoryEditDialog extends DialogFragment {
     }
 
     private void saveCategory(String oldName, String newName, boolean prio) {
-
+        ((CategoryActivity)getActivity()).changeCategory(oldName, newName, prio);
     }
 
     private void deleteCategory(String categoryName) {
         ((CategoryActivity)getActivity()).deleteCategory(categoryName);
+    }
+
+    private boolean isCategoryExists(String name) {
+        return ((CategoryActivity)getActivity()).isCategoryExists(name);
+    }
+
+    private void showNameErrorText() {
+        errorText.setText(R.string.category_dialog_error_name_text);
+        errorText.setVisibility(View.VISIBLE);
+    }
+
+    private void showCategoryExistsErrorText() {
+        errorText.setText(R.string.category_dialog_error_exists_text);
+        errorText.setVisibility(View.VISIBLE);
+    }
+
+    private void hideErrorText() {
+        errorText.setVisibility(View.GONE);
     }
 }

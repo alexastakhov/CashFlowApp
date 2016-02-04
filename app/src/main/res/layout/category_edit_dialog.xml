@@ -9,6 +9,7 @@
         android:layout_height="wrap_content"
         android:id="@+id/categoryEditText"
         android:layout_gravity="center_horizontal"
+        android:singleLine="true"
         android:layout_marginTop="20sp"
         android:layout_marginRight="15sp"
         android:layout_marginLeft="15sp" />
@@ -31,7 +32,7 @@
         android:layout_marginLeft="15sp"
         android:layout_marginRight="15sp"
         android:layout_marginTop="25sp"
-        android:textSize="18sp"
+        android:textSize="16sp"
         android:visibility="gone"
         android:textColor="@color/errorTextColor" />
 

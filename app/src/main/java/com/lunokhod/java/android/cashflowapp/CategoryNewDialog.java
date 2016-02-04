@@ -9,7 +9,6 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 
 /**
@@ -17,8 +16,14 @@ import android.widget.TextView;
  */
 public class CategoryNewDialog extends DialogFragment {
 
-    private int initHeigh;
+    private int initHeigth;
     private int initWidth = 350;
+    private View view;
+    private TextView errorText;
+    private EditText editText;
+    private CheckBox checkBox;
+
+    private static final String TAG = "CategoryNewDialog";
 
     public static CategoryNewDialog getInstance() {
         CategoryNewDialog dialog = new CategoryNewDialog();
@@ -29,24 +34,28 @@ public class CategoryNewDialog extends DialogFragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        final View view = inflater.inflate(R.layout.category_new_dialog, container, false);
-
-        getDialog().setTitle(R.string.category_dialog_header2);
-        initHeigh = getDialog().getWindow().getAttributes().height;
-        getDialog().getWindow().setLayout(initWidth, initHeigh);
-
-        final EditText editText = (EditText)view.findViewById(R.id.categoryEditText);
-        CheckBox checkBox = (CheckBox)view.findViewById(R.id.categoryPrioCheckBox);
+        view = inflater.inflate(R.layout.category_new_dialog, container, false);
+        errorText = (TextView)view.findViewById(R.id.errorTextView);
+        editText = (EditText)view.findViewById(R.id.categoryEditText);
+        checkBox = (CheckBox)view.findViewById(R.id.categoryPrioCheckBox);
         Button saveBtn = (Button)view.findViewById(R.id.categorySaveButton);
         Button cancelBtn = (Button)view.findViewById(R.id.categoryCancelButton);
+
+        getDialog().setTitle(R.string.category_dialog_header2);
+        initHeigth = getDialog().getWindow().getAttributes().height;
+        getDialog().getWindow().setLayout(initWidth, initHeigth);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (editText.getText().length() == 0)
-                    showNameErrorText(view, true);
+                if (editText.getText().length() == 0) {
+                    showNameErrorText();
+                }
+                else if (isCategoryExists(editText.getText().toString())) {
+                    showCategoryExistsErrorText();
+                }
                 else {
-                    showNameErrorText(view, false);
+                    saveCategory(editText.getText().toString(), checkBox.isChecked());
                     closeDialog();
                 }
             }
@@ -66,28 +75,21 @@ public class CategoryNewDialog extends DialogFragment {
         this.dismiss();
     }
 
-    private void saveCategory(String oldName, String newName, boolean prio) {
-
+    private void saveCategory(String name, boolean prio) {
+        ((CategoryActivity)getActivity()).addCategory(name, prio);
     }
 
-    private void deleteCategory(String categoryName) {
-        ((CategoryActivity)getActivity()).deleteCategory(categoryName);
+    private boolean isCategoryExists(String name) {
+        return ((CategoryActivity)getActivity()).isCategoryExists(name);
     }
 
-    private void showNameErrorText(View view, boolean show) {
-        TextView errorText = (TextView)view.findViewById(R.id.errorTextView);
-        //int tvHeihgt = errorText.getHeight();
-        int mHeight = ((LinearLayout.LayoutParams)errorText.getLayoutParams()).topMargin;
-        int tvHeihgt = ((LinearLayout.LayoutParams)errorText.getLayoutParams()).height;
-
+    private void showNameErrorText() {
         errorText.setText(R.string.category_dialog_error_name_text);
-        if (show) {
-            getDialog().getWindow().setLayout(initWidth, initHeigh + tvHeihgt + mHeight);
-            errorText.setVisibility(View.VISIBLE);
-        }
-        else {
-            getDialog().getWindow().setLayout(initWidth, initHeigh);
-            errorText.setVisibility(View.GONE);
-        }
+        errorText.setVisibility(View.VISIBLE);
+    }
+
+    private void showCategoryExistsErrorText() {
+        errorText.setText(R.string.category_dialog_error_exists_text);
+        errorText.setVisibility(View.VISIBLE);
     }
 }

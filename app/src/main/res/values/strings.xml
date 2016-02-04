@@ -42,4 +42,9 @@
 
     <string name="category_dialog_error_name_text">Название категории не может быть пустым.</string>
     <string name="category_dialog_error_exists_text">Категория с таким названием уже существует.</string>
+    <string name="category_dialog_item_added">Категория добавлена</string>
+    <string name="category_dialog_item_deleted">Категория удалена</string>
+    <string name="category_dialog_item_saved">Категория сохранена</string>
+
+    <string name="debug_error_category_exists">Ошибка добавления категории: категория с таким именем уже существует в DataManager</string>
 </resources>

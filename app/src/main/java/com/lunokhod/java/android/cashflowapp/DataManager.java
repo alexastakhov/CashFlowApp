@@ -10,7 +10,7 @@ import java.util.ArrayList;
  * Created by alex on 06.01.2016.
  */
 public class DataManager {
-    private static DataManager lastDataManager = null;
+    private static DataManager instance = null;
 
     private static final String DATABASE_NAME = "cashflow.sqlite.db";
     private static final int DATABASE_VERSION = 1;
@@ -34,17 +34,17 @@ public class DataManager {
     @SuppressWarnings("unused")
     private static final String TAG = "DataManager";
 
-    public DataManager() {
+    private DataManager() {
         categories = new ArrayList<CategoryItem>();
         //p_categories = new ArrayList<CategoryItem>();
-
-        lastDataManager = this;
 
         testCategoryListView();
     }
 
     public static DataManager getInstance() {
-        return lastDataManager;
+        if (instance == null)
+            instance = new DataManager();
+        return instance;
     }
 
     public int getCategoryCount() {
@@ -65,7 +65,7 @@ public class DataManager {
         return result;
     }
 
-    public void insertCategory(String category, boolean pri) {
+    public void addCategory(String category, boolean pri) {
         for (int i = 0; i < categories.size(); i++)
             if (categories.get(i).getName() == category) return;
 
