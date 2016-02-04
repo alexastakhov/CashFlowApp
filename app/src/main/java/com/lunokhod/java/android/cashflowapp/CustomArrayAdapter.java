@@ -6,6 +6,7 @@ package com.lunokhod.java.android.cashflowapp;
 
 import android.content.Context;
 import android.graphics.Color;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
@@ -43,6 +44,11 @@ public class CustomArrayAdapter extends ArrayAdapter {
         if (convertView == null)
             convertView = View.inflate(context, resource, null);
 
+        if (selected)
+            Log.i(TAG, "selected == true");
+        else
+            Log.i(TAG, "selected == false");
+
         if (selected) {
             TextView textView = (TextView) convertView;
             textView.setText((String)getItem(position));
@@ -53,6 +59,11 @@ public class CustomArrayAdapter extends ArrayAdapter {
 
     public void setSelected(boolean selected) {
         this.selected = selected;
+
+        if (selected)
+            Log.i(TAG, "setSelected(true)");
+        else
+            Log.i(TAG, "setSelected(false)");
     }
 
     public void setSelectedColor(int color) {

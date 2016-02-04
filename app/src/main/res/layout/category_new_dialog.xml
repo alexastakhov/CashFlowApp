@@ -52,7 +52,9 @@
             android:layout_weight="1"
             android:textAllCaps="false"
             android:background="@drawable/cat_dialog_btn"
-            android:textSize="16sp" />
+            android:textSize="16sp"
+            android:textColor="@color/categoryDialogButtonTextColor"
+            android:layout_marginTop="1sp" />
 
         <Button
             android:layout_width="match_parent"
@@ -62,7 +64,9 @@
             android:layout_weight="1"
             android:background="@drawable/cat_dialog_btn"
             android:textAllCaps="false"
-            android:layout_marginLeft="2sp"
-            android:textSize="16sp" />
+            android:layout_marginLeft="1sp"
+            android:textSize="16sp"
+            android:textColor="@color/categoryDialogButtonTextColor"
+            android:layout_marginTop="1sp" />
     </LinearLayout>
 </LinearLayout>

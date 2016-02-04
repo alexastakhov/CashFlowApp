@@ -69,6 +69,7 @@ public class MainActivity extends AppCompatActivity {
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
+                Log.i(TAG, "OnItemSelectedListener");
                 spinnerAdapter.setSelected(true);
             }
 
@@ -190,6 +191,8 @@ public class MainActivity extends AppCompatActivity {
 
     private void updateSpinnerData() {
         String[] array = dataManager.getCategoriesAsStrings();
+
+        Log.i(TAG, "updateSpinnerData()");
 
         spinnerList.clear();
 
