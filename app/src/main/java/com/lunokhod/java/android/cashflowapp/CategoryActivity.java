@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -28,11 +29,11 @@ public class CategoryActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        categoryListViewAdapter = new CategoryListViewAdapter(this.getApplicationContext(), DataManager.getInstance().getCategories());
+        dataManager = DataManager.getInstance();
+
+        categoryListViewAdapter = new CategoryListViewAdapter(this.getApplicationContext(), dataManager.getCategoriesSortedByName());
         categoryListView = (ListView) findViewById(R.id.categoryListView);
         categoryListView.setAdapter(categoryListViewAdapter);
-
-        dataManager = DataManager.getInstance();
 
         categoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
@@ -91,7 +92,7 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void updateListAdapter() {
-        categoryListViewAdapter.setDataObjects(DataManager.getInstance().getCategories());
+        categoryListViewAdapter.setDataObjects(dataManager.getCategoriesSortedByName());
     }
 
     public boolean isCategoryExists(String name) {

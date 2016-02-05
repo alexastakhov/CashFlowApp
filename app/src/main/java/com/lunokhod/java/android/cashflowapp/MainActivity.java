@@ -9,7 +9,6 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
-import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -19,10 +18,10 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
-
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Collections;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -46,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
+        DataManager.setContext(getApplicationContext());
         dataManager = DataManager.getInstance();
         spinnerList = new ArrayList<String>(Arrays.asList(dataManager.getCategoriesAsStrings()));
 
@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity {
         categorySpinner.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
-                Log.i(TAG, "OnItemSelectedListener");
                 spinnerAdapter.setSelected(true);
             }
 
@@ -127,6 +126,11 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestart() {
         super.onRestart();
+    }
+
+    @Override
+    protected void onPostResume() {
+        super.onPostResume();
     }
 
     @Override
@@ -192,14 +196,15 @@ public class MainActivity extends AppCompatActivity {
     private void updateSpinnerData() {
         String[] array = dataManager.getCategoriesAsStrings();
 
-        Log.i(TAG, "updateSpinnerData()");
-
         spinnerList.clear();
 
         for (int i = 0; i < array.length; i++)
             spinnerList.add(array[i]);
 
+        Collections.sort(spinnerList);
+
         spinnerAdapter.setSelected(false);
+        spinnerAdapter.setNextSwitched();
         categorySpinner.setSelection(0);
     }
 
