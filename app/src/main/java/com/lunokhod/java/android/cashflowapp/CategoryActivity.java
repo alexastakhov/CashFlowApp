@@ -14,10 +14,9 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 public class CategoryActivity extends AppCompatActivity {
-
     private CategoryListViewAdapter categoryListViewAdapter;
     private ListView categoryListView;
-    private DataManager dataManager;
+    private DataManagerInterface dataManager;
 
     @SuppressWarnings("unused")
     private static final String TAG = "CategoryActivity";

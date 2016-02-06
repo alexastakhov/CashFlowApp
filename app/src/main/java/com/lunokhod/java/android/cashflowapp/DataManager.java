@@ -14,33 +14,98 @@ import java.util.List;
 /**
  * Created by alex on 06.01.2016.
  */
-public class DataManager {
+public class DataManager extends SQLiteOpenHelper implements DataManagerInterface {
+    private static final String DATABASE_NAME = "cashflow.sqlite.db";
+    private static final int DATABASE_VERSION = 1;
+    private static final String CATEGORY_TABLE = "category";
+    private static final String RECORD_TABLE = "record";
+
+    private static final String CATEGORY_COLUMN = "name";
+    private static final String CATEGORY_GROUP_COLUMN = "group_name";
+    private static final String PPIORITY_COLUMN = "priority";
+
+    private static final String AMOUNT_COLUMN = "amount";
+    private static final String DATETIME_COLUMN = "datetime";
+    private static final String COMMENT_COLUMN = "comment";
+    private static final String ACCOUNT_COLUMN = "account";
+    private static final String DEBET_COLUMN = "debet";
+    private static final String REC_CATEGORY_COLUMN = "category";
+
+    private SQLiteDatabase database;
 
     private static DataManager instance = null;
-    private DBHelper dbHelper;
-    private static Context appContext;
     private ArrayList<CategoryItem> categories;
-    //private ArrayList<CategoryItem> p_categories;
 
     @SuppressWarnings("unused")
     private static final String TAG = "DataManager";
 
-    private DataManager() {
+    public DataManager(Context context) {
+        super(context, DATABASE_NAME, null, DATABASE_VERSION);
         categories = new ArrayList<CategoryItem>();
-        dbHelper = new DBHelper(appContext);
-        //p_categories = new ArrayList<CategoryItem>();
+        instance = this;
 
         testCategoryListView();
     }
 
     public static DataManager getInstance() {
-        if (instance == null)
-            instance = new DataManager();
         return instance;
     }
 
-    public static void setContext(Context context) {
-        appContext = context;
+    @Override
+    public void onCreate(SQLiteDatabase db) {
+        if (iskDataBaseAvailable()) {
+            try {
+                openDatabase();
+            } catch (SQLException e) {
+            }
+        } else {
+            createTables(db);
+        }
+    }
+
+    @Override
+    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldv, int newv) {
+        //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + VIDEO_TABLE_NAME + ";");
+        //createTable(sqLiteDatabase);
+    }
+
+    private boolean iskDataBaseAvailable() {
+        SQLiteDatabase db = null;
+
+        try {
+            db = SQLiteDatabase.openDatabase(DATABASE_NAME, null, SQLiteDatabase.OPEN_READONLY);
+        } catch (SQLiteException e) {
+            //
+        }
+
+        if (db != null) {
+            db.close();
+        }
+
+        return db != null ? true : false;
+    }
+
+    private void openDatabase() throws SQLException {
+        database = SQLiteDatabase.openDatabase(DATABASE_NAME, null, SQLiteDatabase.OPEN_READWRITE);
+    }
+
+    private void createTables(SQLiteDatabase database) {
+        String qs = "CREATE TABLE " + CATEGORY_TABLE + " (" +
+                BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                CATEGORY_COLUMN + " TEXT, " +
+                CATEGORY_GROUP_COLUMN + " TEXT, " +
+                PPIORITY_COLUMN + " INTEGER);";
+        database.execSQL(qs);
+
+        qs = "CREATE TABLE " + RECORD_TABLE + " (" +
+                BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
+                AMOUNT_COLUMN + " REAL, " +
+                DATETIME_COLUMN + " TEXT, " +
+                COMMENT_COLUMN + " TEXT, " +
+                ACCOUNT_COLUMN + " INTEGER, " +
+                DEBET_COLUMN + " INTEGER, " +
+                REC_CATEGORY_COLUMN + " INTEGER);";
+        database.execSQL(qs);
     }
 
     public CategoryItem[] getCategories() {
@@ -73,11 +138,11 @@ public class DataManager {
         return result;
     }
 
-    public void addCategory(String category, boolean pri) {
+    public void addCategory(String category, boolean prio) {
         for (int i = 0; i < categories.size(); i++)
             if (categories.get(i).getName() == category) return;
 
-        categories.add(new CategoryItem(category, pri));
+        categories.add(new CategoryItem(category, prio));
     }
 
     public void deleteCategory(String category) {
@@ -86,10 +151,6 @@ public class DataManager {
                 categories.remove(i);
                 return;
             }
-    }
-
-    public void clearCategory() {
-        categories.clear();
     }
 
     private void fillInCategoryTable() {
@@ -112,91 +173,4 @@ public class DataManager {
         categories.add(new CategoryItem("Тринадцатая", true));
         categories.add(new CategoryItem("Четырнадцатая", true));
     }
-
-
-    private static class DBHelper extends SQLiteOpenHelper {
-
-        private static final String DATABASE_NAME = "cashflow.sqlite.db";
-        private static final int DATABASE_VERSION = 1;
-        private static final String CATEGORY_TABLE = "category";
-        private static final String RECORD_TABLE = "record";
-
-        private static final String CATEGORY_COLUMN = "name";
-        private static final String CATEGORY_GROUP_COLUMN = "group_name";
-        private static final String PPIORITY_COLUMN = "priority";
-
-        private static final String AMOUNT_COLUMN = "amount";
-        private static final String DATETIME_COLUMN = "datetime";
-        private static final String COMMENT_COLUMN = "comment";
-        private static final String ACCOUNT_COLUMN = "account";
-        private static final String DEBET_COLUMN = "debet";
-        private static final String REC_CATEGORY_COLUMN = "category";
-
-        private SQLiteDatabase database;
-
-        DBHelper(Context context) {
-            super(context, DATABASE_NAME, null, DATABASE_VERSION);
-        }
-
-        @Override
-        public void onCreate(SQLiteDatabase db) {
-            if (iskDataBaseAvailable()) {
-                try {
-                    openDatabase();
-                }
-                catch (SQLException e) { }
-            }
-            else {
-                createTables(db);
-            }
-        }
-
-        @Override
-        public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldv, int newv)
-        {
-            //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + VIDEO_TABLE_NAME + ";");
-            //createTable(sqLiteDatabase);
-        }
-
-        private boolean iskDataBaseAvailable(){
-            SQLiteDatabase db = null;
-
-            try {
-                db = SQLiteDatabase.openDatabase(DATABASE_NAME, null, SQLiteDatabase.OPEN_READONLY);
-            }
-            catch (SQLiteException e) {
-                //
-            }
-
-            if (db != null) {
-                db.close();
-            }
-
-            return db != null ? true : false;
-        }
-
-        private void openDatabase() throws SQLException {
-            database = SQLiteDatabase.openDatabase(DATABASE_NAME, null, SQLiteDatabase.OPEN_READWRITE);
-        }
-
-        private void createTables(SQLiteDatabase database) {
-            String qs = "CREATE TABLE " + CATEGORY_TABLE + " (" +
-                    BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    CATEGORY_COLUMN + " TEXT, " +
-                    CATEGORY_GROUP_COLUMN + " TEXT, " +
-                    PPIORITY_COLUMN + " INTEGER);";
-            database.execSQL(qs);
-
-            qs = "CREATE TABLE " + RECORD_TABLE + " (" +
-                    BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    AMOUNT_COLUMN + " REAL, " +
-                    DATETIME_COLUMN + " TEXT, " +
-                    COMMENT_COLUMN + " TEXT, " +
-                    ACCOUNT_COLUMN + " INTEGER, " +
-                    DEBET_COLUMN + " INTEGER, " +
-                    REC_CATEGORY_COLUMN + " INTEGER);";
-            database.execSQL(qs);
-        }
-    }
 }
-

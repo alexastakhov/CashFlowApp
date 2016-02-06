@@ -10,6 +10,7 @@
         android:id="@+id/categoryEditText"
         android:layout_gravity="center_horizontal"
         android:singleLine="true"
+        android:inputType="textCapSentences"
         android:layout_marginTop="20sp"
         android:layout_marginRight="15sp"
         android:layout_marginLeft="15sp" />

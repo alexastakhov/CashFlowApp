@@ -24,10 +24,10 @@
         android:numeric="signed|decimal"
         android:singleLine="true"
         android:textSize="45sp"
-        android:textColor="#010150"
+        android:textColor="#b90003"
         android:gravity="center"
         android:textCursorDrawable="@drawable/amount_edit_cursor"
-        android:layout_marginTop="10dp"
+        android:layout_marginTop="5dp"
         android:maxLength="12" />
 
     <LinearLayout
@@ -82,7 +82,7 @@
         android:background="@drawable/descr_text_style"
         android:gravity="top|left"
         android:maxLines="3"
-        android:maxLength="128"
+        android:maxLength="96"
         android:hint="@string/comment_textview_hint"
         android:textSize="18sp"
         android:padding="8dp"

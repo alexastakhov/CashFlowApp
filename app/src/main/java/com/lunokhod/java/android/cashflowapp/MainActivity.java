@@ -9,6 +9,7 @@ import android.support.design.widget.Snackbar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -32,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Calendar selectedDate;
     private EditText dateEditText;
     private EditText amountEditText;
-    private DataManager dataManager;
+    private DataManagerInterface dataManager;
     private ArrayList<String> spinnerList;
 
     @SuppressWarnings("unused")
@@ -45,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        DataManager.setContext(getApplicationContext());
-        dataManager = DataManager.getInstance();
+        dataManager = new DataManager(getApplicationContext());
         spinnerList = new ArrayList<String>(Arrays.asList(dataManager.getCategoriesAsStrings()));
 
         ActionBar actionBar = getSupportActionBar();
@@ -70,6 +70,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerAdapter.setSelected(true);
+                Log.i(TAG, "onItemSelected()");
             }
 
             @Override
@@ -168,10 +169,6 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public DataManager getDataManager() {
-        return dataManager;
     }
 
     private void setDateFromPicker() {
