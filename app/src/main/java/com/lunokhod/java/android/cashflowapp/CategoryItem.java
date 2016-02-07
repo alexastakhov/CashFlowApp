@@ -17,7 +17,7 @@ public class CategoryItem {
         this.priority = false;
     }
 
-    public CategoryItem(String groupName, String name, boolean priority) {
+    public CategoryItem(String name, String groupName, boolean priority) {
         this.name = name;
         this.groupName = groupName;
         this.priority = priority;

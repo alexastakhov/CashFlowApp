@@ -47,6 +47,7 @@ public class DataManager extends SQLiteOpenHelper implements DataManagerInterfac
         this.context = context;
         instance = this;
 
+        //fillInCategoryTable();
         readData();
 
         Log.i(TAG, "DataManager()");
@@ -122,10 +123,20 @@ public class DataManager extends SQLiteOpenHelper implements DataManagerInterfac
         Cursor cursor;
         String sql = "SELECT * FROM " + CATEGORY_TABLE;
 
+        Log.i(TAG, "readData()");
+
         if (isDataBaseAvailable()) {
             database = this.getWritableDatabase();
             cursor = database.rawQuery(sql, null);
-            Log.i(TAG, "readData()");
+
+            if (cursor.moveToFirst()) {
+                Log.i(TAG, "readData() cursor.getCount() == " + cursor.getCount());
+
+                do {
+                    categories.add(new CategoryItem(cursor.getString(1),
+                            (cursor.getInt(3) == 1 ? true : false)));
+                } while (cursor.moveToNext());
+            }
         }
     }
 
@@ -186,9 +197,11 @@ public class DataManager extends SQLiteOpenHelper implements DataManagerInterfac
     private void fillInCategoryTable() {
         testCategoryListView();
 
-        if (database != null) {
-            try {
-                //database.execSQL("DELETE FROM " + CATEGORY_TABLE);
+        try {
+            database = this.getWritableDatabase();
+
+            if (database != null) {
+                database.execSQL("DELETE FROM " + CATEGORY_TABLE);
 
                 for (CategoryItem item : tmp_categories) {
                     String sql = "INSERT INTO " + CATEGORY_TABLE + "(_id, " + CATEGORY_COLUMN +
@@ -197,9 +210,8 @@ public class DataManager extends SQLiteOpenHelper implements DataManagerInterfac
                     database.execSQL(sql, bindArgs);
                 }
             }
-            catch (android.database.SQLException e) {
-                Log.i(TAG, "DataManager->fillInCategoryTable() Exception: " + e.getMessage());
-            }
+        } catch (android.database.SQLException e) {
+            Log.i(TAG, "DataManager->fillInCategoryTable() Exception: " + e.getMessage());
         }
     }
 
