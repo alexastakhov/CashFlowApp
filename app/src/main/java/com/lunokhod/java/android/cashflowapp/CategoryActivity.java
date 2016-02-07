@@ -25,13 +25,13 @@ public class CategoryActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_category);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         dataManager = DataManager.getInstance();
 
         categoryListViewAdapter = new CategoryListViewAdapter(this.getApplicationContext(), dataManager.getCategoriesSortedByName());
-        categoryListView = (ListView) findViewById(R.id.categoryListView);
+        categoryListView = (ListView)findViewById(R.id.categoryListView);
         categoryListView.setAdapter(categoryListViewAdapter);
 
         categoryListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
@@ -43,12 +43,12 @@ public class CategoryActivity extends AppCompatActivity {
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
-            actionBar.setTitle("Категории");
+            actionBar.setTitle(R.string.action_categories);
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
         fab.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

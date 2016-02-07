@@ -9,4 +9,5 @@ public interface DataManagerInterface {
     String[] getCategoriesAsStrings();
     void addCategory(String category, boolean prio);
     void deleteCategory(String category);
+    void dropDataBase();
 }

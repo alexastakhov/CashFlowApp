@@ -43,10 +43,11 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         dataManager = new DataManager(getApplicationContext());
+
         spinnerList = new ArrayList<String>(Arrays.asList(dataManager.getCategoriesAsStrings()));
 
         ActionBar actionBar = getSupportActionBar();
@@ -153,6 +154,8 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent();
 
         if (id == R.id.action_settings) {
+            intent.setClass(getApplicationContext(), SettingsActivity.class);
+            startActivity(intent);
             return true;
         }
 
