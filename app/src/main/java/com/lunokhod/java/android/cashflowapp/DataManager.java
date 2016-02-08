@@ -96,7 +96,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
             database.execSQL(sql);
         }
         catch (android.database.SQLException e) {
-            Log.i(TAG, "DataManager->createTables() Exception: " + e.getMessage());
+            Log.i(TAG, "createTables() Exception: " + e.getMessage());
         }
 
         try {
@@ -111,7 +111,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
             database.execSQL(sql);
         }
         catch (android.database.SQLException e) {
-            Log.i(TAG, "DataManager->createTables() Exception: " + e.getMessage());
+            Log.i(TAG, "createTables() Exception: " + e.getMessage());
         }
     }
 
@@ -125,12 +125,13 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         ArrayList<CategoryItem> result = new ArrayList<CategoryItem>();
 
         Log.i(TAG, "readCategoryData()");
+        Log.i(TAG, sql);
 
         if (isDataBaseAvailable()) {
             database = this.getWritableDatabase();
             cursor = database.rawQuery(sql, null);
 
-            Log.i(TAG, "readData() cursor.getCount() == " + cursor.getCount());
+            Log.i(TAG, "readCategoryData() cursor.getCount() == " + cursor.getCount());
             if (cursor.moveToFirst()) {
                 do {
                     result.add(new CategoryItem(cursor.getString(1),
@@ -180,26 +181,27 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     }
 
     public void addCategory(String category, boolean prio) {
-        ArrayList<CategoryItem> categories = readCategoryData();
+        String sql = "INSERT OR IGNORE INTO " + CATEGORY_TABLE + " (" + CATEGORY_COLUMN +
+                ", " + PPIORITY_COLUMN + ") VALUES (?, ?);";
+        Object[] bindArgs = new Object[]{category, (prio ? 1 : 0)};
+        SQLiteDatabase database = this.getWritableDatabase();
 
-        Log.i(TAG, "addCategory()");
+        Log.i(TAG, "addCategory(" + category + ", " + prio + ")");
+        Log.i(TAG, sql);
 
-        for (int i = 0; i < categories.size(); i++)
-            if (categories.get(i).getName() == category) return;
-
-        categories.add(new CategoryItem(category, prio));
+        database.execSQL(sql, bindArgs);
+        database.close();
     }
 
     public void deleteCategory(String category) {
-        ArrayList<CategoryItem> categories = readCategoryData();
+        String sql = "DELETE FROM " + CATEGORY_TABLE + " WHERE " + CATEGORY_COLUMN + "=\"" + category + "\";";
+        SQLiteDatabase database = this.getWritableDatabase();
 
-        Log.i(TAG, "deleteCategory()");
+        Log.i(TAG, "deleteCategory(" + category + ")");
+        Log.i(TAG, sql);
 
-        for (int i = 0; i < categories.size(); i++)
-            if (categories.get(i).getName() == category) {
-                categories.remove(i);
-                return;
-            }
+        database.execSQL(sql);
+        database.close();
     }
 
     public void changeCategory(String oldName, String newName, boolean prio) {
@@ -219,7 +221,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     }
 
     public void dropDataBase() {
-        SQLiteDatabase database = this.getWritableDatabase();
+        SQLiteDatabase database = this.getReadableDatabase();
 
         if (database != null) {
             Log.i(TAG, "dropDataBase()");
@@ -244,6 +246,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
                             ", " + CATEGORY_GROUP_COLUMN + ", " + PPIORITY_COLUMN + ") VALUES (NULL, ?, ?, ?)";
                     Object[] bindArgs = new Object[]{item.getName(), "", (item.getPriority() ? 1 : 0)};
                     database.execSQL(sql, bindArgs);
+                    Log.i(TAG, sql);
                 }
             }
             database.close();

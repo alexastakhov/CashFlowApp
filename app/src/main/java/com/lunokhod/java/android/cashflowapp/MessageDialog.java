@@ -33,14 +33,13 @@ public class MessageDialog extends DialogFragment {
 
         builder.setTitle(title);
         builder.setMessage(message);
-        builder.setPositiveButton("Отменить", new DialogInterface.OnClickListener() {
+        builder.setPositiveButton("Закрыть", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 close();
             }
         });
 
         return builder.create();
-
     }
 
     @Nullable
