@@ -16,7 +16,7 @@ import android.widget.Toast;
 public class CategoryActivity extends AppCompatActivity {
     private CategoryListViewAdapter categoryListViewAdapter;
     private ListView categoryListView;
-    private DataManagerInterface dataManager;
+    private IDataManager dataManager;
 
     @SuppressWarnings("unused")
     private static final String TAG = "CategoryActivity";
@@ -102,9 +102,7 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     public void changeCategory(String oldName, String newName, boolean prio) {
-        if (isCategoryExists(oldName))
-            dataManager.deleteCategory(oldName);
-        dataManager.addCategory(newName, prio);
+        dataManager.changeCategory(oldName, newName, prio);
         updateListAdapter();
         Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_saved, Toast.LENGTH_SHORT).show();
     }

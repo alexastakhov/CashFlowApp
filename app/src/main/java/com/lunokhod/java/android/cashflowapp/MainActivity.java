@@ -33,7 +33,7 @@ public class MainActivity extends AppCompatActivity {
     private Calendar selectedDate;
     private EditText dateEditText;
     private EditText amountEditText;
-    private DataManagerInterface dataManager;
+    private IDataManager dataManager;
     private ArrayList<String> spinnerList;
 
     @SuppressWarnings("unused")

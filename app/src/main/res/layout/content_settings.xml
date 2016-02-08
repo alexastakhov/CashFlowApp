@@ -20,4 +20,12 @@
         android:id="@+id/dropDataBaseButton"
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20sp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Fill Database"
+        android:id="@+id/fillDataBaseButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25sp" />
 </LinearLayout>

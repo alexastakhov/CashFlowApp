@@ -18,7 +18,7 @@ public class CategoryEditDialog extends DialogFragment {
 
     private int initHeigth;
     private int initWidth = 350;
-    private String category;
+    private String categoryName;
     private boolean priority;
     private View view;
     private TextView errorText;
@@ -42,7 +42,7 @@ public class CategoryEditDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        category = getArguments().getString("cat");
+        categoryName = getArguments().getString("cat");
         priority = getArguments().getBoolean("pri");
     }
 
@@ -72,11 +72,11 @@ public class CategoryEditDialog extends DialogFragment {
                 if (editText.getText().length() == 0) {
                     showNameErrorText();
                 }
-                else if (!category.equals(text) && isCategoryExists(text)) {
+                else if (!categoryName.equals(text) && isCategoryExists(text)) {
                     showCategoryExistsErrorText();
                 }
                 else {
-                    saveCategory(category, text, checkBox.isChecked());
+                    saveCategory(categoryName, text, checkBox.isChecked());
                     closeDialog();
                 }
             }
@@ -92,12 +92,12 @@ public class CategoryEditDialog extends DialogFragment {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteCategory(category);
+                deleteCategory(categoryName);
                 closeDialog();
             }
         });
 
-        editText.setText(category);
+        editText.setText(categoryName);
         checkBox.setChecked(priority);
 
         return view;

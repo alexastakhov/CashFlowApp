@@ -1,8 +1,6 @@
 package com.lunokhod.java.android.cashflowapp;
 
 import android.os.Bundle;
-import android.support.design.widget.FloatingActionButton;
-import android.support.design.widget.Snackbar;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -31,6 +29,14 @@ public class SettingsActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 DataManager.getInstance().dropDataBase();
+            }
+        });
+
+        Button fillDataBaseButton = (Button)findViewById(R.id.fillDataBaseButton);
+        fillDataBaseButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataManager.getInstance().fillInCategoryTable();
             }
         });
     }

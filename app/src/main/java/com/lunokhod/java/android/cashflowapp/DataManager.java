@@ -16,7 +16,7 @@ import java.util.List;
 /**
  * Created by alex on 06.01.2016.
  */
-public class DataManager extends SQLiteOpenHelper implements DataManagerInterface {
+public class DataManager extends SQLiteOpenHelper implements IDataManager {
     private static final String DATABASE_NAME = "cashflow.sqlite.db";
     private static final int DATABASE_VERSION = 1;
     private static final String CATEGORY_TABLE = "category";
@@ -33,10 +33,8 @@ public class DataManager extends SQLiteOpenHelper implements DataManagerInterfac
     private static final String DEBET_COLUMN = "debet";
     private static final String REC_CATEGORY_COLUMN = "category";
 
-    private SQLiteDatabase database;
     private static DataManager instance = null;
     private Context context;
-    private ArrayList<CategoryItem> categories = new ArrayList<CategoryItem>();
     private ArrayList<CategoryItem> tmp_categories = new ArrayList<CategoryItem>();
 
     @SuppressWarnings("unused")
@@ -47,9 +45,6 @@ public class DataManager extends SQLiteOpenHelper implements DataManagerInterfac
         this.context = context;
         instance = this;
 
-        //fillInCategoryTable();
-        readData();
-
         Log.i(TAG, "DataManager()");
     }
 
@@ -59,29 +54,30 @@ public class DataManager extends SQLiteOpenHelper implements DataManagerInterfac
 
     @Override
     public void onCreate(SQLiteDatabase db) {
-        Log.i(TAG, "SQLiteOpenHelper->onCreate()");
+        Log.i(TAG, "onCreate()");
 
         createTables(db);
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldv, int newv) {
-        //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + VIDEO_TABLE_NAME + ";");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CATEGORY_TABLE + ";");
+        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + RECORD_TABLE + ";");
         //createTable(sqLiteDatabase);
     }
 
     public boolean isDataBaseAvailable() {
-        database = null;
+        SQLiteDatabase database = null;
 
         try {
             database = this.getReadableDatabase();
         } catch (SQLiteException e) {
-            Log.i(TAG, "DataManager->iskDataBaseAvailable() : Not available");
-            Log.i(TAG, "DataManager->iskDataBaseAvailable() Exception: " + e.getMessage());
+            Log.i(TAG, "iskDataBaseAvailable() : Not available");
+            Log.i(TAG, "iskDataBaseAvailable() Exception: " + e.getMessage());
         }
 
         if (database != null) {
-            Log.i(TAG, "DataManager->iskDataBaseAvailable() : Available");
+            Log.i(TAG, "iskDataBaseAvailable() : Available");
             database.close();
         }
 
@@ -119,33 +115,43 @@ public class DataManager extends SQLiteOpenHelper implements DataManagerInterfac
         }
     }
 
-    private void readData() {
+    /**
+     * @return ArrayList<CategoryItem>
+     */
+    private ArrayList<CategoryItem> readCategoryData() {
         Cursor cursor;
         String sql = "SELECT * FROM " + CATEGORY_TABLE;
+        SQLiteDatabase database;
+        ArrayList<CategoryItem> result = new ArrayList<CategoryItem>();
 
-        Log.i(TAG, "readData()");
+        Log.i(TAG, "readCategoryData()");
 
         if (isDataBaseAvailable()) {
             database = this.getWritableDatabase();
             cursor = database.rawQuery(sql, null);
 
+            Log.i(TAG, "readData() cursor.getCount() == " + cursor.getCount());
             if (cursor.moveToFirst()) {
-                Log.i(TAG, "readData() cursor.getCount() == " + cursor.getCount());
-
                 do {
-                    categories.add(new CategoryItem(cursor.getString(1),
+                    result.add(new CategoryItem(cursor.getString(1),
                             (cursor.getInt(3) == 1 ? true : false)));
                 } while (cursor.moveToNext());
             }
+            database.close();
         }
+        return result;
     }
 
     public CategoryItem[] getCategories() {
+        ArrayList<CategoryItem> categories = readCategoryData();
         return categories.toArray(new CategoryItem[categories.size()]);
     }
 
     public CategoryItem[] getCategoriesSortedByName() {
         List<CategoryItem> result = new ArrayList<CategoryItem>();
+        ArrayList<CategoryItem> categories = readCategoryData();
+
+        Log.i(TAG, "getCategoriesSortedByName()");
 
         for (CategoryItem item : categories)
             result.add(item);
@@ -161,7 +167,10 @@ public class DataManager extends SQLiteOpenHelper implements DataManagerInterfac
     }
 
     public String[] getCategoriesAsStrings() {
+        ArrayList<CategoryItem> categories = readCategoryData();
         String[] result = new String[categories.size()];
+
+        Log.i(TAG, "getCategoriesAsStrings()");
 
         for (int i = 0; i < result.length; i++) {
             result[i] = categories.get(i).getName();
@@ -171,6 +180,10 @@ public class DataManager extends SQLiteOpenHelper implements DataManagerInterfac
     }
 
     public void addCategory(String category, boolean prio) {
+        ArrayList<CategoryItem> categories = readCategoryData();
+
+        Log.i(TAG, "addCategory()");
+
         for (int i = 0; i < categories.size(); i++)
             if (categories.get(i).getName() == category) return;
 
@@ -178,6 +191,10 @@ public class DataManager extends SQLiteOpenHelper implements DataManagerInterfac
     }
 
     public void deleteCategory(String category) {
+        ArrayList<CategoryItem> categories = readCategoryData();
+
+        Log.i(TAG, "deleteCategory()");
+
         for (int i = 0; i < categories.size(); i++)
             if (categories.get(i).getName() == category) {
                 categories.remove(i);
@@ -185,20 +202,39 @@ public class DataManager extends SQLiteOpenHelper implements DataManagerInterfac
             }
     }
 
-    public void dropDataBase() {
-        database = this.getWritableDatabase();
+    public void changeCategory(String oldName, String newName, boolean prio) {
+
+    }
+
+    public void clearDataBase() {
+        SQLiteDatabase database = this.getWritableDatabase();
 
         if (database != null) {
-            Log.i(TAG, "DataManager->dropDataBase()");
-            context.deleteDatabase(DATABASE_NAME);
+            Log.i(TAG, "clearDataBase()");
+
+            database.delete(CATEGORY_TABLE, null, null);
+            database.delete(RECORD_TABLE, null, null);
+            database.close();
         }
     }
 
-    private void fillInCategoryTable() {
+    public void dropDataBase() {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        if (database != null) {
+            Log.i(TAG, "dropDataBase()");
+            context.deleteDatabase(DATABASE_NAME);
+        }
+        database.close();
+    }
+
+    public void fillInCategoryTable() {
         testCategoryListView();
 
+        Log.i(TAG, "fillInCategoryTable()");
+
         try {
-            database = this.getWritableDatabase();
+            SQLiteDatabase database = this.getWritableDatabase();
 
             if (database != null) {
                 database.execSQL("DELETE FROM " + CATEGORY_TABLE);
@@ -210,8 +246,9 @@ public class DataManager extends SQLiteOpenHelper implements DataManagerInterfac
                     database.execSQL(sql, bindArgs);
                 }
             }
+            database.close();
         } catch (android.database.SQLException e) {
-            Log.i(TAG, "DataManager->fillInCategoryTable() Exception: " + e.getMessage());
+            Log.i(TAG, "fillInCategoryTable() Exception: " + e.getMessage());
         }
     }
 
