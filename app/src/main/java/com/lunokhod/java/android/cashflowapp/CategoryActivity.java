@@ -101,13 +101,13 @@ public class CategoryActivity extends AppCompatActivity {
         return false;
     }
 
-    public void changeCategory(String oldName, String newName, boolean prio) {
+    public void changeCategory(String oldName, String newName, int prio) {
         dataManager.changeCategory(oldName, newName, prio);
         updateListAdapter();
         Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_saved, Toast.LENGTH_SHORT).show();
     }
 
-    public void addCategory(String name, boolean prio) {
+    public void addCategory(String name, int prio) {
         if (!isCategoryExists(name)) {
             dataManager.addCategory(name, prio);
             updateListAdapter();

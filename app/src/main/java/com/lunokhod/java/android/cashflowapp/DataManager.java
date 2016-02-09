@@ -22,15 +22,17 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     private static final String CATEGORY_TABLE = "category";
     private static final String RECORD_TABLE = "record";
 
-    private static final String CATEGORY_COLUMN = "name";
-    private static final String CATEGORY_GROUP_COLUMN = "group_name";
-    private static final String PPIORITY_COLUMN = "priority";
+    private static final String NAME_COLUMN = "name";
+    private static final String GROUP_COLUMN = "group_name";
+    private static final String PRIORITY_COLUMN = "priority";
+    private static final String FULL_CATEGORY_ROW = BaseColumns._ID + "," +
+            NAME_COLUMN + "," + GROUP_COLUMN + "," + PRIORITY_COLUMN;
 
     private static final String AMOUNT_COLUMN = "amount";
     private static final String DATETIME_COLUMN = "datetime";
     private static final String COMMENT_COLUMN = "comment";
     private static final String ACCOUNT_COLUMN = "account";
-    private static final String DEBET_COLUMN = "debet";
+    private static final String CREDIT_COLUMN = "credit";
     private static final String REC_CATEGORY_COLUMN = "category";
 
     private static DataManager instance = null;
@@ -90,10 +92,11 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         try {
             sql = "CREATE TABLE " + CATEGORY_TABLE + " (" +
                     BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
-                    CATEGORY_COLUMN + " TEXT, " +
-                    CATEGORY_GROUP_COLUMN + " TEXT, " +
-                    PPIORITY_COLUMN + " INTEGER);";
+                    NAME_COLUMN + " TEXT, " +
+                    GROUP_COLUMN + " TEXT, " +
+                    PRIORITY_COLUMN + " INTEGER);";
             database.execSQL(sql);
+            Log.i(TAG, "SQLite : " + sql);
         }
         catch (android.database.SQLException e) {
             Log.i(TAG, "createTables() Exception: " + e.getMessage());
@@ -106,18 +109,16 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
                     DATETIME_COLUMN + " TEXT, " +
                     COMMENT_COLUMN + " TEXT, " +
                     ACCOUNT_COLUMN + " INTEGER, " +
-                    DEBET_COLUMN + " INTEGER, " +
+                    CREDIT_COLUMN + " INTEGER, " +
                     REC_CATEGORY_COLUMN + " INTEGER);";
             database.execSQL(sql);
+            Log.i(TAG, "SQLite : " + sql);
         }
         catch (android.database.SQLException e) {
             Log.i(TAG, "createTables() Exception: " + e.getMessage());
         }
     }
 
-    /**
-     * @return ArrayList<CategoryItem>
-     */
     private ArrayList<CategoryItem> readCategoryData() {
         Cursor cursor;
         String sql = "SELECT * FROM " + CATEGORY_TABLE;
@@ -125,7 +126,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         ArrayList<CategoryItem> result = new ArrayList<CategoryItem>();
 
         Log.i(TAG, "readCategoryData()");
-        Log.i(TAG, sql);
+        Log.i(TAG, "SQLite : " + sql);
 
         if (isDataBaseAvailable()) {
             database = this.getWritableDatabase();
@@ -134,8 +135,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
             Log.i(TAG, "readCategoryData() cursor.getCount() == " + cursor.getCount());
             if (cursor.moveToFirst()) {
                 do {
-                    result.add(new CategoryItem(cursor.getString(1),
-                            (cursor.getInt(3) == 1 ? true : false)));
+                    result.add(new CategoryItem(cursor.getString(1), cursor.getInt(3)));
                 } while (cursor.moveToNext());
             }
             database.close();
@@ -180,31 +180,88 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         return result;
     }
 
-    public void addCategory(String category, boolean prio) {
-        String sql = "INSERT OR IGNORE INTO " + CATEGORY_TABLE + " (" + CATEGORY_COLUMN +
-                ", " + PPIORITY_COLUMN + ") VALUES (?, ?);";
-        Object[] bindArgs = new Object[]{category, (prio ? 1 : 0)};
+    public CategoryItem getCategoryByName(String name) {
+        CategoryItem result = null;
+        SQLiteDatabase database = this.getReadableDatabase();
+        String sql = "SELECT * FROM" + CATEGORY_TABLE + " WHERE " + NAME_COLUMN + " = ?;";
+        String[] bindArgs = new String[]{name};
+        Cursor cursor;
+
+        cursor = database.rawQuery(sql, bindArgs);
+
+        if (cursor.getCount() == 0) {
+            result = new CategoryItem(
+                    cursor.getString(1),
+                    cursor.getString(2),
+                    cursor.getInt(3));
+        }
+
+        Log.i(TAG, "getCategoryByName(" + name + ")");
+        Log.i(TAG, "SQLite : " + sql);
+
+        return result;
+    }
+
+    public void addCategory(String category, int prio) {
+        String sql = "INSERT OR IGNORE INTO " + CATEGORY_TABLE + " (" + FULL_CATEGORY_ROW +
+                ") VALUES (NULL, ?, ?, ?);";
+        Object[] bindArgs = new Object[]{category, "", prio};
         SQLiteDatabase database = this.getWritableDatabase();
 
         Log.i(TAG, "addCategory(" + category + ", " + prio + ")");
-        Log.i(TAG, sql);
+        Log.i(TAG, "SQLite : " + sql);
 
         database.execSQL(sql, bindArgs);
         database.close();
     }
 
     public void deleteCategory(String category) {
-        String sql = "DELETE FROM " + CATEGORY_TABLE + " WHERE " + CATEGORY_COLUMN + "=\"" + category + "\";";
+        String sql = "DELETE FROM " + CATEGORY_TABLE + " WHERE " + NAME_COLUMN + "=\"" + category + "\";";
         SQLiteDatabase database = this.getWritableDatabase();
 
         Log.i(TAG, "deleteCategory(" + category + ")");
-        Log.i(TAG, sql);
+        Log.i(TAG, "SQLite : " + sql);
 
         database.execSQL(sql);
         database.close();
     }
 
-    public void changeCategory(String oldName, String newName, boolean prio) {
+    public void changeCategory(String oldName, String newName, int prio) {
+        String sql1 = "DELETE FROM " + CATEGORY_TABLE + " WHERE " + NAME_COLUMN + "=\"" + oldName + "\";";
+        String sql2 = "INSERT INTO " + CATEGORY_TABLE + " (" + FULL_CATEGORY_ROW + ") VALUES (NULL, ?, ?, ?);";
+        String sql3 = "UPDATE " + CATEGORY_TABLE + " SET " + GROUP_COLUMN + "=\"\"," + PRIORITY_COLUMN +
+                "= ? WHERE " + NAME_COLUMN + "= ?";
+
+        Object[] bindArgs = new Object[]{newName, "", prio};
+        Object[] bindArgs2 = new Object[]{prio, oldName};
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        Log.i(TAG, "changeCategory(" + oldName + ", " + newName + ", " + prio + ")");
+
+        if (oldName.equals(newName)) {
+            database.execSQL(sql3, bindArgs2);
+
+            Log.i(TAG, "SQLite : " + sql3);
+        }
+        else {
+            database.execSQL(sql1);
+            database.execSQL(sql2, bindArgs);
+
+            Log.i(TAG, "SQLite : " + sql1);
+            Log.i(TAG, "SQLite : " + sql2);
+        }
+        database.close();
+    }
+
+    public void addRecord() {
+
+    }
+
+    public void deleteRecord() {
+
+    }
+
+    public void changeRecord() {
 
     }
 
@@ -242,9 +299,9 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
                 database.execSQL("DELETE FROM " + CATEGORY_TABLE);
 
                 for (CategoryItem item : tmp_categories) {
-                    String sql = "INSERT INTO " + CATEGORY_TABLE + "(_id, " + CATEGORY_COLUMN +
-                            ", " + CATEGORY_GROUP_COLUMN + ", " + PPIORITY_COLUMN + ") VALUES (NULL, ?, ?, ?)";
-                    Object[] bindArgs = new Object[]{item.getName(), "", (item.getPriority() ? 1 : 0)};
+                    String sql = "INSERT INTO " + CATEGORY_TABLE + "(_id," + NAME_COLUMN +
+                            "," + GROUP_COLUMN + "," + PRIORITY_COLUMN + ") VALUES (NULL, ?, ?, ?)";
+                    Object[] bindArgs = new Object[]{item.getName(), "", item.getPriority()};
                     database.execSQL(sql, bindArgs);
                     Log.i(TAG, sql);
                 }
@@ -256,19 +313,19 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     }
 
     private void testCategoryListView() {
-        tmp_categories.add(new CategoryItem("Первая", false));
-        tmp_categories.add(new CategoryItem("Вторая", false));
-        tmp_categories.add(new CategoryItem("Третья", false));
-        tmp_categories.add(new CategoryItem("Четвертая", true));
-        tmp_categories.add(new CategoryItem("Пятая", false));
-        tmp_categories.add(new CategoryItem("Шестая", true));
-        tmp_categories.add(new CategoryItem("Седьмая", true));
-        tmp_categories.add(new CategoryItem("Восьмая", true));
-        tmp_categories.add(new CategoryItem("Девятая", false));
-        tmp_categories.add(new CategoryItem("Десятая", true));
-        tmp_categories.add(new CategoryItem("Одиннадцатая", false));
-        tmp_categories.add(new CategoryItem("Двенадцатая", true));
-        tmp_categories.add(new CategoryItem("Тринадцатая", true));
-        tmp_categories.add(new CategoryItem("Четырнадцатая", true));
+        tmp_categories.add(new CategoryItem("Первая", CategoryItem.LOW_PRIO));
+        tmp_categories.add(new CategoryItem("Вторая", CategoryItem.LOW_PRIO));
+        tmp_categories.add(new CategoryItem("Третья", CategoryItem.LOW_PRIO));
+        tmp_categories.add(new CategoryItem("Четвертая", CategoryItem.LOW_PRIO));
+        tmp_categories.add(new CategoryItem("Пятая", CategoryItem.LOW_PRIO));
+        tmp_categories.add(new CategoryItem("Шестая", CategoryItem.LOW_PRIO));
+        tmp_categories.add(new CategoryItem("Седьмая", CategoryItem.LOW_PRIO));
+        tmp_categories.add(new CategoryItem("Восьмая", CategoryItem.LOW_PRIO));
+        tmp_categories.add(new CategoryItem("Девятая", CategoryItem.LOW_PRIO));
+        tmp_categories.add(new CategoryItem("Десятая", CategoryItem.LOW_PRIO));
+        tmp_categories.add(new CategoryItem("Одиннадцатая", CategoryItem.LOW_PRIO));
+        tmp_categories.add(new CategoryItem("Двенадцатая", CategoryItem.LOW_PRIO));
+        tmp_categories.add(new CategoryItem("Тринадцатая", CategoryItem.LOW_PRIO));
+        tmp_categories.add(new CategoryItem("Четырнадцатая", CategoryItem.LOW_PRIO));
     }
 }

@@ -7,12 +7,16 @@ public interface IDataManager {
     CategoryItem[] getCategories();
     CategoryItem[] getCategoriesSortedByName();
     String[] getCategoriesAsStrings();
+    CategoryItem getCategoryByName(String name);
 
-    void addCategory(String category, boolean prio);
+    void addCategory(String category, int prio);
     void deleteCategory(String category);
-    void changeCategory(String oldName, String newName, boolean prio);
+    void changeCategory(String oldName, String newName, int prio);
+
+    void addRecord();
+    void deleteRecord();
+    void changeRecord();
 
     void dropDataBase();
-
     void fillInCategoryTable();
 }

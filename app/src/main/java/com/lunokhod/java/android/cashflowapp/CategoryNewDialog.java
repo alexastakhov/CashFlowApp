@@ -55,7 +55,7 @@ public class CategoryNewDialog extends DialogFragment {
                     showCategoryExistsErrorText();
                 }
                 else {
-                    saveCategory(editText.getText().toString(), checkBox.isChecked());
+                    saveCategory(editText.getText().toString(), (checkBox.isChecked() ? 1 : 0));
                     closeDialog();
                 }
             }
@@ -75,7 +75,7 @@ public class CategoryNewDialog extends DialogFragment {
         this.dismiss();
     }
 
-    private void saveCategory(String name, boolean prio) {
+    private void saveCategory(String name, int prio) {
         ((CategoryActivity)getActivity()).addCategory(name, prio);
     }
 

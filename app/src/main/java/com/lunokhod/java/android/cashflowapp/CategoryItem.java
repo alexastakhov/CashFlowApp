@@ -4,9 +4,12 @@ package com.lunokhod.java.android.cashflowapp;
  * Created by alex on 08.01.2016.
  */
 public class CategoryItem {
+    public static final int LOW_PRIO = 0;
+    public static final int HIGH_PRIO = 1;
+
     private String name;
     private String groupName;
-    private boolean priority;
+    private int priority;
 
     @SuppressWarnings("unused")
     private static final String TAG = "CategoryItem";
@@ -14,16 +17,16 @@ public class CategoryItem {
     public CategoryItem() {
         name = "";
         groupName = "";
-        this.priority = false;
+        this.priority = LOW_PRIO;
     }
 
-    public CategoryItem(String name, String groupName, boolean priority) {
+    public CategoryItem(String name, String groupName, int priority) {
         this.name = name;
         this.groupName = groupName;
         this.priority = priority;
     }
 
-    public CategoryItem(String name, boolean priority) {
+    public CategoryItem(String name, int priority) {
         this.name = name;
         this.groupName = "";
         this.priority = priority;
@@ -55,11 +58,11 @@ public class CategoryItem {
         }
     }
 
-    public void setPriority(boolean priority) {
-        priority = priority;
+    public void setPriority(int priority) {
+        this.priority = priority;
     }
 
-    public boolean getPriority() {
+    public int getPriority() {
         return priority;
     }
 }

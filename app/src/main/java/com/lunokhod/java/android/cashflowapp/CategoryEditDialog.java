@@ -19,7 +19,7 @@ public class CategoryEditDialog extends DialogFragment {
     private int initHeigth;
     private int initWidth = 350;
     private String categoryName;
-    private boolean priority;
+    private int priority;
     private View view;
     private TextView errorText;
     private EditText editText;
@@ -27,12 +27,12 @@ public class CategoryEditDialog extends DialogFragment {
 
     private static final String TAG = "CategoryEditDialog";
 
-    public static CategoryEditDialog getInstance(String category, boolean prio) {
+    public static CategoryEditDialog getInstance(String category, int prio) {
         CategoryEditDialog dialog = new CategoryEditDialog();
         Bundle args = new Bundle();
 
         args.putString("cat", category);
-        args.putBoolean("pri", prio);
+        args.putInt("pri", prio);
         dialog.setArguments(args);
 
         return dialog;
@@ -43,7 +43,7 @@ public class CategoryEditDialog extends DialogFragment {
         super.onCreate(savedInstanceState);
 
         categoryName = getArguments().getString("cat");
-        priority = getArguments().getBoolean("pri");
+        priority = getArguments().getInt("pri");
     }
 
     @Nullable
@@ -76,7 +76,7 @@ public class CategoryEditDialog extends DialogFragment {
                     showCategoryExistsErrorText();
                 }
                 else {
-                    saveCategory(categoryName, text, checkBox.isChecked());
+                    saveCategory(categoryName, text, (checkBox.isChecked() ? 1 : 0));
                     closeDialog();
                 }
             }
@@ -98,7 +98,7 @@ public class CategoryEditDialog extends DialogFragment {
         });
 
         editText.setText(categoryName);
-        checkBox.setChecked(priority);
+        checkBox.setChecked(priority == 1 ? true : false);
 
         return view;
     }
@@ -107,7 +107,7 @@ public class CategoryEditDialog extends DialogFragment {
         this.dismiss();
     }
 
-    private void saveCategory(String oldName, String newName, boolean prio) {
+    private void saveCategory(String oldName, String newName, int prio) {
         ((CategoryActivity)getActivity()).changeCategory(oldName, newName, prio);
     }
 
