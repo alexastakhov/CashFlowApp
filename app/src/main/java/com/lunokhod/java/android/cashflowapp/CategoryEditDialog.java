@@ -98,7 +98,7 @@ public class CategoryEditDialog extends DialogFragment {
         });
 
         editText.setText(categoryName);
-        checkBox.setChecked(priority == 1 ? true : false);
+        checkBox.setChecked(priority == 1);
 
         return view;
     }

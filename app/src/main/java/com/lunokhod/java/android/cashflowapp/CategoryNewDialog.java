@@ -26,9 +26,7 @@ public class CategoryNewDialog extends DialogFragment {
     private static final String TAG = "CategoryNewDialog";
 
     public static CategoryNewDialog getInstance() {
-        CategoryNewDialog dialog = new CategoryNewDialog();
-
-        return dialog;
+        return new CategoryNewDialog();
     }
 
     @Nullable

@@ -37,7 +37,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
 
     private static DataManager instance = null;
     private Context context;
-    private ArrayList<CategoryItem> tmp_categories = new ArrayList<CategoryItem>();
+    private ArrayList<CategoryItem> tmp_categories = new ArrayList<>();
 
     @SuppressWarnings("unused")
     private static final String TAG = "DataManager";
@@ -83,7 +83,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
             database.close();
         }
 
-        return database != null ? true : false;
+        return database != null;
     }
 
     private void createTables(SQLiteDatabase database) {
@@ -123,7 +123,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         Cursor cursor;
         String sql = "SELECT * FROM " + CATEGORY_TABLE;
         SQLiteDatabase database;
-        ArrayList<CategoryItem> result = new ArrayList<CategoryItem>();
+        ArrayList<CategoryItem> result = new ArrayList<>();
 
         Log.i(TAG, "readCategoryData()");
         Log.i(TAG, "SQLite : " + sql);
@@ -149,7 +149,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     }
 
     public CategoryItem[] getCategoriesSortedByName() {
-        List<CategoryItem> result = new ArrayList<CategoryItem>();
+        List<CategoryItem> result = new ArrayList<>();
         ArrayList<CategoryItem> categories = readCategoryData();
 
         Log.i(TAG, "getCategoriesSortedByName()");
