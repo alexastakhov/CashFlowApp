@@ -12,21 +12,24 @@
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="New Text"
+            android:text="1 500.50"
             android:id="@+id/textView3"
             android:layout_gravity="center_horizontal"
             android:layout_weight="3"
             android:gravity="center_vertical"
-            android:paddingLeft="20sp" />
+            android:paddingLeft="20sp"
+            android:paddingRight="20sp"
+            android:textSize="24sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="New Text"
+            android:text="Какая-то категория"
             android:id="@+id/textView4"
             android:layout_gravity="center_horizontal"
             android:layout_weight="5"
             android:paddingLeft="20sp"
+            android:paddingRight="20sp"
             android:gravity="top|left" />
     </LinearLayout>
 
@@ -43,7 +46,7 @@
             android:id="@+id/textView"
             android:layout_weight="5"
             android:gravity="bottom|center_horizontal"
-            android:textStyle="bold" />
+            android:textSize="@dimen/record_row_date_text" />
 
         <TextView
             android:layout_width="match_parent"
@@ -51,7 +54,8 @@
             android:text="января"
             android:id="@+id/textView5"
             android:layout_weight="6"
-            android:gravity="top|center_horizontal" />
+            android:gravity="top|center_horizontal"
+            android:textSize="@dimen/record_row_date_text" />
 
         <TextView
             android:layout_width="match_parent"
@@ -60,6 +64,7 @@
             android:id="@+id/textView2"
             android:layout_weight="5"
             android:gravity="center_horizontal"
-            android:paddingTop="1sp" />
+            android:paddingTop="1sp"
+            android:textSize="@dimen/record_row_date_text" />
     </LinearLayout>
 </LinearLayout>

@@ -16,7 +16,7 @@ import android.widget.TextView;
  */
 public class CategoryEditDialog extends DialogFragment {
 
-    private int initHeigth;
+    private int initHeight;
     private int initWidth = 350;
     private String categoryName;
     private int priority;
@@ -59,8 +59,8 @@ public class CategoryEditDialog extends DialogFragment {
 
         getDialog().setTitle(R.string.category_dialog_header);
 
-        initHeigth = getDialog().getWindow().getAttributes().height;
-        getDialog().getWindow().setLayout(initWidth, initHeigth);
+        initHeight = getDialog().getWindow().getAttributes().height;
+        getDialog().getWindow().setLayout(initWidth, initHeight);
 
 
 
@@ -127,9 +127,5 @@ public class CategoryEditDialog extends DialogFragment {
     private void showCategoryExistsErrorText() {
         errorText.setText(R.string.category_dialog_error_exists_text);
         errorText.setVisibility(View.VISIBLE);
-    }
-
-    private void hideErrorText() {
-        errorText.setVisibility(View.GONE);
     }
 }

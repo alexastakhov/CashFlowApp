@@ -15,8 +15,8 @@ import android.widget.TextView;
 import java.util.ArrayList;
 
 public class CustomArrayAdapter extends ArrayAdapter {
-    private Context context;
-    private int resource;
+    private final Context context;
+    private final int resource;
     private int textViewResourceId;
     private boolean selected = false;
     private boolean nextSwitched = false;

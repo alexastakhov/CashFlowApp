@@ -48,7 +48,8 @@
             android:longClickable="false"
             android:cursorVisible="false"
             android:layout_weight="2"
-            android:paddingLeft="12sp" />
+            android:paddingLeft="12sp"
+            android:paddingRight="12sp"/>
 
         <ImageView
             android:layout_width="match_parent"
@@ -69,7 +70,8 @@
         android:layout_marginTop="25sp"
         android:paddingTop="12sp"
         android:paddingBottom="12sp"
-        android:paddingLeft="5sp" />
+        android:paddingLeft="5sp"
+        android:paddingRight="5sp" />
 
     <EditText
         android:layout_width="match_parent"
@@ -94,7 +96,7 @@
         android:layout_height="wrap_content"
         android:paddingTop="15sp"
         android:paddingBottom="15sp"
-        android:text="ДОБАВИТЬ ЗАПИСЬ"
+        android:text="@string/add_record_button_text"
         android:id="@+id/addRecButton"
         android:layout_marginTop="25dp"
         android:textSize="16sp"

@@ -9,5 +9,6 @@
         android:layout_height="62sp"
         android:text="Medium Text"
         android:id="@+id/categoryTextView"
-        android:paddingLeft="25sp" />
+        android:paddingLeft="25sp"
+        android:paddingRight="25sp" />
 </LinearLayout>

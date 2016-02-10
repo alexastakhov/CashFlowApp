@@ -16,7 +16,7 @@ import android.widget.TextView;
  */
 public class CategoryNewDialog extends DialogFragment {
 
-    private int initHeigth;
+    private int initHeight;
     private int initWidth = 350;
     private View view;
     private TextView errorText;
@@ -40,8 +40,8 @@ public class CategoryNewDialog extends DialogFragment {
         Button cancelBtn = (Button)view.findViewById(R.id.categoryCancelButton);
 
         getDialog().setTitle(R.string.category_dialog_header2);
-        initHeigth = getDialog().getWindow().getAttributes().height;
-        getDialog().getWindow().setLayout(initWidth, initHeigth);
+        initHeight = getDialog().getWindow().getAttributes().height;
+        getDialog().getWindow().setLayout(initWidth, initHeight);
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override

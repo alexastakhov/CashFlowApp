@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity {
         spinnerList = new ArrayList<String>(Arrays.asList(dataManager.getCategoriesAsStrings()));
 
         ActionBar actionBar = getSupportActionBar();
-        actionBar.setTitle(R.string.main_caption);
+
+        if (actionBar != null) actionBar.setTitle(R.string.main_caption);
 
         selectedDate = Calendar.getInstance();
 
@@ -115,24 +116,9 @@ public class MainActivity extends AppCompatActivity {
     }
 
     @Override
-    protected void onResume() {
-        super.onResume();
-    }
-
-    @Override
     protected void onStart() {
         super.onStart();
         updateSpinnerData();
-    }
-
-    @Override
-    protected void onRestart() {
-        super.onRestart();
-    }
-
-    @Override
-    protected void onPostResume() {
-        super.onPostResume();
     }
 
     @Override

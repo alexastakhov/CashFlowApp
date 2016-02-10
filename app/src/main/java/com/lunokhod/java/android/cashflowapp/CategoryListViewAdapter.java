@@ -14,8 +14,8 @@ import android.widget.TextView;
  */
 public class CategoryListViewAdapter extends BaseAdapter {
 
-    private LayoutInflater inflater;
-    private Context appContext;
+    private final LayoutInflater inflater;
+    private final Context appContext;
     private CategoryItem[] categories;
 
     @SuppressWarnings("unused")

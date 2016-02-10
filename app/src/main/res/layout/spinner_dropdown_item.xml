@@ -9,5 +9,6 @@
     android:paddingTop="14sp"
     android:paddingBottom="14sp"
     android:paddingLeft="14sp"
+    android:paddingRight="14sp"
     android:textColor="@color/spinDropTextColor"
     android:ellipsize="marquee"/>

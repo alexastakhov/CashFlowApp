@@ -36,7 +36,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     private static final String REC_CATEGORY_COLUMN = "category";
 
     private static DataManager instance = null;
-    private Context context;
+    private final Context context;
     private ArrayList<CategoryItem> tmp_categories = new ArrayList<>();
 
     @SuppressWarnings("unused")
@@ -68,7 +68,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         //createTable(sqLiteDatabase);
     }
 
-    public boolean isDataBaseAvailable() {
+    private boolean isDataBaseAvailable() {
         SQLiteDatabase database = null;
 
         try {
@@ -138,6 +138,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
                     result.add(new CategoryItem(cursor.getString(1), cursor.getInt(3)));
                 } while (cursor.moveToNext());
             }
+            cursor.close();
             database.close();
         }
         return result;
@@ -187,13 +188,17 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         String[] bindArgs = new String[]{name};
         Cursor cursor;
 
-        cursor = database.rawQuery(sql, bindArgs);
+        if (database != null) {
+            cursor = database.rawQuery(sql, bindArgs);
 
-        if (cursor.getCount() == 0) {
-            result = new CategoryItem(
-                    cursor.getString(1),
-                    cursor.getString(2),
-                    cursor.getInt(3));
+            if (cursor.getCount() == 0) {
+                result = new CategoryItem(
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getInt(3));
+            }
+            cursor.close();
+            database.close();
         }
 
         Log.i(TAG, "getCategoryByName(" + name + ")");
@@ -283,8 +288,9 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         if (database != null) {
             Log.i(TAG, "dropDataBase()");
             context.deleteDatabase(DATABASE_NAME);
+
+            database.close();
         }
-        database.close();
     }
 
     public void fillInCategoryTable() {
@@ -305,8 +311,8 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
                     database.execSQL(sql, bindArgs);
                     Log.i(TAG, sql);
                 }
+                database.close();
             }
-            database.close();
         } catch (android.database.SQLException e) {
             Log.i(TAG, "fillInCategoryTable() Exception: " + e.getMessage());
         }

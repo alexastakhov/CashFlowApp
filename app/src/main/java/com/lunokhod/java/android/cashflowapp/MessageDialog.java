@@ -42,12 +42,6 @@ public class MessageDialog extends DialogFragment {
         return builder.create();
     }
 
-    @Nullable
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        return super.onCreateView(inflater, container, savedInstanceState);
-    }
-
     private void close() {
         this.dismiss();
     }
