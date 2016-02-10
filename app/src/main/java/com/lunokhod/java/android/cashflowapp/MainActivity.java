@@ -14,6 +14,7 @@ import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -23,6 +24,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Collections;
+import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -35,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private EditText amountEditText;
     private IDataManager dataManager;
     private ArrayList<String> spinnerList;
+    private Button addRecButton;
 
     @SuppressWarnings("unused")
     private static final String TAG = "MainActivity";
@@ -61,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         categorySpinner = (Spinner)findViewById(R.id.categorySpinner);
         dateImageButton = (ImageView)findViewById(R.id.dateImageButton);
         commentEditText = (TextView)findViewById(R.id.commentEditText);
+        addRecButton = (Button)findViewById(R.id.addRecButton);
 
         spinnerAdapter = new CustomArrayAdapter(this, R.layout.spinner_item, android.R.id.text1, spinnerList);
         spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
@@ -100,6 +104,13 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setDateFromPicker();
+            }
+        });
+
+        addRecButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                addChargeRecord();
             }
         });
 
@@ -192,6 +203,44 @@ public class MainActivity extends AppCompatActivity {
         spinnerAdapter.setSelected(false);
         spinnerAdapter.setNextSwitched();
         categorySpinner.setSelection(0);
+    }
+
+    private void addChargeRecord() {
+        String str;
+        float amount;
+        Date date;
+        CategoryItem category;
+        String comment;
+        int credit = ChargeRecord.DEBET;
+
+        str = amountEditText.getText().toString();
+
+        if (str.length() == 0) {
+            showMsgDlg("Ошибка", "Поле суммы не может быть пустым. Введите расход/доход.");
+            return;
+        }
+
+        if (str.contains("+")) credit = ChargeRecord.CREDIT;
+
+        try {
+            str = str.replace((new String(new char[] { 160 })), "").replace("+", "");
+            amount = Float.parseFloat(str);
+        }
+        catch (NumberFormatException e) {
+            showMsgDlg("Ошибка", "Неправильный формат поля Amount");
+            return;
+        }
+
+        date = selectedDate.getTime();
+        comment = commentEditText.getText().toString();
+        category = dataManager.getCategoryByName(categorySpinner.getSelectedItem().toString());
+
+        if (category == null) {
+            showMsgDlg("Ошибка", "Необходимо выбрать категорию расходов/доходов");
+            return;
+        }
+
+        dataManager.addRecord(amount, category, comment, date, credit, 0);
     }
 
     private void showMsgDlg(String title, String msg) {

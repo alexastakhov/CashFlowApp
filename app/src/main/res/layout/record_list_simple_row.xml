@@ -19,7 +19,8 @@
             android:gravity="center_vertical"
             android:paddingLeft="20sp"
             android:paddingRight="20sp"
-            android:textSize="24sp" />
+            android:textSize="24sp"
+            android:textColor="@color/recordRowAmountColor" />
 
         <TextView
             android:layout_width="match_parent"
@@ -30,7 +31,8 @@
             android:layout_weight="5"
             android:paddingLeft="20sp"
             android:paddingRight="20sp"
-            android:gravity="top|left" />
+            android:gravity="top|left"
+            android:textColor="@color/recordRowCategoryColor" />
     </LinearLayout>
 
     <LinearLayout
@@ -46,7 +48,8 @@
             android:id="@+id/textView"
             android:layout_weight="5"
             android:gravity="bottom|center_horizontal"
-            android:textSize="@dimen/record_row_date_text" />
+            android:textSize="@dimen/record_row_date_text"
+            android:textColor="@color/recordRowDateColor" />
 
         <TextView
             android:layout_width="match_parent"
@@ -55,7 +58,8 @@
             android:id="@+id/textView5"
             android:layout_weight="6"
             android:gravity="top|center_horizontal"
-            android:textSize="@dimen/record_row_date_text" />
+            android:textSize="@dimen/record_row_date_text"
+            android:textColor="@color/recordRowDateColor" />
 
         <TextView
             android:layout_width="match_parent"
@@ -65,6 +69,7 @@
             android:layout_weight="5"
             android:gravity="center_horizontal"
             android:paddingTop="1sp"
-            android:textSize="@dimen/record_row_date_text" />
+            android:textSize="@dimen/record_row_date_text"
+            android:textColor="@color/recordRowTimeColor" />
     </LinearLayout>
 </LinearLayout>

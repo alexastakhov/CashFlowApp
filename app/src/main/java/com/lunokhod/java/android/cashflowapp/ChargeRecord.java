@@ -16,6 +16,7 @@ public class ChargeRecord {
     private int credit;
     private String comment;
     private int account;
+    private int id;
 
     public ChargeRecord(float amount, CategoryItem category, Date date) {
         this.amount = amount;
@@ -24,6 +25,7 @@ public class ChargeRecord {
         this.date = date;
         this.credit = DEBET;
         account = 0;
+        id = 0;
     }
 
     public ChargeRecord(float amount, CategoryItem category, String comment, Date date) {
@@ -33,15 +35,25 @@ public class ChargeRecord {
         this.date = date;
         this.credit = DEBET;
         account = 0;
+        id = 0;
     }
 
-    public ChargeRecord(float amount, CategoryItem category, String comment, Date date, int credit, int account) {
+    public ChargeRecord(float amount, CategoryItem category, String comment, Date date, int credit, int account, int id) {
         this.amount = amount;
         this.category = category;
         this.comment = comment;
         this.date = date;
         this.credit = credit;
         this.account = account;
+        this.id = id;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public float getAmount() {

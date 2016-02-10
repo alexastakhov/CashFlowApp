@@ -8,9 +8,12 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -184,14 +187,14 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     public CategoryItem getCategoryByName(String name) {
         CategoryItem result = null;
         SQLiteDatabase database = this.getReadableDatabase();
-        String sql = "SELECT * FROM" + CATEGORY_TABLE + " WHERE " + NAME_COLUMN + " = ?;";
-        String[] bindArgs = new String[]{name};
+        String sql = "SELECT * FROM " + CATEGORY_TABLE + " WHERE " + NAME_COLUMN + "=\"" + name + "\";";
         Cursor cursor;
 
         if (database != null) {
-            cursor = database.rawQuery(sql, bindArgs);
+            cursor = database.rawQuery(sql, null);
 
-            if (cursor.getCount() == 0) {
+            if (cursor.getCount() == 1) {
+                cursor.moveToFirst();
                 result = new CategoryItem(
                         cursor.getString(1),
                         cursor.getString(2),
@@ -207,24 +210,24 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         return result;
     }
 
-    public void addCategory(String category, int prio) {
+    public void addCategory(String name, int prio) {
         String sql = "INSERT OR IGNORE INTO " + CATEGORY_TABLE + " (" + FULL_CATEGORY_ROW +
                 ") VALUES (NULL, ?, ?, ?);";
-        Object[] bindArgs = new Object[]{category, "", prio};
+        Object[] bindArgs = new Object[]{name, "", prio};
         SQLiteDatabase database = this.getWritableDatabase();
 
-        Log.i(TAG, "addCategory(" + category + ", " + prio + ")");
+        Log.i(TAG, "addCategory(" + name + ", " + prio + ")");
         Log.i(TAG, "SQLite : " + sql);
 
         database.execSQL(sql, bindArgs);
         database.close();
     }
 
-    public void deleteCategory(String category) {
-        String sql = "DELETE FROM " + CATEGORY_TABLE + " WHERE " + NAME_COLUMN + "=\"" + category + "\";";
+    public void deleteCategory(String name) {
+        String sql = "DELETE FROM " + CATEGORY_TABLE + " WHERE " + NAME_COLUMN + "=\"" + name + "\";";
         SQLiteDatabase database = this.getWritableDatabase();
 
-        Log.i(TAG, "deleteCategory(" + category + ")");
+        Log.i(TAG, "deleteCategory(" + name + ")");
         Log.i(TAG, "SQLite : " + sql);
 
         database.execSQL(sql);
@@ -258,8 +261,20 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         database.close();
     }
 
-    public void addRecord() {
+    public void addRecord(ChargeRecord record) {
+        addRecord(record.getAmount(), record.getCategory(), record.getComment(),
+                record.getDate(), record.getCredit(), record.getAccount());
+    }
 
+    public void addRecord(float amount, CategoryItem category, String comment, Date date, int credit, int account) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
+
+        Log.i(TAG, "addRecord()");
+        Log.i(TAG, "amount = " + amount);
+        Log.i(TAG, "category = " + category.getName());
+        Log.i(TAG, "comment = " + comment);
+        Log.i(TAG, "date = " + dateFormat.format(date));
+        Log.i(TAG, "credit = " + credit);
     }
 
     public void deleteRecord() {
