@@ -79,7 +79,7 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     private void showItemEditDialog(CategoryItem item) {
-        CategoryEditDialog.getInstance(item.getName(), item.getPriority()).show(getFragmentManager(), "categoryDialog");
+        CategoryEditDialog.getInstance(item).show(getFragmentManager(), "categoryDialog");
     }
 
     private void showItemNewDialog() {
@@ -94,21 +94,21 @@ public class CategoryActivity extends AppCompatActivity {
         categoryListViewAdapter.setDataObjects(dataManager.getCategoriesSortedByName());
     }
 
-    public boolean isCategoryExists(String name) {
+    public boolean isCategoryNameExists(String name) {
         for (String s : dataManager.getCategoriesAsStrings())
             if (name.equals(s))
                 return true;
         return false;
     }
 
-    public void changeCategory(String oldName, String newName, int prio) {
-        dataManager.changeCategory(oldName, newName, prio);
+    public void changeCategory(int categoryId, String newName, int prio) {
+        dataManager.changeCategory(categoryId, newName, prio);
         updateListAdapter();
         Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_saved, Toast.LENGTH_SHORT).show();
     }
 
     public void addCategory(String name, int prio) {
-        if (!isCategoryExists(name)) {
+        if (!isCategoryNameExists(name)) {
             dataManager.addCategory(name, prio);
             updateListAdapter();
             Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_added, Toast.LENGTH_SHORT).show();

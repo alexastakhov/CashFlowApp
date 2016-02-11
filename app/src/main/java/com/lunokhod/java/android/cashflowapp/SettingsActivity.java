@@ -39,6 +39,14 @@ public class SettingsActivity extends AppCompatActivity {
                 DataManager.getInstance().fillInCategoryTable();
             }
         });
+
+        Button deleteAllRecsButton = (Button)findViewById(R.id.deleteAllRecsButton);
+        deleteAllRecsButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                DataManager.getInstance().deleteAllRecords();
+            }
+        });
     }
 
     @Override

@@ -78,7 +78,7 @@ public class CategoryNewDialog extends DialogFragment {
     }
 
     private boolean isCategoryExists(String name) {
-        return ((CategoryActivity)getActivity()).isCategoryExists(name);
+        return ((CategoryActivity)getActivity()).isCategoryNameExists(name);
     }
 
     private void showNameErrorText() {

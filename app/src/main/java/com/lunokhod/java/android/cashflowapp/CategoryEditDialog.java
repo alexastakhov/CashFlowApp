@@ -20,6 +20,7 @@ public class CategoryEditDialog extends DialogFragment {
     private int initWidth = 350;
     private String categoryName;
     private int priority;
+    private int categoryId;
     private View view;
     private TextView errorText;
     private EditText editText;
@@ -27,12 +28,13 @@ public class CategoryEditDialog extends DialogFragment {
 
     private static final String TAG = "CategoryEditDialog";
 
-    public static CategoryEditDialog getInstance(String category, int prio) {
+    public static CategoryEditDialog getInstance(CategoryItem item) {
         CategoryEditDialog dialog = new CategoryEditDialog();
         Bundle args = new Bundle();
 
-        args.putString("cat", category);
-        args.putInt("pri", prio);
+        args.putString("name", item.getName());
+        args.putInt("pri", item.getPriority());
+        args.putInt("id", item.getId());
         dialog.setArguments(args);
 
         return dialog;
@@ -42,8 +44,9 @@ public class CategoryEditDialog extends DialogFragment {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        categoryName = getArguments().getString("cat");
+        categoryName = getArguments().getString("name");
         priority = getArguments().getInt("pri");
+        categoryId = getArguments().getInt("id");
     }
 
     @Nullable
@@ -62,8 +65,6 @@ public class CategoryEditDialog extends DialogFragment {
         initHeight = getDialog().getWindow().getAttributes().height;
         getDialog().getWindow().setLayout(initWidth, initHeight);
 
-
-
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,7 +77,7 @@ public class CategoryEditDialog extends DialogFragment {
                     showCategoryExistsErrorText();
                 }
                 else {
-                    saveCategory(categoryName, text, (checkBox.isChecked() ? 1 : 0));
+                    saveCategory(categoryId, text, (checkBox.isChecked() ? 1 : 0));
                     closeDialog();
                 }
             }
@@ -107,8 +108,8 @@ public class CategoryEditDialog extends DialogFragment {
         this.dismiss();
     }
 
-    private void saveCategory(String oldName, String newName, int prio) {
-        ((CategoryActivity)getActivity()).changeCategory(oldName, newName, prio);
+    private void saveCategory(int id, String newName, int prio) {
+        ((CategoryActivity)getActivity()).changeCategory(id, newName, prio);
     }
 
     private void deleteCategory(String categoryName) {
@@ -116,7 +117,7 @@ public class CategoryEditDialog extends DialogFragment {
     }
 
     private boolean isCategoryExists(String name) {
-        return ((CategoryActivity)getActivity()).isCategoryExists(name);
+        return ((CategoryActivity)getActivity()).isCategoryNameExists(name);
     }
 
     private void showNameErrorText() {

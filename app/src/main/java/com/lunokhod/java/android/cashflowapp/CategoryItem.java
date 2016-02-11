@@ -10,6 +10,7 @@ public class CategoryItem {
     private String name;
     private String groupName;
     private int priority;
+    private int id;
 
     @SuppressWarnings("unused")
     private static final String TAG = "CategoryItem";
@@ -18,18 +19,35 @@ public class CategoryItem {
         name = "";
         groupName = "";
         this.priority = LOW_PRIO;
+        id = 0;
     }
 
     public CategoryItem(String name, String groupName, int priority) {
         this.name = name;
         this.groupName = groupName;
         this.priority = priority;
+        id = 0;
+    }
+
+    public CategoryItem(String name, String groupName, int priority, int id) {
+        this.name = name;
+        this.groupName = groupName;
+        this.priority = priority;
+        this.id = id;
     }
 
     public CategoryItem(String name, int priority) {
         this.name = name;
         this.groupName = "";
         this.priority = priority;
+        id = 0;
+    }
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     public String getName() {
@@ -37,7 +55,7 @@ public class CategoryItem {
     }
 
     public String getGroupName() {
-        return name;
+        return groupName;
     }
 
     public void setName(String name) {

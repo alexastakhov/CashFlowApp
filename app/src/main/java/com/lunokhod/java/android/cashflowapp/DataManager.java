@@ -28,6 +28,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     private static final String NAME_COLUMN = "name";
     private static final String GROUP_COLUMN = "group_name";
     private static final String PRIORITY_COLUMN = "priority";
+
     private static final String FULL_CATEGORY_ROW = BaseColumns._ID + "," +
             NAME_COLUMN + "," + GROUP_COLUMN + "," + PRIORITY_COLUMN;
 
@@ -36,7 +37,11 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     private static final String COMMENT_COLUMN = "comment";
     private static final String ACCOUNT_COLUMN = "account";
     private static final String CREDIT_COLUMN = "credit";
-    private static final String REC_CATEGORY_COLUMN = "category";
+    private static final String CATEGORY_COLUMN = "category";
+
+    private static final String FULL_RECORD_ROW = BaseColumns._ID + "," + AMOUNT_COLUMN + "," +
+            DATETIME_COLUMN + "," + COMMENT_COLUMN + "," + ACCOUNT_COLUMN + "," +
+            CREDIT_COLUMN + "," + CATEGORY_COLUMN;
 
     private static DataManager instance = null;
     private final Context context;
@@ -113,7 +118,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
                     COMMENT_COLUMN + " TEXT, " +
                     ACCOUNT_COLUMN + " INTEGER, " +
                     CREDIT_COLUMN + " INTEGER, " +
-                    REC_CATEGORY_COLUMN + " INTEGER);";
+                    CATEGORY_COLUMN + " INTEGER);";
             database.execSQL(sql);
             Log.i(TAG, "SQLite : " + sql);
         }
@@ -138,7 +143,8 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
             Log.i(TAG, "readCategoryData() cursor.getCount() == " + cursor.getCount());
             if (cursor.moveToFirst()) {
                 do {
-                    result.add(new CategoryItem(cursor.getString(1), cursor.getInt(3)));
+                    result.add(new CategoryItem(cursor.getString(1), cursor.getString(2),
+                            cursor.getInt(3), cursor.getInt(0)));
                 } while (cursor.moveToNext());
             }
             cursor.close();
@@ -198,7 +204,8 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
                 result = new CategoryItem(
                         cursor.getString(1),
                         cursor.getString(2),
-                        cursor.getInt(3));
+                        cursor.getInt(3),
+                        cursor.getInt(0));
             }
             cursor.close();
             database.close();
@@ -208,6 +215,37 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         Log.i(TAG, "SQLite : " + sql);
 
         return result;
+    }
+
+    public ChargeRecord[] getAllRecords() {
+
+        Cursor cursor;
+        String sql = "SELECT * FROM " + RECORD_TABLE;
+        SQLiteDatabase database;
+        ArrayList<ChargeRecord> result = new ArrayList<>();
+
+        Log.i(TAG, "getAllRecords()");
+        Log.i(TAG, "SQLite : " + sql);
+
+        if (isDataBaseAvailable()) {
+            database = this.getWritableDatabase();
+            cursor = database.rawQuery(sql, null);
+
+            Log.i(TAG, "getAllRecords() cursor.getCount() == " + cursor.getCount());
+            if (cursor.moveToFirst()) {
+                do {
+//                    result.add(new ChargeRecord(
+//                            cursor.getFloat(1),
+//                            , String comment, Date date, int credit, int account, int id);
+                } while (cursor.moveToNext());
+            }
+            cursor.close();
+            database.close();
+        }
+        return result;
+
+
+        return new ChargeRecord[0];
     }
 
     public void addCategory(String name, int prio) {
@@ -234,30 +272,16 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         database.close();
     }
 
-    public void changeCategory(String oldName, String newName, int prio) {
-        String sql1 = "DELETE FROM " + CATEGORY_TABLE + " WHERE " + NAME_COLUMN + "=\"" + oldName + "\";";
-        String sql2 = "INSERT INTO " + CATEGORY_TABLE + " (" + FULL_CATEGORY_ROW + ") VALUES (NULL, ?, ?, ?);";
-        String sql3 = "UPDATE " + CATEGORY_TABLE + " SET " + GROUP_COLUMN + "=\"\"," + PRIORITY_COLUMN +
-                "= ? WHERE " + NAME_COLUMN + "= ?";
-
-        Object[] bindArgs = new Object[]{newName, "", prio};
-        Object[] bindArgs2 = new Object[]{prio, oldName};
+    public void changeCategory(int categoryId, String newName, int prio) {
+        String sql = "UPDATE " + CATEGORY_TABLE + " SET " + NAME_COLUMN + "= ?," + GROUP_COLUMN + "=\"\"," + PRIORITY_COLUMN +
+                "= ? WHERE " + BaseColumns._ID + "= ?";
+        Object[] bindArgs = new Object[]{newName, prio, categoryId};
         SQLiteDatabase database = this.getWritableDatabase();
 
-        Log.i(TAG, "changeCategory(" + oldName + ", " + newName + ", " + prio + ")");
+        Log.i(TAG, "changeCategory(" + categoryId + ", " + newName + ", " + prio + ")");
+        Log.i(TAG, "SQLite : " + sql);
 
-        if (oldName.equals(newName)) {
-            database.execSQL(sql3, bindArgs2);
-
-            Log.i(TAG, "SQLite : " + sql3);
-        }
-        else {
-            database.execSQL(sql1);
-            database.execSQL(sql2, bindArgs);
-
-            Log.i(TAG, "SQLite : " + sql1);
-            Log.i(TAG, "SQLite : " + sql2);
-        }
+        database.execSQL(sql, bindArgs);
         database.close();
     }
 
@@ -268,6 +292,12 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
 
     public void addRecord(float amount, CategoryItem category, String comment, Date date, int credit, int account) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
+        String sql = "INSERT INTO " + RECORD_TABLE + "(" + FULL_RECORD_ROW + ") VALUES (NULL, ?, ?, ?, ?, ?, ?);";
+        Object[] bindArgs = new Object[]{amount, dateFormat.format(date), comment, account, credit, category.getId()};
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        database.execSQL(sql, bindArgs);
+        database.close();
 
         Log.i(TAG, "addRecord()");
         Log.i(TAG, "amount = " + amount);
@@ -297,13 +327,24 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         }
     }
 
+    public void deleteAllRecords() {
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        if (database != null) {
+            Log.i(TAG, "deleteAllRecords()");
+
+            database.delete(RECORD_TABLE, null, null);
+            database.close();
+        }
+    }
+
     public void dropDataBase() {
         SQLiteDatabase database = this.getReadableDatabase();
 
         if (database != null) {
             Log.i(TAG, "dropDataBase()");
-            context.deleteDatabase(DATABASE_NAME);
 
+            context.deleteDatabase(DATABASE_NAME);
             database.close();
         }
     }
