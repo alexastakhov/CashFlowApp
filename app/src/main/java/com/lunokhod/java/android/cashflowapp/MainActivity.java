@@ -10,6 +10,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -20,6 +21,8 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
+
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -50,14 +53,11 @@ public class MainActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
 
         dataManager = new DataManager(getApplicationContext());
-
         spinnerList = new ArrayList<String>(Arrays.asList(dataManager.getCategoriesAsStrings()));
-
         ActionBar actionBar = getSupportActionBar();
+        selectedDate = Calendar.getInstance();
 
         if (actionBar != null) actionBar.setTitle(R.string.main_caption);
-
-        selectedDate = Calendar.getInstance();
 
         dateEditText = (EditText)findViewById(R.id.dateEditText);
         amountEditText = (EditText)findViewById(R.id.amountEditText);
@@ -90,6 +90,15 @@ public class MainActivity extends AppCompatActivity {
             public void onFocusChange(View v, boolean hasFocus) {
                 if (hasFocus) commentEditText.setHint("");
                 else commentEditText.setHint(R.string.comment_textview_hint);
+            }
+        });
+
+        commentEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER)
+                    return true;
+                return false;
             }
         });
 
@@ -241,9 +250,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         dataManager.addRecord(amount, category, comment, date, credit, 0);
+        Toast.makeText(this, R.string.main_activity_record_added, Toast.LENGTH_SHORT).show();
     }
 
     private void showMsgDlg(String title, String msg) {
         MessageDialog.newInstance(title, msg).show(getFragmentManager(), "messageDialog");
+    }
+
+    private void clearForm() {
+
     }
 }

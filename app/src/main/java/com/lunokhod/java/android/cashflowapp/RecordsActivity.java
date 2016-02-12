@@ -6,9 +6,12 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
+import android.widget.ListView;
 
 public class RecordsActivity extends AppCompatActivity {
+    private RecordListViewAdapter recordListViewAdapter;
+    private ListView recordListView;
+    private IDataManager dataManager;
 
     @SuppressWarnings("unused")
     private static final String TAG = "RecordsActivity";
@@ -19,6 +22,12 @@ public class RecordsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_records);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
+
+        dataManager = DataManager.getInstance();
+
+        recordListViewAdapter = new RecordListViewAdapter(this.getApplicationContext(), dataManager.getAllRecords());
+        recordListView = (ListView)findViewById(R.id.recordListView);
+        recordListView.setAdapter(recordListViewAdapter);
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -51,5 +60,9 @@ public class RecordsActivity extends AppCompatActivity {
 
     private void showMsgDlg(String title, String msg) {
         MessageDialog.newInstance(title, msg).show(getFragmentManager(), "messageDialog");
+    }
+
+    private void updateListAdapter() {
+        recordListViewAdapter.setDataObjects(dataManager.getAllRecords());
     }
 }

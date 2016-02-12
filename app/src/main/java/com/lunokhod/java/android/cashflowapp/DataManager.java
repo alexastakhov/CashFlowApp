@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteOpenHelper;
 import android.provider.BaseColumns;
 import android.util.Log;
 
-import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -114,7 +113,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
             sql = "CREATE TABLE " + RECORD_TABLE + " (" +
                     BaseColumns._ID + " INTEGER PRIMARY KEY AUTOINCREMENT, " +
                     AMOUNT_COLUMN + " REAL, " +
-                    DATETIME_COLUMN + " TEXT, " +
+                    DATETIME_COLUMN + " INTEGER, " +
                     COMMENT_COLUMN + " TEXT, " +
                     ACCOUNT_COLUMN + " INTEGER, " +
                     CREDIT_COLUMN + " INTEGER, " +
@@ -217,8 +216,34 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         return result;
     }
 
-    public ChargeRecord[] getAllRecords() {
+    public CategoryItem getCategoryById(int id) {
+        CategoryItem result = null;
+        SQLiteDatabase database = this.getReadableDatabase();
+        String sql = "SELECT * FROM " + CATEGORY_TABLE + " WHERE " + BaseColumns._ID + "=\"" + id + "\";";
+        Cursor cursor;
 
+        if (database != null) {
+            cursor = database.rawQuery(sql, null);
+
+            if (cursor.getCount() == 1) {
+                cursor.moveToFirst();
+                result = new CategoryItem(
+                        cursor.getString(1),
+                        cursor.getString(2),
+                        cursor.getInt(3),
+                        cursor.getInt(0));
+            }
+            cursor.close();
+            database.close();
+        }
+
+        Log.i(TAG, "getCategoryById(" + id + ")");
+        Log.i(TAG, "SQLite : " + sql);
+
+        return result;
+    }
+
+    public ChargeRecord[] getAllRecords() {
         Cursor cursor;
         String sql = "SELECT * FROM " + RECORD_TABLE;
         SQLiteDatabase database;
@@ -234,18 +259,20 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
             Log.i(TAG, "getAllRecords() cursor.getCount() == " + cursor.getCount());
             if (cursor.moveToFirst()) {
                 do {
-//                    result.add(new ChargeRecord(
-//                            cursor.getFloat(1),
-//                            , String comment, Date date, int credit, int account, int id);
+                    result.add(new ChargeRecord(
+                            cursor.getFloat(1),
+                            getCategoryById(cursor.getInt(6)),
+                            cursor.getString(3),
+                            (new Date(cursor.getLong(2))),
+                            cursor.getInt(5),
+                            cursor.getInt(4),
+                            cursor.getInt(0)));
                 } while (cursor.moveToNext());
             }
             cursor.close();
             database.close();
         }
-        return result;
-
-
-        return new ChargeRecord[0];
+        return result.toArray(new ChargeRecord[result.size()]);
     }
 
     public void addCategory(String name, int prio) {
@@ -293,7 +320,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     public void addRecord(float amount, CategoryItem category, String comment, Date date, int credit, int account) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
         String sql = "INSERT INTO " + RECORD_TABLE + "(" + FULL_RECORD_ROW + ") VALUES (NULL, ?, ?, ?, ?, ?, ?);";
-        Object[] bindArgs = new Object[]{amount, dateFormat.format(date), comment, account, credit, category.getId()};
+        Object[] bindArgs = new Object[]{amount, date.getTime(), comment, account, credit, category.getId()};
         SQLiteDatabase database = this.getWritableDatabase();
 
         database.execSQL(sql, bindArgs);
@@ -303,7 +330,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         Log.i(TAG, "amount = " + amount);
         Log.i(TAG, "category = " + category.getName());
         Log.i(TAG, "comment = " + comment);
-        Log.i(TAG, "date = " + dateFormat.format(date));
+        Log.i(TAG, "date = " + dateFormat.format(date) + " (" + date.getTime() +")");
         Log.i(TAG, "credit = " + credit);
     }
 

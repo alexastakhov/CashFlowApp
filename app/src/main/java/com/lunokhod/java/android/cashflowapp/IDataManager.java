@@ -10,6 +10,7 @@ public interface IDataManager {
     CategoryItem[] getCategoriesSortedByName();
     String[] getCategoriesAsStrings();
     CategoryItem getCategoryByName(String name);
+    CategoryItem getCategoryById(int id);
 
     ChargeRecord[] getAllRecords();
 

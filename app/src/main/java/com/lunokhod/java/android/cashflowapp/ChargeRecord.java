@@ -1,6 +1,5 @@
 package com.lunokhod.java.android.cashflowapp;
 
-import com.lunokhod.java.android.cashflowapp.CategoryItem;
 import java.util.Date;
 
 /**

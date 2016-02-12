@@ -13,7 +13,6 @@ import android.widget.TextView;
  * Created by alex on 08.01.2016.
  */
 public class CategoryListViewAdapter extends BaseAdapter {
-
     private final LayoutInflater inflater;
     private final Context appContext;
     private CategoryItem[] categories;

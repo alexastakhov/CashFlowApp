@@ -89,7 +89,8 @@
         android:textSize="18sp"
         android:padding="8dp"
         android:textColorHint="@color/labelHintPrimaryColor"
-        android:textColor="@color/editTextPrimaryColor" />
+        android:textColor="@color/editTextPrimaryColor"
+        android:inputType="textCapSentences|textMultiLine" />
 
     <Button
         android:layout_width="fill_parent"

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="70sp">
+    android:layout_height="90sp">
 
     <LinearLayout
         android:orientation="vertical"
@@ -13,26 +13,28 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="1 500.50"
-            android:id="@+id/textView3"
+            android:id="@+id/amountTextView"
             android:layout_gravity="center_horizontal"
             android:layout_weight="3"
             android:gravity="center_vertical"
             android:paddingLeft="20sp"
             android:paddingRight="20sp"
             android:textSize="24sp"
-            android:textColor="@color/recordRowAmountColor" />
+            android:textColor="@color/recordRowAmountColor"
+            android:paddingTop="10sp" />
 
         <TextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="Какая-то категория"
-            android:id="@+id/textView4"
+            android:id="@+id/categoryTextView"
             android:layout_gravity="center_horizontal"
             android:layout_weight="5"
             android:paddingLeft="20sp"
             android:paddingRight="20sp"
             android:gravity="top|left"
-            android:textColor="@color/recordRowCategoryColor" />
+            android:textColor="@color/recordRowCategoryColor"
+            android:paddingBottom="10sp" />
     </LinearLayout>
 
     <LinearLayout
@@ -45,7 +47,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="12"
-            android:id="@+id/textView"
+            android:id="@+id/dayTextView"
             android:layout_weight="5"
             android:gravity="bottom|center_horizontal"
             android:textSize="@dimen/record_row_date_text"
@@ -55,7 +57,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="января"
-            android:id="@+id/textView5"
+            android:id="@+id/monthTextView"
             android:layout_weight="6"
             android:gravity="top|center_horizontal"
             android:textSize="@dimen/record_row_date_text"
@@ -65,7 +67,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:text="10:42"
-            android:id="@+id/textView2"
+            android:id="@+id/timeTextView"
             android:layout_weight="5"
             android:gravity="center_horizontal"
             android:paddingTop="1sp"
