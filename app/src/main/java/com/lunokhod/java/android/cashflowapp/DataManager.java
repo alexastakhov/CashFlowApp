@@ -271,6 +271,13 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
             }
             cursor.close();
             database.close();
+
+            Collections.sort(result, new Comparator<ChargeRecord>() {
+                @Override
+                public int compare(ChargeRecord lhs, ChargeRecord rhs) {
+                    return lhs.getDate().compareTo(rhs.getDate());
+                }
+            });
         }
         return result.toArray(new ChargeRecord[result.size()]);
     }

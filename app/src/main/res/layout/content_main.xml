@@ -24,7 +24,7 @@
         android:numeric="signed|decimal"
         android:singleLine="true"
         android:textSize="45sp"
-        android:textColor="#b90003"
+        android:textColor="@color/amountTextColor"
         android:gravity="center"
         android:textCursorDrawable="@drawable/amount_edit_cursor"
         android:layout_marginTop="5dp"

@@ -1,6 +1,7 @@
 package com.lunokhod.java.android.cashflowapp;
 
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.support.v7.app.ActionBar;
 import android.content.Intent;
 import android.os.Bundle;
@@ -14,6 +15,7 @@ import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
                 spinnerAdapter.setSelected(true);
-                Log.i(TAG, "onItemSelected()");
+                hideKeyboard(view);
             }
 
             @Override
@@ -113,6 +115,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 setDateFromPicker();
+                hideKeyboard(v);
             }
         });
 
@@ -250,6 +253,7 @@ public class MainActivity extends AppCompatActivity {
         }
 
         dataManager.addRecord(amount, category, comment, date, credit, 0);
+        clearForm();
         Toast.makeText(this, R.string.main_activity_record_added, Toast.LENGTH_SHORT).show();
     }
 
@@ -258,6 +262,14 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void clearForm() {
+        amountEditText.setText("");
+        commentEditText.setText("");
+        selectedDate = Calendar.getInstance();
+        setInitialDate();
+    }
 
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }

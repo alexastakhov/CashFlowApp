@@ -5,6 +5,8 @@
     <color name="colorAccent">#FF4081</color>
     <color name="colorBorder1">#c6ccef</color>
 
+    <color name="amountTextColor">#b90003</color>
+
     <color name="spinDropTextColor">#000000</color>
     <color name="labelPrimaryColor">#646464</color>
     <color name="labelHintPrimaryColor">#a4a4a4</color>
@@ -20,7 +22,7 @@
 
     <color name="errorTextColor">#ff0000</color>
 
-    <color name="recordRowAmountColor">#4b1314</color>
+    <color name="recordRowAmountColor">#b90003</color>
     <color name="recordRowCategoryColor">#6b6b6b</color>
     <color name="recordRowDateColor">#939292</color>
     <color name="recordRowTimeColor">#939292</color>

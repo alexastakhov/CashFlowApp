@@ -34,16 +34,16 @@
     <string name="debug_error_category_exists">Ошибка добавления категории: категория с таким именем уже существует в DataManager</string>
     <string name="title_activity_settings">SettingsActivity</string>
 
-    <string name="month_jan">январь</string>
-    <string name="month_feb">февраль</string>
-    <string name="month_mar">март</string>
-    <string name="month_apr">апрель</string>
-    <string name="month_may">май</string>
-    <string name="month_jun">июнь</string>
-    <string name="month_jul">июль</string>
-    <string name="month_aug">август</string>
-    <string name="month_sep">сентябрь</string>
-    <string name="month_oct">октябрь</string>
-    <string name="month_nov">ноябрь</string>
-    <string name="month_dec">декабрь</string>
+    <string name="month_jan">января</string>
+    <string name="month_feb">февраля</string>
+    <string name="month_mar">марта</string>
+    <string name="month_apr">апреля</string>
+    <string name="month_may">мая</string>
+    <string name="month_jun">июня</string>
+    <string name="month_jul">июля</string>
+    <string name="month_aug">августа</string>
+    <string name="month_sep">сентября</string>
+    <string name="month_oct">октября</string>
+    <string name="month_nov">ноября</string>
+    <string name="month_dec">декабря</string>
 </resources>

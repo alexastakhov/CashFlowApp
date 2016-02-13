@@ -1,27 +1,26 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="horizontal" android:layout_width="match_parent"
-    android:layout_height="90sp">
+    android:layout_height="wrap_content">
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_weight="1">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="1 500.50"
             android:id="@+id/amountTextView"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="3"
-            android:gravity="center_vertical"
             android:paddingLeft="20sp"
             android:paddingRight="20sp"
             android:textSize="24sp"
             android:textColor="@color/recordRowAmountColor"
-            android:paddingTop="10sp" />
+            android:paddingTop="8sp"
+            android:gravity="left|bottom" />
 
         <TextView
             android:layout_width="match_parent"
@@ -29,47 +28,45 @@
             android:text="Какая-то категория"
             android:id="@+id/categoryTextView"
             android:layout_gravity="center_horizontal"
-            android:layout_weight="5"
             android:paddingLeft="20sp"
             android:paddingRight="20sp"
             android:gravity="top|left"
             android:textColor="@color/recordRowCategoryColor"
-            android:paddingBottom="10sp" />
+            android:paddingBottom="10sp"
+            android:textSize="15sp" />
     </LinearLayout>
 
     <LinearLayout
         android:orientation="vertical"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_weight="3">
+        android:layout_height="wrap_content"
+        android:layout_weight="3"
+        android:layout_gravity="center_vertical">
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="12"
             android:id="@+id/dayTextView"
-            android:layout_weight="5"
             android:gravity="bottom|center_horizontal"
             android:textSize="@dimen/record_row_date_text"
             android:textColor="@color/recordRowDateColor" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="января"
             android:id="@+id/monthTextView"
-            android:layout_weight="6"
-            android:gravity="top|center_horizontal"
+            android:gravity="center_horizontal"
             android:textSize="@dimen/record_row_date_text"
             android:textColor="@color/recordRowDateColor" />
 
         <TextView
             android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_height="wrap_content"
             android:text="10:42"
             android:id="@+id/timeTextView"
-            android:layout_weight="5"
-            android:gravity="center_horizontal"
+            android:gravity="top|center_horizontal"
             android:paddingTop="1sp"
             android:textSize="@dimen/record_row_date_text"
             android:textColor="@color/recordRowTimeColor" />
