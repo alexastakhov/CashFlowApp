@@ -23,8 +23,9 @@
     <string name="title_activity_category">CategoryActivity</string>
     <string name="title_activity_records_edit">RecordsEditActivity</string>
 
-    <string name="category_dialog_error_name_text">Название категории не может быть пустым.</string>
-    <string name="category_dialog_error_exists_text">Категория с таким названием уже существует.</string>
+    <string name="category_dialog_error_name_text">Название категории не может быть пустым</string>
+    <string name="category_dialog_error_exists_text">Категория с таким названием уже существует</string>
+    <string name="category_dialog_category_in_use">Данная категория используется в записях. Переименуйте категорию, или удалите эти записи перед удалением категории</string>
     <string name="category_dialog_item_added">Категория добавлена</string>
     <string name="category_dialog_item_deleted">Категория удалена</string>
     <string name="category_dialog_item_saved">Категория сохранена</string>

@@ -66,3 +66,7 @@ public class RecordsActivity extends AppCompatActivity {
         recordListViewAdapter.setDataObjects(dataManager.getAllRecords());
     }
 }
+
+// TODO: Create record edit dialog
+// TODO: Create filers: Date-Date, Last period, Category
+// TODO: Reading records into own thread

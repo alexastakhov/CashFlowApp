@@ -110,10 +110,10 @@ public class CategoryActivity extends AppCompatActivity {
         if (!isCategoryNameExists(name)) {
             dataManager.addCategory(name, prio);
             updateListAdapter();
-            Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_added, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.category_dialog_item_added, Toast.LENGTH_SHORT).show();
         }
         else
-            Toast.makeText(CategoryActivity.this, R.string.debug_error_category_exists, Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, R.string.debug_error_category_exists, Toast.LENGTH_SHORT).show();
     }
 
     public void deleteCategory(String categoryName) {

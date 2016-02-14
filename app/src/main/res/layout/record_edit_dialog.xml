@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:minWidth="320sp">
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recordAmountEditText"
+        android:layout_gravity="center_horizontal"
+        android:singleLine="true"
+        android:inputType="textCapSentences"
+        android:layout_marginTop="20sp"
+        android:layout_marginRight="15sp"
+        android:layout_marginLeft="15sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="date"
+        android:ems="10"
+        android:id="@+id/recordDateEditText"
+        android:focusable="false"
+        android:editable="false"
+        android:longClickable="false"
+        android:cursorVisible="false"
+        android:layout_weight="2"
+        android:paddingLeft="12sp"
+        android:paddingRight="12sp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="15sp"
+        android:layout_marginRight="15sp"
+        android:layout_marginLeft="15sp" />
+
+    <Spinner
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recordCategorySpinner"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginRight="15sp"
+        android:layout_marginLeft="15sp"
+        android:layout_marginTop="15sp" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/recordCommentEditText"
+        android:layout_marginTop="15dp"
+        android:editable="true"
+        android:lines="3"
+        android:layout_weight="0.09"
+        android:background="@drawable/descr_text_style"
+        android:gravity="top|left"
+        android:maxLines="3"
+        android:maxLength="96"
+        android:hint="@string/comment_textview_hint"
+        android:textSize="18sp"
+        android:padding="8dp"
+        android:textColorHint="@color/labelHintPrimaryColor"
+        android:textColor="@color/editTextPrimaryColor"
+        android:inputType="textCapSentences|textMultiLine"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginRight="15sp"
+        android:layout_marginLeft="15sp" />
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="25sp"
+        android:background="@color/categoryDialogBtnPadLayoutColor"
+        android:visibility="visible">
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/category_dialog_delete_text"
+            android:id="@+id/recordDeleteButton"
+            android:layout_weight="1"
+            android:background="@drawable/cat_dialog_btn"
+            android:textAllCaps="false"
+            android:layout_marginRight="1sp"
+            android:textSize="16sp"
+            android:textColor="@color/categoryDialogButtonTextColor"
+            android:layout_marginTop="1sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/category_dialog_cancel_text"
+            android:id="@+id/recordCancelButton"
+            android:layout_weight="1"
+            android:textAllCaps="false"
+            android:background="@drawable/cat_dialog_btn"
+            android:textSize="16sp"
+            android:textColor="@color/categoryDialogButtonTextColor"
+            android:layout_marginTop="1sp" />
+
+        <Button
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/category_dialog_save_text"
+            android:id="@+id/recordSaveButton"
+            android:layout_weight="1"
+            android:background="@drawable/cat_dialog_btn"
+            android:textAllCaps="false"
+            android:layout_marginLeft="1sp"
+            android:textSize="16sp"
+            android:textColor="@color/categoryDialogButtonTextColor"
+            android:layout_marginTop="1sp" />
+    </LinearLayout>
+</LinearLayout>

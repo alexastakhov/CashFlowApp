@@ -15,7 +15,7 @@ public class ChargeRecord {
     private int credit;
     private String comment;
     private int account;
-    private int id;
+    private long id;
 
     public ChargeRecord(float amount, CategoryItem category, Date date) {
         this.amount = amount;
@@ -47,11 +47,11 @@ public class ChargeRecord {
         this.id = id;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 

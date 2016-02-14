@@ -28,7 +28,9 @@
         android:gravity="center"
         android:textCursorDrawable="@drawable/amount_edit_cursor"
         android:layout_marginTop="5dp"
-        android:maxLength="12" />
+        android:maxLength="12"
+        android:paddingBottom="4sp"
+        android:paddingTop="2sp" />
 
     <LinearLayout
         android:orientation="horizontal"
@@ -105,3 +107,5 @@
         android:textColor="#ffffff" />
 
 </LinearLayout>
+
+<!-- TODO: Fix Spinner's bugs -->

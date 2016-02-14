@@ -20,7 +20,7 @@ public interface IDataManager {
 
     void addRecord(ChargeRecord record);
     void addRecord(float amount, CategoryItem category, String comment, Date date, int credit, int account);
-    void deleteRecord();
+    void deleteRecord(long recordId);
     void changeRecord();
 
     void dropDataBase();

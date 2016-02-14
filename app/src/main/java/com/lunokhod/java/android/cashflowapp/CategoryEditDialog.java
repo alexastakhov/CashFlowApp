@@ -71,10 +71,10 @@ public class CategoryEditDialog extends DialogFragment {
                 String text = editText.getText().toString();
 
                 if (editText.getText().length() == 0) {
-                    showNameErrorText();
+                    showErrorText(R.string.category_dialog_error_name_text);
                 }
                 else if (!categoryName.equals(text) && isCategoryExists(text)) {
-                    showCategoryExistsErrorText();
+                    showErrorText(R.string.category_dialog_error_exists_text);
                 }
                 else {
                     saveCategory(categoryId, text, (checkBox.isChecked() ? 1 : 0));
@@ -93,8 +93,12 @@ public class CategoryEditDialog extends DialogFragment {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                deleteCategory(categoryName);
-                closeDialog();
+                if (DataManager.getInstance().getRecordsNumWithCategory(categoryId) > 0)
+                    showErrorText(R.string.category_dialog_category_in_use);
+                else {
+                    deleteCategory(categoryName);
+                    closeDialog();
+                }
             }
         });
 
@@ -120,13 +124,8 @@ public class CategoryEditDialog extends DialogFragment {
         return ((CategoryActivity)getActivity()).isCategoryNameExists(name);
     }
 
-    private void showNameErrorText() {
-        errorText.setText(R.string.category_dialog_error_name_text);
-        errorText.setVisibility(View.VISIBLE);
-    }
-
-    private void showCategoryExistsErrorText() {
-        errorText.setText(R.string.category_dialog_error_exists_text);
+    private void showErrorText(int resId) {
+        errorText.setText(resId);
         errorText.setVisibility(View.VISIBLE);
     }
 }

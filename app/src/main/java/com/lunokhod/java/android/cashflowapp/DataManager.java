@@ -282,6 +282,24 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         return result.toArray(new ChargeRecord[result.size()]);
     }
 
+    public int getRecordsNumWithCategory(int categoryId) {
+        SQLiteDatabase database = this.getReadableDatabase();
+        String sql = "SELECT COUNT(*) FROM " + RECORD_TABLE + " WHERE " +
+                CATEGORY_COLUMN + "=" + categoryId + ";";
+        Cursor cursor;
+        int result = 0;
+
+        if (database != null) {
+            cursor = database.rawQuery(sql, null);
+            cursor.moveToFirst();
+            result = cursor.getInt(0);
+
+            cursor.close();
+            database.close();
+        }
+        return result;
+    }
+
     public void addCategory(String name, int prio) {
         String sql = "INSERT OR IGNORE INTO " + CATEGORY_TABLE + " (" + FULL_CATEGORY_ROW +
                 ") VALUES (NULL, ?, ?, ?);";
@@ -335,13 +353,13 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
 
         Log.i(TAG, "addRecord()");
         Log.i(TAG, "amount = " + amount);
-        Log.i(TAG, "category = " + category.getName());
+        Log.i(TAG, "category = " + category.getName() + "(" + category.getId() + ")");
         Log.i(TAG, "comment = " + comment);
         Log.i(TAG, "date = " + dateFormat.format(date) + " (" + date.getTime() +")");
         Log.i(TAG, "credit = " + credit);
     }
 
-    public void deleteRecord() {
+    public void deleteRecord(long recordId) {
 
     }
 
