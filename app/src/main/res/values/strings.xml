@@ -1,28 +1,31 @@
 <resources>
+    <!-- System Strings -->
     <string name="app_name">CashFlowApp</string>
-    <string name="main_caption">"Новая запись"</string>
-    <string name="cat_caption">Категория</string>
-    <string name="comment_textview_hint">Комментарий</string>
+    <string name="title_activity_records">RecordsActivity</string>
+    <string name="title_activity_category">CategoryActivity</string>
+    <string name="title_activity_records_edit">RecordsEditActivity</string>
+    <string name="title_activity_settings">SettingsActivity</string>
 
-    <string name="add_record_button_text">ДОБАВИТЬ ЗАПИСЬ</string>
-
+    <!-- Activity Captions and ActionBar Buttons' Hints -->
     <string name="action_records">Записи</string>
     <string name="action_categories">Категории</string>
     <string name="action_settings">Настройки</string>
 
+    <!-- Main Activity Strings -->
+    <string name="main_caption">"Новая запись"</string>
+    <string name="cat_caption">Категория</string>
+    <string name="comment_textview_hint">Комментарий</string>
+    <string name="main_activity_record_added">Запись добавлена</string>
+    <string name="add_record_button_text">ДОБАВИТЬ ЗАПИСЬ</string>
     <string name="category_spin_hint">Категория</string>
 
+    <!-- Category Dialogs -->
     <string name="category_dialog_header">Изменить категорию</string>
     <string name="category_dialog_header2">Новая категория</string>
     <string name="category_dialog_check">Приоритетная категория</string>
     <string name="category_dialog_cancel_text">Отменить</string>
     <string name="category_dialog_save_text">Сохранить</string>
     <string name="category_dialog_delete_text">Удалить</string>
-
-    <string name="title_activity_records">RecordsActivity</string>
-    <string name="title_activity_category">CategoryActivity</string>
-    <string name="title_activity_records_edit">RecordsEditActivity</string>
-
     <string name="category_dialog_error_name_text">Название категории не может быть пустым</string>
     <string name="category_dialog_error_exists_text">Категория с таким названием уже существует</string>
     <string name="category_dialog_category_in_use">Данная категория используется в записях. Переименуйте категорию, или удалите эти записи перед удалением категории</string>
@@ -30,11 +33,17 @@
     <string name="category_dialog_item_deleted">Категория удалена</string>
     <string name="category_dialog_item_saved">Категория сохранена</string>
 
-    <string name="main_activity_record_added">Запись добавлена</string>
+    <!-- Record Dialog -->
+    <string name="record_dialog_cancel_text">Отменить</string>
+    <string name="record_dialog_save_text">Сохранить</string>
+    <string name="record_dialog_delete_text">Удалить</string>
+    <string name="record_dialog_item_deleted">Запись удалена</string>
+    <string name="record_dialog_item_saved">Запись сохранена</string>
 
+    <!-- Debug Purpoues -->
     <string name="debug_error_category_exists">Ошибка добавления категории: категория с таким именем уже существует в DataManager</string>
-    <string name="title_activity_settings">SettingsActivity</string>
 
+    <!-- Months Converter -->
     <string name="month_jan">января</string>
     <string name="month_feb">февраля</string>
     <string name="month_mar">марта</string>

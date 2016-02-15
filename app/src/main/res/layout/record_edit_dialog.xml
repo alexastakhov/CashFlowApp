@@ -76,39 +76,39 @@
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/category_dialog_delete_text"
+            android:text="@string/record_dialog_delete_text"
             android:id="@+id/recordDeleteButton"
             android:layout_weight="1"
             android:background="@drawable/cat_dialog_btn"
             android:textAllCaps="false"
             android:layout_marginRight="1sp"
             android:textSize="16sp"
-            android:textColor="@color/categoryDialogButtonTextColor"
+            android:textColor="@color/recordDialogButtonTextColor"
             android:layout_marginTop="1sp" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/category_dialog_cancel_text"
+            android:text="@string/record_dialog_cancel_text"
             android:id="@+id/recordCancelButton"
             android:layout_weight="1"
             android:textAllCaps="false"
             android:background="@drawable/cat_dialog_btn"
             android:textSize="16sp"
-            android:textColor="@color/categoryDialogButtonTextColor"
+            android:textColor="@color/recordDialogButtonTextColor"
             android:layout_marginTop="1sp" />
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/category_dialog_save_text"
+            android:text="@string/record_dialog_save_text"
             android:id="@+id/recordSaveButton"
             android:layout_weight="1"
             android:background="@drawable/cat_dialog_btn"
             android:textAllCaps="false"
             android:layout_marginLeft="1sp"
             android:textSize="16sp"
-            android:textColor="@color/categoryDialogButtonTextColor"
+            android:textColor="@color/recordDialogButtonTextColor"
             android:layout_marginTop="1sp" />
     </LinearLayout>
 </LinearLayout>

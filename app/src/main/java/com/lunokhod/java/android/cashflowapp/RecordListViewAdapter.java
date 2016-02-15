@@ -31,7 +31,7 @@ public class RecordListViewAdapter extends BaseAdapter {
     }
 
     @Override
-    public Object getItem(int position) {
+    public ChargeRecord getItem(int position) {
         return records[position];
     }
 
@@ -57,7 +57,13 @@ public class RecordListViewAdapter extends BaseAdapter {
         TextView timeTextView = (TextView)view.findViewById(R.id.timeTextView);
 
         date.setTime(item.getDate());
-        amountTextView.setText(formatAmount(item.getAmount()));
+        if (item.getCredit() == ChargeRecord.CREDIT) {
+            amountTextView.setText("+" + formatAmount(item.getAmount()));
+            amountTextView.setTextColor(view.getResources().getColor(R.color.recordRowCreditAmountColor));
+        }
+        else
+            amountTextView.setText(formatAmount(item.getAmount()));
+
         categoryTextView.setText(item.getCategory().getName());
         dayTextView.setText(String.valueOf(date.get(Calendar.DATE)));
         monthTextView.setText(monthToString(date.get(Calendar.MONTH)));

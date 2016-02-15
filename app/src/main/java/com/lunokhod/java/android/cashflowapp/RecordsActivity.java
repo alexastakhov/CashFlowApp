@@ -6,7 +6,10 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ListView;
+import android.widget.Toast;
 
 public class RecordsActivity extends AppCompatActivity {
     private RecordListViewAdapter recordListViewAdapter;
@@ -28,6 +31,13 @@ public class RecordsActivity extends AppCompatActivity {
         recordListViewAdapter = new RecordListViewAdapter(this.getApplicationContext(), dataManager.getAllRecords());
         recordListView = (ListView)findViewById(R.id.recordListView);
         recordListView.setAdapter(recordListViewAdapter);
+
+        recordListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                showItemEditDialog(recordListViewAdapter.getItem(position));
+            }
+        });
 
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
@@ -58,12 +68,24 @@ public class RecordsActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    private void showMsgDlg(String title, String msg) {
-        MessageDialog.newInstance(title, msg).show(getFragmentManager(), "messageDialog");
+    private void showItemEditDialog(ChargeRecord item) {
+        RecordEditDialog.getInstance(item).show(getFragmentManager(), "recordDialog");
     }
 
     private void updateListAdapter() {
         recordListViewAdapter.setDataObjects(dataManager.getAllRecords());
+    }
+
+    public void changeRecord(int categoryId, String newName, int prio) {
+        //dataManager.changeRecord(categoryId, newName, prio);
+        updateListAdapter();
+//        Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_saved, Toast.LENGTH_SHORT).show();
+    }
+
+    public void deleteRecord(long recordId) {
+        dataManager.deleteRecord(recordId);
+        updateListAdapter();
+//        Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_deleted, Toast.LENGTH_SHORT).show();
     }
 }
 

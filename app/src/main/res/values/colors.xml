@@ -13,17 +13,28 @@
     <color name="spinHintPrimaryColor">#919191</color>
     <color name="editTextPrimaryColor">#000000</color>
 
+    <!-- Category List Row -->
     <color name="categoryListTextColor">#000000</color>
 
+    <!-- Category Dialogs -->
     <color name="categoryDialogHeaderColor">#8a81f5</color>
     <color name="categoryDialogHeaderTextColor">#ffffff</color>
     <color name="categoryDialogButtonTextColor">#000249</color>
     <color name="categoryDialogBtnPadLayoutColor">#bababa</color>
 
+    <!-- Record Dialog -->
+    <color name="recordDialogHeaderColor">#8a81f5</color>
+    <color name="recordDialogHeaderTextColor">#ffffff</color>
+    <color name="recordDialogButtonTextColor">#000249</color>
+    <color name="recordDialogBtnPadLayoutColor">#bababa</color>
+
     <color name="errorTextColor">#ff0000</color>
 
+    <!-- Record List Row -->
     <color name="recordRowAmountColor">#b90003</color>
+    <color name="recordRowCreditAmountColor">#3737f1</color>
     <color name="recordRowCategoryColor">#6b6b6b</color>
     <color name="recordRowDateColor">#939292</color>
     <color name="recordRowTimeColor">#939292</color>
 </resources>
+

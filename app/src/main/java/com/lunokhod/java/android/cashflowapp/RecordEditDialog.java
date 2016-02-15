@@ -9,6 +9,7 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.TextView;
 
 /**
@@ -18,8 +19,14 @@ public class RecordEditDialog extends DialogFragment {
 
     private int initHeight;
     private int initWidth = 350;
-    private long recordId;
     private View view;
+    private long date;
+    private float amount;
+    private long recordId;
+    private String comment;
+    private int categoryId;
+    private int credit;
+
 
     private static final String TAG = "RecordEditDialog";
 
@@ -32,6 +39,7 @@ public class RecordEditDialog extends DialogFragment {
         args.putLong("id", item.getId());
         args.putString("comment", item.getComment());
         args.putInt("category", item.getCategory().getId());
+        args.putInt("credit", item.getCredit());
         dialog.setArguments(args);
 
         return dialog;
@@ -40,21 +48,29 @@ public class RecordEditDialog extends DialogFragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-//
-//        categoryName = getArguments().getString("name");
-//        priority = getArguments().getInt("pri");
-//        categoryId = getArguments().getInt("id");
+
+        date = getArguments().getLong("date");
+        amount = getArguments().getFloat("amount");
+        recordId = getArguments().getLong("id");
+        comment = getArguments().getString("comment");
+        categoryId = getArguments().getInt("category");
+        credit = getArguments().getInt("credit");
     }
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.record_edit_dialog, container, false);
-//        Button saveBtn = (Button)view.findViewById(R.id.recordSaveButton);
-//        Button cancelBtn = (Button)view.findViewById(R.id.recordCancelButton);
-//        Button deleteBtn = (Button)view.findViewById(R.id.recordDeleteButton);
-//
-//        getDialog().setTitle(R.string.category_dialog_header);
+        Button saveBtn = (Button)view.findViewById(R.id.recordSaveButton);
+        Button cancelBtn = (Button)view.findViewById(R.id.recordCancelButton);
+        Button deleteBtn = (Button)view.findViewById(R.id.recordDeleteButton);
+        EditText recordAmountEditText = (EditText)view.findViewById(R.id.recordAmountEditText);
+        EditText recordDateEditText = (EditText)view.findViewById(R.id.recordDateEditText);
+        Spinner recordCategorySpinner = (Spinner)view.findViewById(R.id.recordCategorySpinner);
+        EditText recordCommentEditText = (EditText)view.findViewById(R.id.recordCommentEditText);
+
+
+        getDialog().setTitle(R.string.category_dialog_header);
 //
 //        initHeight = getDialog().getWindow().getAttributes().height;
 //        getDialog().getWindow().setLayout(initWidth, initHeight);
@@ -99,15 +115,12 @@ public class RecordEditDialog extends DialogFragment {
         this.dismiss();
     }
 
-//    private void saveCategory(int id, String newName, int prio) {
-//        ((CategoryActivity)getActivity()).changeCategory(id, newName, prio);
-//    }
-//
-//    private void deleteRecord(long id) {
-//        ((CategoryActivity)getActivity()).deleteCategory(categoryName);
-//    }
-//
-//    private boolean isCategoryExists(String name) {
-//        return ((CategoryActivity)getActivity()).isCategoryNameExists(name);
-//    }
+    private void saveRecord(int id, String newName, int prio) {
+        ((RecordsActivity)getActivity()).changeRecord(id, newName, prio);
+    }
+
+    private void deleteRecord(long recordId) {
+        ((RecordsActivity)getActivity()).deleteRecord(recordId);
+    }
+
 }

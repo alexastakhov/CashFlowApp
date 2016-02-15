@@ -85,10 +85,6 @@ public class CategoryActivity extends AppCompatActivity {
         CategoryNewDialog.getInstance().show(getFragmentManager(), "categoryDialog");
     }
 
-    private void showMsgDlg(String title, String msg) {
-        MessageDialog.newInstance(title, msg).show(getFragmentManager(), "messageDialog");
-    }
-
     private void updateListAdapter() {
         categoryListViewAdapter.setDataObjects(dataManager.getCategoriesSortedByName());
     }
