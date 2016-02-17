@@ -71,13 +71,13 @@ public class RecordEditDialog extends DialogFragment {
 
 
         getDialog().setTitle(R.string.category_dialog_header);
-//
-//        initHeight = getDialog().getWindow().getAttributes().height;
-//        getDialog().getWindow().setLayout(initWidth, initHeight);
-//
-//        saveBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
+
+        initHeight = getDialog().getWindow().getAttributes().height;
+        getDialog().getWindow().setLayout(initWidth, initHeight);
+
+        saveBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
 //                String text = editText.getText().toString();
 //
 //                if (editText.getText().length() == 0) {
@@ -88,25 +88,25 @@ public class RecordEditDialog extends DialogFragment {
 //                }
 //                else {
 //                    saveCategory(categoryId, text, (checkBox.isChecked() ? 1 : 0));
-//                    closeDialog();
+                    closeDialog();
 //                }
-//            }
-//        });
+            }
+        });
 //
-//        cancelBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                closeDialog();
-//            }
-//        });
-//
-//        deleteBtn.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                deleteRecord(recordId);
-//                closeDialog();
-//            }
-//        });
+        cancelBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closeDialog();
+            }
+        });
+
+        deleteBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                deleteRecord(recordId);
+                closeDialog();
+            }
+        });
 
         return view;
     }

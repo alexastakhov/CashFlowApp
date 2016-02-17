@@ -4,15 +4,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.lunokhod.java.android.cashflowapp.MainActivity"
     tools:showIn="@layout/activity_main"
     android:orientation="vertical"
-    android:weightSum="1">
+    android:weightSum="1"
+    style="?android:buttonBarStyle" >
 
     <EditText
         android:layout_width="match_parent"
@@ -27,17 +24,22 @@
         android:textColor="@color/amountTextColor"
         android:gravity="center"
         android:textCursorDrawable="@drawable/amount_edit_cursor"
-        android:layout_marginTop="5dp"
+        android:layout_marginTop="@dimen/amount_edit_vertical_margin"
         android:maxLength="12"
         android:paddingBottom="4sp"
-        android:paddingTop="2sp" />
+        android:paddingTop="2sp"
+        android:background="@drawable/apptheme_edit_text_holo_light"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin" />
 
     <LinearLayout
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginTop="25sp"
-        android:focusable="false">
+        android:layout_marginTop="@dimen/main_activity_vertical_margin"
+        android:focusable="false"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin">
 
         <EditText
             android:layout_width="match_parent"
@@ -49,15 +51,16 @@
             android:editable="false"
             android:longClickable="false"
             android:cursorVisible="false"
+            android:background="@drawable/apptheme_edit_text_holo_light"
             android:layout_weight="2"
             android:paddingLeft="12sp"
-            android:paddingRight="12sp"/>
+            android:paddingRight="12sp" />
 
         <ImageView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:id="@+id/dateImageButton"
-            android:layout_weight="12"
+            android:layout_weight="11"
             android:src="@mipmap/ic_date_range_black_24dp"
             android:padding="5sp" />
     </LinearLayout>
@@ -69,17 +72,19 @@
         android:layout_gravity="center_horizontal"
         android:spinnerMode="dialog"
         android:background="@drawable/cat_spinner_style"
-        android:layout_marginTop="25sp"
+        android:layout_marginTop="@dimen/main_activity_vertical_margin"
         android:paddingTop="12sp"
         android:paddingBottom="12sp"
         android:paddingLeft="5sp"
-        android:paddingRight="5sp" />
+        android:paddingRight="5sp"
+        android:layout_marginRight="@dimen/activity_horizontal_margin"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/commentEditText"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="@dimen/main_activity_vertical_margin"
         android:editable="true"
         android:lines="3"
         android:layout_weight="0.09"
@@ -92,19 +97,22 @@
         android:padding="8dp"
         android:textColorHint="@color/labelHintPrimaryColor"
         android:textColor="@color/editTextPrimaryColor"
-        android:inputType="textCapSentences|textMultiLine" />
+        android:inputType="textCapSentences|textMultiLine"
+        android:layout_marginLeft="@dimen/activity_horizontal_margin"
+        android:layout_marginRight="@dimen/activity_horizontal_margin" />
 
     <Button
+        style="?android:buttonBarButtonStyle"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:paddingTop="15sp"
         android:paddingBottom="15sp"
         android:text="@string/add_record_button_text"
         android:id="@+id/addRecButton"
-        android:layout_marginTop="25dp"
         android:textSize="16sp"
         android:background="@drawable/addrec_btn_style"
-        android:textColor="#ffffff" />
+        android:textColor="#ffffff"
+        android:layout_marginTop="@dimen/main_activity_vertical_margin" />
 
 </LinearLayout>
 
