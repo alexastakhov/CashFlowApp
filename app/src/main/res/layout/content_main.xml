@@ -20,7 +20,7 @@
         android:enabled="true"
         android:numeric="signed|decimal"
         android:singleLine="true"
-        android:textSize="45sp"
+        android:textSize="@dimen/amount_edit_text_size"
         android:textColor="@color/amountTextColor"
         android:gravity="center"
         android:textCursorDrawable="@drawable/amount_edit_cursor"

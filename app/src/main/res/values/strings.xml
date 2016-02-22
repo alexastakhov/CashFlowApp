@@ -34,6 +34,7 @@
     <string name="category_dialog_item_saved">Категория сохранена</string>
 
     <!-- Record Dialog -->
+    <string name="record_dialog_header">Изменить запись</string>
     <string name="record_dialog_cancel_text">Отменить</string>
     <string name="record_dialog_save_text">Сохранить</string>
     <string name="record_dialog_delete_text">Удалить</string>

@@ -110,8 +110,4 @@ public class NumericWatcher implements TextWatcher {
             hasFractionalPart = false;
         }
     }
-
-    public boolean getPlusFlag() {
-        return plusFlag;
-    }
 }

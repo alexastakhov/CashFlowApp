@@ -69,11 +69,11 @@ public class RecordEditDialog extends DialogFragment {
         Spinner recordCategorySpinner = (Spinner)view.findViewById(R.id.recordCategorySpinner);
         EditText recordCommentEditText = (EditText)view.findViewById(R.id.recordCommentEditText);
 
-
-        getDialog().setTitle(R.string.category_dialog_header);
+        getDialog().setTitle(R.string.record_dialog_header);
 
         initHeight = getDialog().getWindow().getAttributes().height;
         getDialog().getWindow().setLayout(initWidth, initHeight);
+        recordAmountEditText.addTextChangedListener(new NumericWatcher(recordAmountEditText));
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -108,6 +108,9 @@ public class RecordEditDialog extends DialogFragment {
             }
         });
 
+        recordAmountEditText.setText(formatAmount(amount, credit));
+        recordCommentEditText.setText(comment);
+
         return view;
     }
 
@@ -123,4 +126,26 @@ public class RecordEditDialog extends DialogFragment {
         ((RecordsActivity)getActivity()).deleteRecord(recordId);
     }
 
+    private String formatAmount(float num, int cr) {
+        String[] parts = String.format("%.2f", num).split(",");
+        String str = "";
+        int cnt = 1;
+
+        for (int i = parts[0].length() - 1; i >= 0; i--) {
+            str = parts[0].charAt(i) + str;
+            if (cnt == 3 && i > 0) {
+                str = " " + str;
+                cnt = 0;
+            }
+            cnt++;
+        }
+
+        if (!parts[1].equals("00"))
+            str = str + "." + parts[1];
+
+        if (cr == ChargeRecord.CREDIT)
+            str = "+" + str;
+
+        return str;
+    }
 }

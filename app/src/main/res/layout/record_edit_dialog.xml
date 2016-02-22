@@ -10,13 +10,14 @@
         android:id="@+id/recordAmountEditText"
         android:layout_gravity="center_horizontal"
         android:singleLine="true"
-        android:inputType="textCapSentences"
         android:background="@drawable/apptheme_edit_text_holo_light"
-        android:layout_marginTop="20sp"
-        android:layout_marginRight="15sp"
-        android:layout_marginLeft="15sp"
-        android:textSize="@dimen/dialog_edit_text_size"
-        android:layout_marginBottom="5sp" />
+        android:layout_marginTop="@dimen/dialog_vertical_margin"
+        android:layout_marginRight="@dimen/dialog_horizontal_margin"
+        android:layout_marginLeft="@dimen/dialog_horizontal_margin"
+        android:textSize="@dimen/dialog_amount_edit_text_size"
+        android:gravity="center"
+        android:numeric="signed|decimal"
+        android:textColor="@color/amountTextColor" />
 
     <EditText
         android:layout_width="match_parent"
@@ -28,34 +29,31 @@
         android:editable="false"
         android:longClickable="false"
         android:cursorVisible="false"
-        android:layout_weight="2"
         android:paddingLeft="12sp"
         android:paddingRight="12sp"
         android:layout_gravity="center_horizontal"
         android:background="@drawable/apptheme_edit_text_holo_light"
-        android:layout_marginTop="15sp"
-        android:layout_marginRight="15sp"
-        android:layout_marginLeft="15sp"
-        android:textSize="@dimen/dialog_edit_text_size"
-        android:layout_marginBottom="5sp" />
+        android:layout_marginTop="@dimen/dialog_vertical_margin"
+        android:layout_marginRight="@dimen/dialog_horizontal_margin"
+        android:layout_marginLeft="@dimen/dialog_horizontal_margin"
+        android:textSize="@dimen/dialog_edit_text_size" />
 
     <Spinner
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recordCategorySpinner"
         android:layout_gravity="center_horizontal"
-        android:layout_marginRight="15sp"
-        android:layout_marginLeft="15sp"
-        android:layout_marginTop="15sp" />
+        android:layout_marginRight="@dimen/dialog_horizontal_margin"
+        android:layout_marginLeft="@dimen/dialog_horizontal_margin"
+        android:layout_marginTop="@dimen/dialog_vertical_margin" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:id="@+id/recordCommentEditText"
-        android:layout_marginTop="15dp"
+        android:layout_marginTop="@dimen/dialog_vertical_margin"
         android:editable="true"
         android:lines="3"
-        android:layout_weight="0.09"
         android:background="@drawable/descr_text_style"
         android:gravity="top|left"
         android:maxLines="3"
@@ -67,8 +65,8 @@
         android:textColor="@color/editTextPrimaryColor"
         android:inputType="textCapSentences|textMultiLine"
         android:layout_gravity="center_horizontal"
-        android:layout_marginRight="15sp"
-        android:layout_marginLeft="15sp" />
+        android:layout_marginRight="@dimen/dialog_horizontal_margin"
+        android:layout_marginLeft="@dimen/dialog_horizontal_margin" />
 
     <LinearLayout
         android:orientation="horizontal"
