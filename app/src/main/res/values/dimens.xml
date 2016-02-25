@@ -7,7 +7,10 @@
     <!-- Main Activity -->
     <dimen name="amount_edit_vertical_margin">20dp</dimen>
     <dimen name="main_activity_vertical_margin">25dp</dimen>
-    <dimen name="amount_edit_text_size">45sp</dimen>
+    <dimen name="amount_edit_text_size">40sp</dimen>
+    <dimen name="main_edit_text_size">18sp</dimen>
+    <dimen name="main_label_text_size">15sp</dimen>
+    <dimen name="main_activity_horizontal_margin">16sp</dimen>
 
     <dimen name="record_row_date_text">12sp</dimen>
 
@@ -18,4 +21,15 @@
     <dimen name="dialog_error_text_size">14sp</dimen>
     <dimen name="dialog_horizontal_margin">15sp</dimen>
     <dimen name="dialog_vertical_margin">15sp</dimen>
+    <dimen name="dialog_vertical_large_margin">20sp</dimen>
+    <dimen name="dialog_vertical_small_margin">5sp</dimen>
+
+    <!-- Spinner -->
+    <dimen name="spinner_vertical_padding">12sp</dimen>
+    <dimen name="spinner_horizontal_padding">5sp</dimen>
+
+    <!-- Dialog Spinner -->
+    <dimen name="dialog_spinner_vertical_padding">9sp</dimen>
+    <dimen name="dialog_spinner_horizontal_padding">5sp</dimen>
+
 </resources>

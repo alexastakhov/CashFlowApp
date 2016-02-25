@@ -1,22 +1,32 @@
 package com.lunokhod.java.android.cashflowapp;
 
 import android.app.DialogFragment;
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
+import android.text.format.DateUtils;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.Spinner;
+import android.widget.SpinnerAdapter;
 import android.widget.TextView;
+
+import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.List;
 
 /**
  * Created by alex on 10.01.2016.
  */
 public class RecordEditDialog extends DialogFragment {
-
     private int initHeight;
     private int initWidth = 350;
     private View view;
@@ -26,7 +36,6 @@ public class RecordEditDialog extends DialogFragment {
     private String comment;
     private int categoryId;
     private int credit;
-
 
     private static final String TAG = "RecordEditDialog";
 
@@ -61,6 +70,9 @@ public class RecordEditDialog extends DialogFragment {
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         view = inflater.inflate(R.layout.record_edit_dialog, container, false);
+        ArrayList<String> spinnerList = new ArrayList<String>(Arrays.asList(DataManager.getInstance().getCategoriesAsStrings()));
+        ArrayAdapter spinnerAdapter = new DialogArrayAdapter(this.getActivity().getApplicationContext(),
+                R.layout.dialog_spinner_item, spinnerList);
         Button saveBtn = (Button)view.findViewById(R.id.recordSaveButton);
         Button cancelBtn = (Button)view.findViewById(R.id.recordCancelButton);
         Button deleteBtn = (Button)view.findViewById(R.id.recordDeleteButton);
@@ -69,11 +81,16 @@ public class RecordEditDialog extends DialogFragment {
         Spinner recordCategorySpinner = (Spinner)view.findViewById(R.id.recordCategorySpinner);
         EditText recordCommentEditText = (EditText)view.findViewById(R.id.recordCommentEditText);
 
-        getDialog().setTitle(R.string.record_dialog_header);
+        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        recordCategorySpinner.setAdapter(spinnerAdapter);
 
+        getDialog().setTitle(R.string.record_dialog_header);
         initHeight = getDialog().getWindow().getAttributes().height;
         getDialog().getWindow().setLayout(initWidth, initHeight);
         recordAmountEditText.addTextChangedListener(new NumericWatcher(recordAmountEditText));
+
+        recordDateEditText.setText(DateUtils.formatDateTime(this.getActivity().getApplicationContext(), date,
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,6 +122,15 @@ public class RecordEditDialog extends DialogFragment {
             public void onClick(View v) {
                 deleteRecord(recordId);
                 closeDialog();
+            }
+        });
+
+        recordCommentEditText.setOnKeyListener(new View.OnKeyListener() {
+            @Override
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if (keyCode == KeyEvent.KEYCODE_ENTER)
+                    return true;
+                return false;
             }
         });
 
@@ -147,5 +173,27 @@ public class RecordEditDialog extends DialogFragment {
             str = "+" + str;
 
         return str;
+    }
+}
+
+class DialogArrayAdapter extends ArrayAdapter<String> {
+    private Context context;
+    private int resource;
+
+    public DialogArrayAdapter(Context context, int resource, List<String> objects) {
+        super(context, resource, objects);
+
+        this.context = context;
+        this.resource = resource;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        convertView = View.inflate(context, resource, null);
+        TextView textView = (TextView)convertView;
+
+        textView.setText(getItem(position));
+
+        return convertView;
     }
 }

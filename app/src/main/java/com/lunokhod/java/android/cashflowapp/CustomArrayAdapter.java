@@ -25,13 +25,6 @@ public class CustomArrayAdapter extends ArrayAdapter {
     @SuppressWarnings("unused")
     private static final String TAG = "CustomArrayAdapter";
 
-    public CustomArrayAdapter(Context context, int resource, ArrayList<String> objects) {
-        super(context, resource, objects);
-        this.context = context;
-        this.resource = resource;
-        selectedColor = Color.BLACK;
-    }
-
     public CustomArrayAdapter(Context context, int resource, int textViewResourceId, ArrayList<String> objects) {
         super(context, resource, textViewResourceId, objects);
         this.context = context;
@@ -48,7 +41,7 @@ public class CustomArrayAdapter extends ArrayAdapter {
             convertView = View.inflate(context, resource, null);
 
         if (selected) {
-            TextView textView = (TextView) convertView;
+            TextView textView = (TextView)convertView;
             textView.setText((String)getItem(position));
             textView.setTextColor(selectedColor);
         }

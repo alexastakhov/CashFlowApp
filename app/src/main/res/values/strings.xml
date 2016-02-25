@@ -18,6 +18,8 @@
     <string name="main_activity_record_added">Запись добавлена</string>
     <string name="add_record_button_text">ДОБАВИТЬ ЗАПИСЬ</string>
     <string name="category_spin_hint">Категория</string>
+    <string name="amount_label_text">Сумма:</string>
+    <string name="date_label_text">Дата:</string>
 
     <!-- Category Dialogs -->
     <string name="category_dialog_header">Изменить категорию</string>

@@ -12,10 +12,10 @@
         android:singleLine="true"
         android:inputType="textCapSentences"
         android:background="@drawable/apptheme_edit_text_holo_light"
-        android:layout_marginTop="20sp"
+        android:layout_marginTop="@dimen/dialog_vertical_large_margin"
         android:layout_marginRight="@dimen/dialog_horizontal_margin"
         android:layout_marginLeft="@dimen/dialog_horizontal_margin"
-        android:layout_marginBottom="5sp"
+        android:layout_marginBottom="@dimen/dialog_vertical_small_margin"
         android:textSize="@dimen/dialog_edit_text_size" />
 
     <CheckBox
