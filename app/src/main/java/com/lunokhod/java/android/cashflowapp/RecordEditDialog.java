@@ -81,7 +81,7 @@ public class RecordEditDialog extends DialogFragment {
         Spinner recordCategorySpinner = (Spinner)view.findViewById(R.id.recordCategorySpinner);
         EditText recordCommentEditText = (EditText)view.findViewById(R.id.recordCommentEditText);
 
-        spinnerAdapter.setDropDownViewResource(R.layout.spinner_dropdown_item);
+        spinnerAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
         recordCategorySpinner.setAdapter(spinnerAdapter);
 
         getDialog().setTitle(R.string.record_dialog_header);

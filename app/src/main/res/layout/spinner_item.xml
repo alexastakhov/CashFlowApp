@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
-    android:textSize="18sp"
+    android:textSize="@dimen/main_edit_text_size"
     android:text="@string/category_spin_hint"
     android:textColor="@color/spinHintPrimaryColor"
     android:drawableRight="@mipmap/ic_expand_more_black_24dp"

@@ -1,13 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<TextView xmlns:android="http://schemas.android.com/apk/res/android"
+<CheckedTextView xmlns:android="http://schemas.android.com/apk/res/android"
     android:id="@android:id/text1"
-    style="?android:attr/spinnerItemStyle"
     android:singleLine="true"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:ellipsize="marquee"
     android:textSize="@dimen/dialog_edit_text_size"
+    android:paddingTop="14sp"
+    android:paddingBottom="14sp"
+    android:paddingLeft="14sp"
+    android:paddingRight="14sp"
     android:textColor="@color/spinDropTextColor"
-    android:drawableRight="@mipmap/ic_expand_more_black_24dp"
-    android:textAlignment="inherit" />
+    android:ellipsize="marquee"/>

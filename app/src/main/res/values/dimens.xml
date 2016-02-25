@@ -11,12 +11,13 @@
     <dimen name="main_edit_text_size">18sp</dimen>
     <dimen name="main_label_text_size">15sp</dimen>
     <dimen name="main_activity_horizontal_margin">16sp</dimen>
+    <dimen name="main_comment_text_padding">8sp</dimen>
 
     <dimen name="record_row_date_text">12sp</dimen>
 
     <!-- Dialogs -->
     <dimen name="dialog_amount_edit_text_size">27sp</dimen>
-    <dimen name="dialog_edit_text_size">18sp</dimen>
+    <dimen name="dialog_edit_text_size">16sp</dimen>
     <dimen name="dialog_check_box_size">16sp</dimen>
     <dimen name="dialog_error_text_size">14sp</dimen>
     <dimen name="dialog_horizontal_margin">15sp</dimen>

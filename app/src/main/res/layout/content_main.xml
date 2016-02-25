@@ -154,7 +154,7 @@
         android:maxLength="96"
         android:hint="@string/comment_textview_hint"
         android:textSize="@dimen/main_edit_text_size"
-        android:padding="8dp"
+        android:padding="@dimen/main_comment_text_padding"
         android:textColorHint="@color/labelHintPrimaryColor"
         android:textColor="@color/editTextPrimaryColor"
         android:inputType="textCapSentences|textMultiLine"
