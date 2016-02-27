@@ -1,5 +1,6 @@
 package com.lunokhod.java.android.cashflowapp;
 
+import android.content.Intent;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -35,7 +36,19 @@ public class RecordsActivity extends AppCompatActivity {
         recordListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                showItemEditDialog(recordListViewAdapter.getItem(position));
+                Intent intent = new Intent();
+                ChargeRecord item = recordListViewAdapter.getItem(position);
+
+                intent.putExtra("amount", item.getAmount());
+                intent.putExtra("credit", item.getCredit());
+                intent.putExtra("category", item.getCategory().getName());
+                intent.putExtra("date", item.getDate().getTime());
+                intent.putExtra("comment", item.getComment());
+                intent.putExtra("account", item.getAccount());
+                intent.putExtra("id", item.getId());
+
+                intent.setClass(getApplicationContext(), RecordEditActivity.class);
+                startActivity(intent);
             }
         });
 
@@ -66,10 +79,6 @@ public class RecordsActivity extends AppCompatActivity {
             return true;
         }
         return super.onOptionsItemSelected(item);
-    }
-
-    private void showItemEditDialog(ChargeRecord item) {
-        RecordEditDialog.getInstance(item).show(getFragmentManager(), "recordDialog");
     }
 
     private void updateListAdapter() {

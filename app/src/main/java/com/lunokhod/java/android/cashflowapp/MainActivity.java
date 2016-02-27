@@ -32,7 +32,6 @@ import java.util.Collections;
 import java.util.Date;
 
 public class MainActivity extends AppCompatActivity {
-
     private Spinner categorySpinner;
     private CustomArrayAdapter spinnerAdapter;
     private TextView commentEditText;
@@ -57,6 +56,7 @@ public class MainActivity extends AppCompatActivity {
         dataManager = new DataManager(getApplicationContext());
         spinnerList = new ArrayList<String>(Arrays.asList(dataManager.getCategoriesAsStrings()));
         ActionBar actionBar = getSupportActionBar();
+
         selectedDate = Calendar.getInstance();
 
         if (actionBar != null) actionBar.setTitle(R.string.main_caption);
@@ -127,15 +127,6 @@ public class MainActivity extends AppCompatActivity {
         });
 
         setInitialDate();
-
-        FloatingActionButton fab = (FloatingActionButton) findViewById(R.id.fab);
-        fab.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Snackbar.make(view, "Replace with your own action", Snackbar.LENGTH_LONG)
-                        .setAction("Action", null).show();
-            }
-        });
     }
 
     @Override
@@ -146,7 +137,6 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_main, menu);
 
         return true;
@@ -184,7 +174,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDateFromPicker() {
-        new DatePickerDialog(MainActivity.this, d, selectedDate.get(Calendar.YEAR),
+        new DatePickerDialog(this, d, selectedDate.get(Calendar.YEAR),
                 selectedDate.get(Calendar.MONTH), selectedDate.get(Calendar.DAY_OF_MONTH)).show();
     }
 

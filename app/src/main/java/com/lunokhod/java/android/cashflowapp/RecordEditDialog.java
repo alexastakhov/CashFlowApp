@@ -1,5 +1,6 @@
 package com.lunokhod.java.android.cashflowapp;
 
+import android.app.DatePickerDialog;
 import android.app.DialogFragment;
 import android.content.Context;
 import android.os.Bundle;
@@ -11,10 +12,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.CheckBox;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.SpinnerAdapter;
 import android.widget.TextView;
 
 import java.sql.Date;
@@ -34,8 +34,11 @@ public class RecordEditDialog extends DialogFragment {
     private float amount;
     private long recordId;
     private String comment;
-    private int categoryId;
+    private String category;
     private int credit;
+
+    private EditText dateEditText;
+    private Calendar selectedDate;
 
     private static final String TAG = "RecordEditDialog";
 
@@ -47,7 +50,7 @@ public class RecordEditDialog extends DialogFragment {
         args.putFloat("amount", item.getAmount());
         args.putLong("id", item.getId());
         args.putString("comment", item.getComment());
-        args.putInt("category", item.getCategory().getId());
+        args.putString("category", item.getCategory().getName());
         args.putInt("credit", item.getCredit());
         dialog.setArguments(args);
 
@@ -62,7 +65,7 @@ public class RecordEditDialog extends DialogFragment {
         amount = getArguments().getFloat("amount");
         recordId = getArguments().getLong("id");
         comment = getArguments().getString("comment");
-        categoryId = getArguments().getInt("category");
+        category = getArguments().getString("category");
         credit = getArguments().getInt("credit");
     }
 
@@ -76,21 +79,31 @@ public class RecordEditDialog extends DialogFragment {
         Button saveBtn = (Button)view.findViewById(R.id.recordSaveButton);
         Button cancelBtn = (Button)view.findViewById(R.id.recordCancelButton);
         Button deleteBtn = (Button)view.findViewById(R.id.recordDeleteButton);
-        EditText recordAmountEditText = (EditText)view.findViewById(R.id.recordAmountEditText);
-        EditText recordDateEditText = (EditText)view.findViewById(R.id.recordDateEditText);
-        Spinner recordCategorySpinner = (Spinner)view.findViewById(R.id.recordCategorySpinner);
-        EditText recordCommentEditText = (EditText)view.findViewById(R.id.recordCommentEditText);
+        EditText amountEditText = (EditText)view.findViewById(R.id.recordAmountEditText);
+        Spinner categorySpinner = (Spinner)view.findViewById(R.id.recordCategorySpinner);
+        EditText commentEditText = (EditText)view.findViewById(R.id.recordCommentEditText);
+
+        dateEditText = (EditText)view.findViewById(R.id.recordDateEditText);
+        selectedDate = Calendar.getInstance();
+        selectedDate.setTimeInMillis(date);
 
         spinnerAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
-        recordCategorySpinner.setAdapter(spinnerAdapter);
+        categorySpinner.setAdapter(spinnerAdapter);
+        categorySpinner.setSelection(spinnerAdapter.getPosition(category));
 
         getDialog().setTitle(R.string.record_dialog_header);
         initHeight = getDialog().getWindow().getAttributes().height;
         getDialog().getWindow().setLayout(initWidth, initHeight);
-        recordAmountEditText.addTextChangedListener(new NumericWatcher(recordAmountEditText));
+        amountEditText.addTextChangedListener(new NumericWatcher(amountEditText));
 
-        recordDateEditText.setText(DateUtils.formatDateTime(this.getActivity().getApplicationContext(), date,
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+        setInitialDate();
+
+        dateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDateFromPicker();
+            }
+        });
 
         saveBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -105,7 +118,7 @@ public class RecordEditDialog extends DialogFragment {
 //                }
 //                else {
 //                    saveCategory(categoryId, text, (checkBox.isChecked() ? 1 : 0));
-                    closeDialog();
+                closeDialog();
 //                }
             }
         });
@@ -125,7 +138,7 @@ public class RecordEditDialog extends DialogFragment {
             }
         });
 
-        recordCommentEditText.setOnKeyListener(new View.OnKeyListener() {
+        commentEditText.setOnKeyListener(new View.OnKeyListener() {
             @Override
             public boolean onKey(View v, int keyCode, KeyEvent event) {
                 if (keyCode == KeyEvent.KEYCODE_ENTER)
@@ -134,8 +147,8 @@ public class RecordEditDialog extends DialogFragment {
             }
         });
 
-        recordAmountEditText.setText(formatAmount(amount, credit));
-        recordCommentEditText.setText(comment);
+        amountEditText.setText(formatAmount(amount, credit));
+        commentEditText.setText(comment);
 
         return view;
     }
@@ -173,6 +186,31 @@ public class RecordEditDialog extends DialogFragment {
             str = "+" + str;
 
         return str;
+    }
+
+    private DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            selectedDate.set(Calendar.YEAR, year);
+            selectedDate.set(Calendar.MONTH, monthOfYear);
+            selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            setInitialDate();
+        }
+    };
+
+    private void setDateFromPicker() {
+        new DatePickerDialog(this.getActivity().getApplicationContext(), d,
+                selectedDate.get(Calendar.YEAR),
+                selectedDate.get(Calendar.MONTH),
+                selectedDate.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private void setInitialDate() {
+        dateEditText.setText(DateUtils.formatDateTime(this.getActivity().getApplicationContext(),
+                selectedDate.getTimeInMillis(), DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+    }
+
+    private void showItemNewDialog() {
+        CategoryNewDialog.getInstance().show(getFragmentManager(), "categoryDialog");
     }
 }
 

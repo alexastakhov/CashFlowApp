@@ -10,8 +10,9 @@
     <string name="action_records">Записи</string>
     <string name="action_categories">Категории</string>
     <string name="action_settings">Настройки</string>
+    <string name="action_delete">Удалить</string>
 
-    <!-- Main Activity Strings -->
+    <!-- Main Activity -->
     <string name="main_caption">"Новая запись"</string>
     <string name="cat_caption">Категория</string>
     <string name="comment_textview_hint">Комментарий</string>
@@ -20,6 +21,13 @@
     <string name="category_spin_hint">Категория</string>
     <string name="amount_label_text">Сумма:</string>
     <string name="date_label_text">Дата:</string>
+
+    <!-- Record Edit Activity -->
+    <string name="save_record_button_text">СОХРАНИТЬ ЗАПИСЬ</string>
+    <string name="record_edit_caption">Изменить запись</string>
+
+    <!-- Settings Activity -->
+    <string name="settings_caption">Настройки</string>
 
     <!-- Category Dialogs -->
     <string name="category_dialog_header">Изменить категорию</string>
@@ -59,4 +67,5 @@
     <string name="month_oct">октября</string>
     <string name="month_nov">ноября</string>
     <string name="month_dec">декабря</string>
+    <string name="title_activity_record_edit">RecordEditActivity</string>
 </resources>

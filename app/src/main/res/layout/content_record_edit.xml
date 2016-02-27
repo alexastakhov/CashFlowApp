@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.lunokhod.java.android.cashflowapp.MainActivity"
-    tools:showIn="@layout/activity_main"
+    tools:showIn="@layout/activity_record_edit"
     android:orientation="vertical"
     android:weightSum="1"
     style="?android:buttonBarStyle" >
@@ -49,7 +49,7 @@
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:ems="10"
-                    android:id="@+id/amountEditText"
+                    android:id="@+id/editAmountEditText"
                     android:editable="false"
                     android:enabled="true"
                     android:numeric="signed|decimal"
@@ -107,7 +107,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="date"
                     android:ems="10"
-                    android:id="@+id/dateEditText"
+                    android:id="@+id/editDateEditText"
                     android:focusable="false"
                     android:editable="false"
                     android:longClickable="false"
@@ -122,7 +122,7 @@
                 <ImageView
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
-                    android:id="@+id/dateImageButton"
+                    android:id="@+id/editDateImageButton"
                     android:layout_weight="11"
                     android:src="@mipmap/ic_date_range_black_24dp"
                     android:padding="5sp" />
@@ -133,7 +133,7 @@
         <Spinner
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/categorySpinner"
+            android:id="@+id/editCategorySpinner"
             android:layout_gravity="center_horizontal"
             android:spinnerMode="dialog"
             android:background="@drawable/cat_spinner_style"
@@ -148,7 +148,7 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/commentEditText"
+            android:id="@+id/editCommentEditText"
             android:layout_marginTop="@dimen/main_activity_vertical_margin"
             android:editable="true"
             android:lines="3"
@@ -178,8 +178,8 @@
             android:layout_height="wrap_content"
             android:paddingTop="15sp"
             android:paddingBottom="15sp"
-            android:text="@string/add_record_button_text"
-            android:id="@+id/addRecButton"
+            android:text="@string/save_record_button_text"
+            android:id="@+id/editSaveRecButton"
             android:textSize="16sp"
             android:background="@drawable/addrec_btn_style"
             android:textColor="#ffffff"
@@ -188,5 +188,5 @@
 
 </LinearLayout>
 
-<!-- TODO: Fix Spinner's bugs -->
-<!-- TODO: AddRecord Button to Bottom -->
+    <!-- TODO: Fix Spinner's bugs -->
+    <!-- TODO: AddRecord Button to Bottom -->
