@@ -17,7 +17,6 @@ import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 
-import java.sql.Date;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
@@ -75,7 +74,7 @@ public class RecordEditDialog extends DialogFragment {
         view = inflater.inflate(R.layout.record_edit_dialog, container, false);
         ArrayList<String> spinnerList = new ArrayList<String>(Arrays.asList(DataManager.getInstance().getCategoriesAsStrings()));
         ArrayAdapter spinnerAdapter = new DialogArrayAdapter(this.getActivity().getApplicationContext(),
-                R.layout.dialog_spinner_item, spinnerList);
+                R.layout.edit_spinner_item, spinnerList);
         Button saveBtn = (Button)view.findViewById(R.id.recordSaveButton);
         Button cancelBtn = (Button)view.findViewById(R.id.recordCancelButton);
         Button deleteBtn = (Button)view.findViewById(R.id.recordDeleteButton);
@@ -87,7 +86,7 @@ public class RecordEditDialog extends DialogFragment {
         selectedDate = Calendar.getInstance();
         selectedDate.setTimeInMillis(date);
 
-        spinnerAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
+        spinnerAdapter.setDropDownViewResource(R.layout.edit_spinner_dropdown_item);
         categorySpinner.setAdapter(spinnerAdapter);
         categorySpinner.setSelection(spinnerAdapter.getPosition(category));
 

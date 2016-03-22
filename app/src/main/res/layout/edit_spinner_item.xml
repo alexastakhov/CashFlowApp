@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:ellipsize="marquee"
-    android:textSize="@dimen/dialog_edit_text_size"
+    android:textSize="@dimen/main_edit_text_size"
     android:textColor="@color/spinDropTextColor"
     android:drawableRight="@mipmap/ic_expand_more_black_24dp"
     android:textAlignment="inherit" />

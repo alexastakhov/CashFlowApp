@@ -1,17 +1,21 @@
 package com.lunokhod.java.android.cashflowapp;
 
+import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
@@ -33,6 +37,7 @@ public class RecordEditActivity extends AppCompatActivity {
     private IDataManager dataManager;
     private ArrayList<String> spinnerList;
     private Button editSaveRecButton;
+    private long recId;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -40,14 +45,11 @@ public class RecordEditActivity extends AppCompatActivity {
         setContentView(R.layout.activity_record_edit);
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
         Intent intent = getIntent();
 
         spinnerList = new ArrayList<String>(Arrays.asList(DataManager.getInstance().getCategoriesAsStrings()));
-        spinnerAdapter = new SpinArrayAdapter(getApplicationContext(), R.layout.dialog_spinner_item, spinnerList);
-        spinnerAdapter.setDropDownViewResource(R.layout.dialog_spinner_dropdown_item);
-
-        selectedDate = Calendar.getInstance();
+        spinnerAdapter = new SpinArrayAdapter(getApplicationContext(), R.layout.edit_spinner_item, spinnerList);
+        spinnerAdapter.setDropDownViewResource(R.layout.edit_spinner_dropdown_item);
 
         editCategorySpinner = (Spinner)findViewById(R.id.editCategorySpinner);
         editCommentEditText = (TextView)findViewById(R.id.editCommentEditText);
@@ -60,6 +62,21 @@ public class RecordEditActivity extends AppCompatActivity {
         editCategorySpinner.setAdapter(spinnerAdapter);
         editCategorySpinner.setSelection(spinnerAdapter.getPosition(intent.getStringExtra("category")));
 
+        editDateImageButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDateFromPicker();
+            }
+        });
+
+        editDateEditText.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                setDateFromPicker();
+                hideKeyboard(v);
+            }
+        });
+
         ActionBar actionBar = getSupportActionBar();
         if (actionBar != null) {
             actionBar.setTitle(R.string.record_edit_caption);
@@ -67,8 +84,13 @@ public class RecordEditActivity extends AppCompatActivity {
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
 
+        selectedDate = Calendar.getInstance();
+        selectedDate.setTimeInMillis(intent.getLongExtra("date", selectedDate.getTimeInMillis()));
+        setInitialDate();
+
         editAmountEditText.setText(formatAmount(intent.getFloatExtra("amount", 0), intent.getIntExtra("credit", 0)));
         editCommentEditText.setText(intent.getStringExtra("comment"));
+        recId = intent.getIntExtra("id", 0);
     }
 
     @Override
@@ -123,6 +145,30 @@ public class RecordEditActivity extends AppCompatActivity {
             str = "+" + str;
 
         return str;
+    }
+
+    private void setDateFromPicker() {
+        new DatePickerDialog(this, d, selectedDate.get(Calendar.YEAR),
+                selectedDate.get(Calendar.MONTH), selectedDate.get(Calendar.DAY_OF_MONTH)).show();
+    }
+
+    private DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
+        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+            selectedDate.set(Calendar.YEAR, year);
+            selectedDate.set(Calendar.MONTH, monthOfYear);
+            selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+            setInitialDate();
+        }
+    };
+
+    private void setInitialDate() {
+        editDateEditText.setText(DateUtils.formatDateTime(getApplicationContext(), selectedDate.getTimeInMillis(),
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
+    }
+
+    private void hideKeyboard(View view) {
+        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
+        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 }
 
