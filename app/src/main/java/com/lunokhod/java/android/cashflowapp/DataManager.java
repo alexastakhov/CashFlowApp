@@ -15,9 +15,6 @@ import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 
-/**
- * Created by alex on 06.01.2016.
- */
 public class DataManager extends SQLiteOpenHelper implements IDataManager {
     private static final String DATABASE_NAME = "cashflow.sqlite.db";
     private static final int DATABASE_VERSION = 1;
@@ -360,7 +357,14 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     }
 
     public void deleteRecord(long recordId) {
+        String sql = "DELETE FROM " + RECORD_TABLE + " WHERE " + BaseColumns._ID + "=\"" + recordId + "\";";
+        SQLiteDatabase database = this.getWritableDatabase();
 
+        Log.i(TAG, "deleteRecord(" + recordId + ")");
+        Log.i(TAG, "SQLite : " + sql);
+
+        database.execSQL(sql);
+        database.close();
     }
 
     public void changeRecord() {

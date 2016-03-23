@@ -84,8 +84,7 @@ public class NumericWatcher implements TextWatcher {
                 editText.setSelection(sel);
             }
             else {
-                // place cursor at the end?
-                editText.setSelection(editText.getText().length() - 1);
+                editText.setSelection(editText.getText().length());
             }
         } catch (NumberFormatException nfe) {
             Log.i(TAG, "NumberFormatException");

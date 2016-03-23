@@ -11,9 +11,6 @@ import android.widget.CheckBox;
 import android.widget.EditText;
 import android.widget.TextView;
 
-/**
- * Created by alex on 10.01.2016.
- */
 public class CategoryEditDialog extends DialogFragment {
 
     private int initHeight;

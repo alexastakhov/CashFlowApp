@@ -20,10 +20,12 @@ import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 
 public class RecordEditActivity extends AppCompatActivity {
@@ -38,6 +40,8 @@ public class RecordEditActivity extends AppCompatActivity {
     private ArrayList<String> spinnerList;
     private Button editSaveRecButton;
     private long recId;
+
+    private static final String TAG = "RecordEditActivity";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,7 +94,14 @@ public class RecordEditActivity extends AppCompatActivity {
 
         editAmountEditText.setText(formatAmount(intent.getFloatExtra("amount", 0), intent.getIntExtra("credit", 0)));
         editCommentEditText.setText(intent.getStringExtra("comment"));
-        recId = intent.getIntExtra("id", 0);
+        recId = intent.getLongExtra("id", 0);
+
+        editSaveRecButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                saveChargeRecord();
+            }
+        });
     }
 
     @Override
@@ -111,8 +122,8 @@ public class RecordEditActivity extends AppCompatActivity {
         Intent intent = new Intent();
 
         if (id == R.id.action_delete) {
-            //intent.setClass(getApplicationContext(), SettingsActivity.class);
-            //startActivity(intent);
+            deleteRecord();
+            this.finish();
             return true;
         }
 
@@ -122,6 +133,42 @@ public class RecordEditActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    private void saveChargeRecord() {
+        String str;
+        float amount;
+        Date date;
+        CategoryItem category;
+        String comment;
+        int credit = ChargeRecord.DEBET;
+
+        str = editAmountEditText.getText().toString();
+
+        if (str.length() == 0) {
+            showMsgDlg("Ошибка", "Поле суммы не может быть пустым. Введите расход/доход.");
+            return;
+        }
+
+        if (str.contains("+")) credit = ChargeRecord.CREDIT;
+
+        try {
+            str = str.replace((new String(new char[] { 160 })), "").replace("+", "");
+            amount = Float.parseFloat(str);
+        }
+        catch (NumberFormatException e) {
+            showMsgDlg("Ошибка", "Неправильный формат поля Amount");
+            return;
+        }
+
+        date = selectedDate.getTime();
+        comment = editCommentEditText.getText().toString();
+        category = dataManager.getCategoryByName(editCategorySpinner.getSelectedItem().toString());
+    }
+
+    private void deleteRecord() {
+        DataManager.getInstance().deleteRecord(recId);
+        Toast.makeText(this, R.string.record_dialog_item_deleted, Toast.LENGTH_SHORT).show();
     }
 
     private String formatAmount(float num, int cr) {
@@ -169,6 +216,10 @@ public class RecordEditActivity extends AppCompatActivity {
     private void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    private void showMsgDlg(String title, String msg) {
+        MessageDialog.newInstance(title, msg).show(getFragmentManager(), "messageDialog");
     }
 }
 

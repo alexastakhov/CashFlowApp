@@ -84,20 +84,7 @@ public class RecordsActivity extends AppCompatActivity {
     private void updateListAdapter() {
         recordListViewAdapter.setDataObjects(dataManager.getAllRecords());
     }
-
-    public void changeRecord(int categoryId, String newName, int prio) {
-        //dataManager.changeRecord(categoryId, newName, prio);
-        updateListAdapter();
-//        Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_saved, Toast.LENGTH_SHORT).show();
-    }
-
-    public void deleteRecord(long recordId) {
-        dataManager.deleteRecord(recordId);
-        updateListAdapter();
-//        Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_deleted, Toast.LENGTH_SHORT).show();
-    }
 }
 
-// TODO: Create record edit dialog
 // TODO: Create filers: Date-Date, Last period, Category
 // TODO: Reading records into own thread
