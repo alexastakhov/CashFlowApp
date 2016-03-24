@@ -215,7 +215,7 @@ public class MainActivity extends AppCompatActivity {
         str = amountEditText.getText().toString();
 
         if (str.length() == 0) {
-            showMsgDlg("Ошибка", "Поле суммы не может быть пустым. Введите расход/доход.");
+            showMsgDlg(R.string.message_dialog_header_error, R.string.message_dialog_msg_empty_amount);
             return;
         }
 
@@ -226,7 +226,7 @@ public class MainActivity extends AppCompatActivity {
             amount = Float.parseFloat(str);
         }
         catch (NumberFormatException e) {
-            showMsgDlg("Ошибка", "Неправильный формат поля Amount");
+            showMsgDlg(R.string.message_dialog_header_error, R.string.message_dialog_msg_format_amount);
             return;
         }
 
@@ -235,17 +235,17 @@ public class MainActivity extends AppCompatActivity {
         category = dataManager.getCategoryByName(categorySpinner.getSelectedItem().toString());
 
         if (category == null) {
-            showMsgDlg("Ошибка", "Необходимо выбрать категорию расходов/доходов");
+            showMsgDlg(R.string.message_dialog_header_error, R.string.message_dialog_msg_empty_category);
             return;
         }
 
-        dataManager.addRecord(amount, category, comment, date, credit, 0);
+        dataManager.addRecord(amount, category.getId(), comment, date, credit, 0);
         clearForm();
         Toast.makeText(this, R.string.main_activity_record_added, Toast.LENGTH_SHORT).show();
     }
 
-    private void showMsgDlg(String title, String msg) {
-        MessageDialog.newInstance(title, msg).show(getFragmentManager(), "messageDialog");
+    private void showMsgDlg(int title, int msg) {
+        MessageDialog.newInstance(getResources().getString(title), getResources().getString(msg)).show(getFragmentManager(), "messageDialog");
     }
 
     private void clearForm() {

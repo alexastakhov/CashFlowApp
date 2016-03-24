@@ -5,6 +5,7 @@ import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +30,7 @@ public class RecordsActivity extends AppCompatActivity {
 
         dataManager = DataManager.getInstance();
 
-        recordListViewAdapter = new RecordListViewAdapter(this.getApplicationContext(), dataManager.getAllRecords());
+        recordListViewAdapter = new RecordListViewAdapter(this.getApplicationContext());
         recordListView = (ListView)findViewById(R.id.recordListView);
         recordListView.setAdapter(recordListViewAdapter);
 
@@ -61,8 +62,14 @@ public class RecordsActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        updateListAdapter();
+        Log.i(TAG, "onStart");
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_records, menu);
         return true;
     }

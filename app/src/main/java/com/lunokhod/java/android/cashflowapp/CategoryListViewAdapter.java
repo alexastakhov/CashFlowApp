@@ -20,14 +20,15 @@ public class CategoryListViewAdapter extends BaseAdapter {
     @SuppressWarnings("unused")
     private static final String TAG = "CategoryListViewAdapter";
 
-    public CategoryListViewAdapter(Context context, CategoryItem[] objects) {
+    public CategoryListViewAdapter(Context context) {
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         appContext = context;
-        categories = objects;
     }
 
     @Override
     public int getCount() {
+        if (categories == null)
+            return 0;
         return categories.length;
     }
 

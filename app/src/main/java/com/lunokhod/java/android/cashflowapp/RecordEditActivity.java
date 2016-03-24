@@ -51,6 +51,8 @@ public class RecordEditActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
 
+        dataManager = DataManager.getInstance();
+
         spinnerList = new ArrayList<String>(Arrays.asList(DataManager.getInstance().getCategoriesAsStrings()));
         spinnerAdapter = new SpinArrayAdapter(getApplicationContext(), R.layout.edit_spinner_item, spinnerList);
         spinnerAdapter.setDropDownViewResource(R.layout.edit_spinner_dropdown_item);
@@ -119,7 +121,6 @@ public class RecordEditActivity extends AppCompatActivity {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         int id = item.getItemId();
-        Intent intent = new Intent();
 
         if (id == R.id.action_delete) {
             deleteRecord();
@@ -146,7 +147,7 @@ public class RecordEditActivity extends AppCompatActivity {
         str = editAmountEditText.getText().toString();
 
         if (str.length() == 0) {
-            showMsgDlg("Ошибка", "Поле суммы не может быть пустым. Введите расход/доход.");
+            showMsgDlg(R.string.message_dialog_header_error, R.string.message_dialog_msg_empty_amount);
             return;
         }
 
@@ -157,13 +158,18 @@ public class RecordEditActivity extends AppCompatActivity {
             amount = Float.parseFloat(str);
         }
         catch (NumberFormatException e) {
-            showMsgDlg("Ошибка", "Неправильный формат поля Amount");
+            showMsgDlg(R.string.message_dialog_header_error, R.string.message_dialog_msg_format_amount);
             return;
         }
 
         date = selectedDate.getTime();
         comment = editCommentEditText.getText().toString();
         category = dataManager.getCategoryByName(editCategorySpinner.getSelectedItem().toString());
+
+        dataManager.changeRecord(recId, amount, category.getId(), comment, date, credit, 0);
+        Toast.makeText(this, R.string.record_dialog_item_saved, Toast.LENGTH_SHORT).show();
+
+        this.finish();
     }
 
     private void deleteRecord() {
@@ -218,8 +224,8 @@ public class RecordEditActivity extends AppCompatActivity {
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
     }
 
-    private void showMsgDlg(String title, String msg) {
-        MessageDialog.newInstance(title, msg).show(getFragmentManager(), "messageDialog");
+    private void showMsgDlg(int title, int msg) {
+        MessageDialog.newInstance(getResources().getString(title), getResources().getString(msg)).show(getFragmentManager(), "messageDialog");
     }
 }
 

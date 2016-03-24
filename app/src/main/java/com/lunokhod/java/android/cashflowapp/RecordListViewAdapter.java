@@ -19,14 +19,15 @@ public class RecordListViewAdapter extends BaseAdapter {
 
     private static final String TAG = "RecordListViewAdapter";
 
-    public RecordListViewAdapter(Context context, ChargeRecord[] objects) {
+    public RecordListViewAdapter(Context context) {
         inflater = (LayoutInflater)context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
         appContext = context;
-        records = objects;
     }
 
     @Override
     public int getCount() {
+        if (records == null)
+            return 0;
         return records.length;
     }
 

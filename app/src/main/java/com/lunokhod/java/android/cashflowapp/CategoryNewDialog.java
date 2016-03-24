@@ -73,8 +73,8 @@ public class CategoryNewDialog extends DialogFragment {
         this.dismiss();
     }
 
-    private void saveCategory(String name, int prio) {
-        ((CategoryActivity)getActivity()).addCategory(name, prio);
+    private void saveCategory(String name, int priority) {
+        ((CategoryActivity)getActivity()).addCategory(name, priority);
     }
 
     private boolean isCategoryExists(String name) {

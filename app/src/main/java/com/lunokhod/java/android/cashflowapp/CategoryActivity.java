@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -29,7 +30,7 @@ public class CategoryActivity extends AppCompatActivity {
 
         dataManager = DataManager.getInstance();
 
-        categoryListViewAdapter = new CategoryListViewAdapter(this.getApplicationContext(), dataManager.getCategoriesSortedByName());
+        categoryListViewAdapter = new CategoryListViewAdapter(this.getApplicationContext());
         categoryListView = (ListView)findViewById(R.id.categoryListView);
         categoryListView.setAdapter(categoryListViewAdapter);
 
@@ -57,8 +58,14 @@ public class CategoryActivity extends AppCompatActivity {
     }
 
     @Override
+    protected void onStart() {
+        super.onStart();
+        updateListAdapter();
+        Log.i(TAG, "onStart");
+    }
+
+    @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
         getMenuInflater().inflate(R.menu.menu_category, menu);
         return true;
     }
@@ -102,9 +109,9 @@ public class CategoryActivity extends AppCompatActivity {
         Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_saved, Toast.LENGTH_SHORT).show();
     }
 
-    public void addCategory(String name, int prio) {
+    public void addCategory(String name, int priority) {
         if (!isCategoryNameExists(name)) {
-            dataManager.addCategory(name, prio);
+            dataManager.addCategory(name, priority);
             updateListAdapter();
             Toast.makeText(this, R.string.category_dialog_item_added, Toast.LENGTH_SHORT).show();
         }
@@ -112,9 +119,20 @@ public class CategoryActivity extends AppCompatActivity {
             Toast.makeText(this, R.string.debug_error_category_exists, Toast.LENGTH_SHORT).show();
     }
 
-    public void deleteCategory(String categoryName) {
-        dataManager.deleteCategory(categoryName);
-        updateListAdapter();
-        Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_deleted, Toast.LENGTH_SHORT).show();
+    public void deleteCategory(int categoryId) {
+        if (dataManager.getRecordsNumWithCategory(categoryId) == 0) {
+            dataManager.deleteCategory(categoryId);
+            updateListAdapter();
+            Toast.makeText(CategoryActivity.this, R.string.category_dialog_item_deleted, Toast.LENGTH_SHORT).show();
+        }
+        else {
+            showMsgDlg(R.string.message_dialog_header_warning, R.string.message_dialog_msg_category_in_use);
+        }
+    }
+
+    private void showMsgDlg(int title, int msg) {
+        MessageDialog.newInstance(getResources().getString(title), getResources().getString(msg)).show(getFragmentManager(), "messageDialog");
     }
 }
+
+// TODO: Perform Category using check before deleting

@@ -1,6 +1,6 @@
 <resources>
     <!-- System Strings -->
-    <string name="app_name">CashFlowApp</string>
+    <string name="app_name">CashFlow Beta</string>
     <string name="title_activity_records">RecordsActivity</string>
     <string name="title_activity_category">CategoryActivity</string>
     <string name="title_activity_records_edit">RecordsEditActivity</string>
@@ -50,6 +50,15 @@
     <string name="record_dialog_delete_text">Удалить</string>
     <string name="record_dialog_item_deleted">Запись удалена</string>
     <string name="record_dialog_item_saved">Запись сохранена</string>
+
+    <!-- Message Dialog -->
+    <string name="message_dialog_header_error">Ошибка</string>
+    <string name="message_dialog_header_warning">Предупреждение</string>
+    <string name="message_dialog_header_info">Информация</string>
+    <string name="message_dialog_msg_empty_amount">Поле суммы не может быть пустым. Введите расход/доход.</string>
+    <string name="message_dialog_msg_format_amount">Неправильный формат поля расхода</string>
+    <string name="message_dialog_msg_empty_category">Необходимо выбрать категорию расходов/доходов</string>
+    <string name="message_dialog_msg_category_in_use">Данная категория используется в записях. Необходимо удалить записи или изменить их категории.</string>
 
     <!-- Debug Purpoues -->
     <string name="debug_error_category_exists">Ошибка добавления категории: категория с таким именем уже существует в DataManager</string>

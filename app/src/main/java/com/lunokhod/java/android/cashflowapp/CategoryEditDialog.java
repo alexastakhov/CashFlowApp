@@ -93,7 +93,7 @@ public class CategoryEditDialog extends DialogFragment {
                 if (DataManager.getInstance().getRecordsNumWithCategory(categoryId) > 0)
                     showErrorText(R.string.category_dialog_category_in_use);
                 else {
-                    deleteCategory(categoryName);
+                    deleteCategory(categoryId);
                     closeDialog();
                 }
             }
@@ -109,12 +109,12 @@ public class CategoryEditDialog extends DialogFragment {
         this.dismiss();
     }
 
-    private void saveCategory(int id, String newName, int prio) {
-        ((CategoryActivity)getActivity()).changeCategory(id, newName, prio);
+    private void saveCategory(int id, String newName, int priority) {
+        ((CategoryActivity)getActivity()).changeCategory(id, newName, priority);
     }
 
-    private void deleteCategory(String categoryName) {
-        ((CategoryActivity)getActivity()).deleteCategory(categoryName);
+    private void deleteCategory(int categoryId) {
+        ((CategoryActivity)getActivity()).deleteCategory(categoryId);
     }
 
     private boolean isCategoryExists(String name) {

@@ -11,17 +11,19 @@ public interface IDataManager {
     String[] getCategoriesAsStrings();
     CategoryItem getCategoryByName(String name);
     CategoryItem getCategoryById(int id);
+    int getRecordsNumWithCategory(int categoryId);
 
     ChargeRecord[] getAllRecords();
 
-    void addCategory(String category, int prio);
-    void deleteCategory(String category);
-    void changeCategory(int categoryId, String newName, int prio);
+    void addCategory(String category, int priority);
+    void deleteCategory(int  categoryId);
+    void deleteCategory(String  name);
+    void changeCategory(int categoryId, String newName, int priority);
 
     void addRecord(ChargeRecord record);
-    void addRecord(float amount, CategoryItem category, String comment, Date date, int credit, int account);
+    void addRecord(float amount, int  categoryId, String comment, Date date, int credit, int account);
     void deleteRecord(long recordId);
-    void changeRecord();
+    void changeRecord(long recId, float amount, int  categoryId, String comment, Date date, int credit, int account);
 
     void dropDataBase();
     void fillInCategoryTable();

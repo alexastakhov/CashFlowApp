@@ -297,13 +297,13 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         return result;
     }
 
-    public void addCategory(String name, int prio) {
+    public void addCategory(String name, int priority) {
         String sql = "INSERT OR IGNORE INTO " + CATEGORY_TABLE + " (" + FULL_CATEGORY_ROW +
                 ") VALUES (NULL, ?, ?, ?);";
-        Object[] bindArgs = new Object[]{name, "", prio};
+        Object[] bindArgs = new Object[]{name, "", priority};
         SQLiteDatabase database = this.getWritableDatabase();
 
-        Log.i(TAG, "addCategory(" + name + ", " + prio + ")");
+        Log.i(TAG, "addCategory(" + name + ", " + priority + ")");
         Log.i(TAG, "SQLite : " + sql);
 
         database.execSQL(sql, bindArgs);
@@ -314,20 +314,33 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         String sql = "DELETE FROM " + CATEGORY_TABLE + " WHERE " + NAME_COLUMN + "=\"" + name + "\";";
         SQLiteDatabase database = this.getWritableDatabase();
 
-        Log.i(TAG, "deleteCategory(" + name + ")");
+        Log.i(TAG, "deleteCategory(name = " + name + ")");
         Log.i(TAG, "SQLite : " + sql);
 
         database.execSQL(sql);
         database.close();
     }
 
-    public void changeCategory(int categoryId, String newName, int prio) {
-        String sql = "UPDATE " + CATEGORY_TABLE + " SET " + NAME_COLUMN + "= ?," + GROUP_COLUMN + "=\"\"," + PRIORITY_COLUMN +
-                "= ? WHERE " + BaseColumns._ID + "= ?";
-        Object[] bindArgs = new Object[]{newName, prio, categoryId};
+    public void deleteCategory(int catId) {
+        String sql = "DELETE FROM " + CATEGORY_TABLE + " WHERE " + BaseColumns._ID + "=\"" + catId + "\";";
         SQLiteDatabase database = this.getWritableDatabase();
 
-        Log.i(TAG, "changeCategory(" + categoryId + ", " + newName + ", " + prio + ")");
+        Log.i(TAG, "deleteCategory(id = " + catId + ")");
+        Log.i(TAG, "SQLite : " + sql);
+
+        database.execSQL(sql);
+        database.close();
+    }
+
+    public void changeCategory(int categoryId, String newName, int priority) {
+        String sql = "UPDATE " + CATEGORY_TABLE + " SET " +
+                NAME_COLUMN + "= ?," +
+                GROUP_COLUMN + "=\"\"," +
+                PRIORITY_COLUMN + "= ? WHERE " + BaseColumns._ID + "= ?";
+        Object[] bindArgs = new Object[]{newName, priority, categoryId};
+        SQLiteDatabase database = this.getWritableDatabase();
+
+        Log.i(TAG, "changeCategory(" + categoryId + ", " + newName + ", " + priority + ")");
         Log.i(TAG, "SQLite : " + sql);
 
         database.execSQL(sql, bindArgs);
@@ -335,22 +348,23 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     }
 
     public void addRecord(ChargeRecord record) {
-        addRecord(record.getAmount(), record.getCategory(), record.getComment(),
+        addRecord(record.getAmount(), record.getCategory().getId(), record.getComment(),
                 record.getDate(), record.getCredit(), record.getAccount());
     }
 
-    public void addRecord(float amount, CategoryItem category, String comment, Date date, int credit, int account) {
+    public void addRecord(float amount, int categoryId, String comment, Date date, int credit, int account) {
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
         String sql = "INSERT INTO " + RECORD_TABLE + "(" + FULL_RECORD_ROW + ") VALUES (NULL, ?, ?, ?, ?, ?, ?);";
-        Object[] bindArgs = new Object[]{amount, date.getTime(), comment, account, credit, category.getId()};
+        Object[] bindArgs = new Object[]{amount, date.getTime(), comment, account, credit, categoryId};
         SQLiteDatabase database = this.getWritableDatabase();
 
         database.execSQL(sql, bindArgs);
         database.close();
 
         Log.i(TAG, "addRecord()");
+        Log.i(TAG, "SQLite : " + sql);
         Log.i(TAG, "amount = " + amount);
-        Log.i(TAG, "category = " + category.getName() + "(" + category.getId() + ")");
+        Log.i(TAG, "category = " + categoryId);
         Log.i(TAG, "comment = " + comment);
         Log.i(TAG, "date = " + dateFormat.format(date) + " (" + date.getTime() +")");
         Log.i(TAG, "credit = " + credit);
@@ -367,8 +381,28 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         database.close();
     }
 
-    public void changeRecord() {
+    public void changeRecord(long recId, float amount, int categoryId, String comment, Date date, int credit, int account) {
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd-M-yyyy HH:mm:ss");
+        String sql = "UPDATE " + RECORD_TABLE + " SET " +
+                AMOUNT_COLUMN + "= ?," +
+                DATETIME_COLUMN + "= ?," +
+                COMMENT_COLUMN + "= ?," +
+                ACCOUNT_COLUMN + "= ?," +
+                CREDIT_COLUMN + "= ?," +
+                CATEGORY_COLUMN + "= ? WHERE " + BaseColumns._ID + "= ?";
+        Object[] bindArgs = new Object[]{amount, date.getTime(), comment, account, credit, categoryId, recId};
+        SQLiteDatabase database = this.getWritableDatabase();
 
+        database.execSQL(sql, bindArgs);
+        database.close();
+
+        Log.i(TAG, "changeRecord()");
+        Log.i(TAG, "SQLite : " + sql);
+        Log.i(TAG, "amount = " + amount);
+        Log.i(TAG, "category = " + categoryId);
+        Log.i(TAG, "comment = " + comment);
+        Log.i(TAG, "date = " + dateFormat.format(date) + " (" + date.getTime() + ")");
+        Log.i(TAG, "credit = " + credit);
     }
 
     public void clearDataBase() {

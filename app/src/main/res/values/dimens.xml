@@ -19,7 +19,7 @@
     <dimen name="dialog_amount_edit_text_size">27sp</dimen>
     <dimen name="dialog_edit_text_size">16sp</dimen>
     <dimen name="dialog_check_box_size">16sp</dimen>
-    <dimen name="dialog_error_text_size">14sp</dimen>
+    <dimen name="dialog_error_text_size">16sp</dimen>
     <dimen name="dialog_horizontal_margin">15sp</dimen>
     <dimen name="dialog_vertical_margin">15sp</dimen>
     <dimen name="dialog_vertical_large_margin">20sp</dimen>
