@@ -2,7 +2,6 @@ package com.lunokhod.java.android.cashflowapp;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.provider.ContactsContract;
 import android.support.v7.app.ActionBar;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
@@ -36,37 +35,11 @@ public class SettingsActivity extends AppCompatActivity {
             }
         });
 
-        Button fillDataBaseButton = (Button)findViewById(R.id.fillDataBaseButton);
-        fillDataBaseButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                DataManager.getInstance().fillInCategoryTable();
-            }
-        });
-
         Button deleteAllRecsButton = (Button)findViewById(R.id.deleteAllRecsButton);
         deleteAllRecsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 DataManager.getInstance().deleteAllRecords();
-            }
-        });
-
-        final EditText catNumEditText = (EditText)findViewById(R.id.catNumEditText);
-        Button getRecNumButton = (Button)findViewById(R.id.getRecNumButton);
-        getRecNumButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                int i = 0;
-
-                hideKeyboard(v);
-                try {
-                    i = Integer.parseInt(catNumEditText.getText().toString());
-                }
-                catch (NumberFormatException e) { }
-
-                i = DataManager.getInstance().getRecordsNumWithCategory(i);
-                showMsgDlg("Результат", "Количество записей = " + i);
             }
         });
     }

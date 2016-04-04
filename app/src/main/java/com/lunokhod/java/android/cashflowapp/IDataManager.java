@@ -26,5 +26,4 @@ public interface IDataManager {
     void changeRecord(long recId, float amount, int  categoryId, String comment, Date date, int credit, int account);
 
     void dropDataBase();
-    void fillInCategoryTable();
 }

@@ -438,46 +438,4 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
             database.close();
         }
     }
-
-    public void fillInCategoryTable() {
-        testCategoryListView();
-
-        Log.i(TAG, "fillInCategoryTable()");
-
-        try {
-            SQLiteDatabase database = this.getWritableDatabase();
-
-            if (database != null) {
-                database.execSQL("DELETE FROM " + CATEGORY_TABLE);
-
-                for (CategoryItem item : tmp_categories) {
-                    String sql = "INSERT INTO " + CATEGORY_TABLE + "(_id," + NAME_COLUMN +
-                            "," + GROUP_COLUMN + "," + PRIORITY_COLUMN + ") VALUES (NULL, ?, ?, ?)";
-                    Object[] bindArgs = new Object[]{item.getName(), "", item.getPriority()};
-                    database.execSQL(sql, bindArgs);
-                    Log.i(TAG, sql);
-                }
-                database.close();
-            }
-        } catch (android.database.SQLException e) {
-            Log.i(TAG, "fillInCategoryTable() Exception: " + e.getMessage());
-        }
-    }
-
-    private void testCategoryListView() {
-        tmp_categories.add(new CategoryItem("Первая", CategoryItem.LOW_PRIO));
-        tmp_categories.add(new CategoryItem("Вторая", CategoryItem.LOW_PRIO));
-        tmp_categories.add(new CategoryItem("Третья", CategoryItem.LOW_PRIO));
-        tmp_categories.add(new CategoryItem("Четвертая", CategoryItem.LOW_PRIO));
-        tmp_categories.add(new CategoryItem("Пятая", CategoryItem.LOW_PRIO));
-        tmp_categories.add(new CategoryItem("Шестая", CategoryItem.LOW_PRIO));
-        tmp_categories.add(new CategoryItem("Седьмая", CategoryItem.LOW_PRIO));
-        tmp_categories.add(new CategoryItem("Восьмая", CategoryItem.LOW_PRIO));
-        tmp_categories.add(new CategoryItem("Девятая", CategoryItem.LOW_PRIO));
-        tmp_categories.add(new CategoryItem("Десятая", CategoryItem.LOW_PRIO));
-        tmp_categories.add(new CategoryItem("Одиннадцатая", CategoryItem.LOW_PRIO));
-        tmp_categories.add(new CategoryItem("Двенадцатая", CategoryItem.LOW_PRIO));
-        tmp_categories.add(new CategoryItem("Тринадцатая", CategoryItem.LOW_PRIO));
-        tmp_categories.add(new CategoryItem("Четырнадцатая", CategoryItem.LOW_PRIO));
-    }
 }

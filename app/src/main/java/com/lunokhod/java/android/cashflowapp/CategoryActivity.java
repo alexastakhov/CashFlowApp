@@ -135,4 +135,4 @@ public class CategoryActivity extends AppCompatActivity {
     }
 }
 
-// TODO: Perform Category using check before deleting
+// TODO: Add Label when the List is empty

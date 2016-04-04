@@ -1,6 +1,7 @@
 package com.lunokhod.java.android.cashflowapp;
 
 import android.content.Context;
+import android.content.res.Resources;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -62,8 +63,10 @@ public class RecordListViewAdapter extends BaseAdapter {
             amountTextView.setText("+" + formatAmount(item.getAmount()));
             amountTextView.setTextColor(view.getResources().getColor(R.color.recordRowCreditAmountColor));
         }
-        else
+        else {
             amountTextView.setText(formatAmount(item.getAmount()));
+            amountTextView.setTextColor(view.getResources().getColor(R.color.recordRowAmountColor));
+        }
 
         categoryTextView.setText(item.getCategory().getName());
         dayTextView.setText(String.valueOf(date.get(Calendar.DATE)));

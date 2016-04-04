@@ -1,6 +1,7 @@
 package com.lunokhod.java.android.cashflowapp;
 
 import android.content.Intent;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.ActionBar;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -59,6 +60,14 @@ public class RecordsActivity extends AppCompatActivity {
             actionBar.setHomeButtonEnabled(true);
             actionBar.setDisplayHomeAsUpEnabled(true);
         }
+
+        FloatingActionButton fab = (FloatingActionButton)findViewById(R.id.fab);
+        fab.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //
+            }
+        });
     }
 
     @Override
@@ -95,3 +104,4 @@ public class RecordsActivity extends AppCompatActivity {
 
 // TODO: Create filers: Date-Date, Last period, Category
 // TODO: Reading records into own thread
+// TODO: Add Label when the List is empty
