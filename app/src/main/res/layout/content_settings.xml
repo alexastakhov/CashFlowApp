@@ -29,4 +29,19 @@
         android:layout_gravity="center_horizontal"
         android:layout_marginTop="20sp" />
 
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/fileNameToSaveRecords"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30sp" />
+
+    <Button
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="SAVE RECORDS TO FILE"
+        android:id="@+id/saveRecordsToFileButton"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="10sp" />
+
 </LinearLayout>

@@ -66,10 +66,12 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     }
 
     @Override
-    public void onUpgrade(SQLiteDatabase sqLiteDatabase, int oldv, int newv) {
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CATEGORY_TABLE + ";");
-        sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + RECORD_TABLE + ";");
-        //createTable(sqLiteDatabase);
+    public void onUpgrade(SQLiteDatabase db, int oldv, int newv) {
+        //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CATEGORY_TABLE + ";");
+        //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + RECORD_TABLE + ";");
+        //createTables(db);
+
+
     }
 
     private boolean isDataBaseAvailable() {
