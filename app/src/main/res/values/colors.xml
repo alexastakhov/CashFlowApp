@@ -7,6 +7,7 @@
 
     <color name="amountTextColor">#b90003</color>
 
+    <!-- Common components -->
     <color name="spinDropTextColor">#000000</color>
     <color name="labelPrimaryColor">#646464</color>
     <color name="labelHintPrimaryColor">#a4a4a4</color>
@@ -35,5 +36,7 @@
     <color name="recordRowCategoryColor">#6b6b6b</color>
     <color name="recordRowDateColor">#939292</color>
     <color name="recordRowTimeColor">#939292</color>
+
+    <!-- Settings Activity -->
 </resources>
 

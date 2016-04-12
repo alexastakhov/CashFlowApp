@@ -73,9 +73,8 @@ public class SettingsActivity extends AppCompatActivity {
 
     private void saveRecordsToFile() {
         String path = android.os.Environment.getExternalStorageDirectory().getAbsolutePath() + "/CashFlowApp";
-        String fileName = DateUtils.formatDateTime(getApplicationContext(), Calendar.getInstance().getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR);
-        File dir = new File(path + "/" + fileName);
+        File dir = new File(path);
+        File file = new File(path + "/" + getFileName());
 
         if (!dir.exists()) {
             if (!dir.mkdirs()) {
@@ -85,7 +84,7 @@ public class SettingsActivity extends AppCompatActivity {
             Toast.makeText(this, "App Folder created!", Toast.LENGTH_SHORT);
         }
 
-        showMsgDlg("SD card path", path);
+        showMsgDlg("SD card path", file.getPath());
     }
 
     private void showMsgDlg(String title, String msg) {
@@ -95,5 +94,42 @@ public class SettingsActivity extends AppCompatActivity {
     private void hideKeyboard(View view) {
         InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
         imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+    }
+
+    private String getFileName() {
+        Calendar date = Calendar.getInstance();
+
+        String y = String.valueOf(date.get(Calendar.YEAR));
+        String d = String.valueOf(date.get(Calendar.DAY_OF_MONTH));
+        d = d.length() == 1 ? "0" + d : d;
+
+        String h = String.valueOf(date.get(Calendar.HOUR_OF_DAY));
+        h = h.length() == 1 ? "0" + h : h;
+
+        String n = String.valueOf(date.get(Calendar.MINUTE));
+        n = n.length() == 1 ? "0" + n : n;
+
+        String s = String.valueOf(date.get(Calendar.SECOND));
+        s = s.length() == 1 ? "0" + s : s;
+
+        String m;
+
+        switch (date.get(Calendar.MONTH)) {
+            case Calendar.JANUARY   : m = "01"; break;
+            case Calendar.FEBRUARY  : m = "02"; break;
+            case Calendar.MARCH     : m = "03"; break;
+            case Calendar.APRIL     : m = "04"; break;
+            case Calendar.MAY       : m = "05"; break;
+            case Calendar.JUNE      : m = "06"; break;
+            case Calendar.JULY      : m = "07"; break;
+            case Calendar.AUGUST    : m = "08"; break;
+            case Calendar.SEPTEMBER : m = "09"; break;
+            case Calendar.OCTOBER   : m = "10"; break;
+            case Calendar.NOVEMBER  : m = "11"; break;
+            case Calendar.DECEMBER  : m = "12"; break;
+            default                 : m = "00";
+        }
+
+        return ("Records_" + y + m + d + "_" + h + n + s + ".txt");
     }
 }

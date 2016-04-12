@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.Menu;
@@ -53,8 +54,6 @@ public class MainActivity extends AppCompatActivity {
         dataManager = new DataManager(getApplicationContext());
         spinnerList = new ArrayList<String>(Arrays.asList(dataManager.getCategoriesAsStrings()));
         ActionBar actionBar = getSupportActionBar();
-
-        selectedDate = Calendar.getInstance();
 
         if (actionBar != null) actionBar.setTitle(R.string.main_caption);
 
@@ -123,13 +122,16 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        setInitialDate();
+        selectedDate = Calendar.getInstance();
+        setInitialDate(selectedDate);
     }
 
     @Override
     protected void onStart() {
         super.onStart();
         updateSpinnerData();
+        selectedDate = Calendar.getInstance();
+        setInitialDate(selectedDate);
     }
 
     @Override
@@ -171,21 +173,21 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void setDateFromPicker() {
+        DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
+            public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                selectedDate.set(Calendar.YEAR, year);
+                selectedDate.set(Calendar.MONTH, monthOfYear);
+                selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
+                setInitialDate(selectedDate);
+            }
+        };
+
         new DatePickerDialog(this, d, selectedDate.get(Calendar.YEAR),
                 selectedDate.get(Calendar.MONTH), selectedDate.get(Calendar.DAY_OF_MONTH)).show();
     }
 
-    private DatePickerDialog.OnDateSetListener d = new DatePickerDialog.OnDateSetListener() {
-        public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
-            selectedDate.set(Calendar.YEAR, year);
-            selectedDate.set(Calendar.MONTH, monthOfYear);
-            selectedDate.set(Calendar.DAY_OF_MONTH, dayOfMonth);
-            setInitialDate();
-        }
-    };
-
-    private void setInitialDate() {
-        dateEditText.setText(DateUtils.formatDateTime(getApplicationContext(), selectedDate.getTimeInMillis(),
+    private void setInitialDate(Calendar date) {
+        dateEditText.setText(DateUtils.formatDateTime(getApplicationContext(), date.getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_YEAR));
     }
 
@@ -252,7 +254,7 @@ public class MainActivity extends AppCompatActivity {
         amountEditText.setText("");
         commentEditText.setText("");
         selectedDate = Calendar.getInstance();
-        setInitialDate();
+        setInitialDate(selectedDate);
     }
 
     private void hideKeyboard(View view) {
