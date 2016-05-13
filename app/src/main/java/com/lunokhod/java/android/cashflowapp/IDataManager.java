@@ -24,6 +24,8 @@ public interface IDataManager {
     void addRecord(float amount, int  categoryId, String comment, Date date, int credit, int account);
     void deleteRecord(long recordId);
     void changeRecord(long recId, float amount, int  categoryId, String comment, Date date, int credit, int account);
+    void clearDataBase();
+    void deleteAllRecords();
 
     void dropDataBase();
 }

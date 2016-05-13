@@ -51,9 +51,9 @@ public class RecordEditActivity extends AppCompatActivity {
         setSupportActionBar(toolbar);
         Intent intent = getIntent();
 
-        dataManager = DataManager.getInstance();
+        dataManager = DataManager.getInstance(getApplicationContext());
 
-        spinnerList = new ArrayList<String>(Arrays.asList(DataManager.getInstance().getCategoriesAsStrings()));
+        spinnerList = new ArrayList<String>(Arrays.asList(DataManager.getInstance(getApplicationContext()).getCategoriesAsStrings()));
         spinnerAdapter = new SpinArrayAdapter(getApplicationContext(), R.layout.edit_spinner_item, spinnerList);
         spinnerAdapter.setDropDownViewResource(R.layout.edit_spinner_dropdown_item);
 
@@ -173,7 +173,7 @@ public class RecordEditActivity extends AppCompatActivity {
     }
 
     private void deleteRecord() {
-        DataManager.getInstance().deleteRecord(recId);
+        DataManager.getInstance(getApplicationContext()).deleteRecord(recId);
         Toast.makeText(this, R.string.record_dialog_item_deleted, Toast.LENGTH_SHORT).show();
     }
 

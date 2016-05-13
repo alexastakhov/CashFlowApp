@@ -51,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        dataManager = new DataManager(getApplicationContext());
+        dataManager = DataManager.getInstance(getApplicationContext());
         spinnerList = new ArrayList<String>(Arrays.asList(dataManager.getCategoriesAsStrings()));
         ActionBar actionBar = getSupportActionBar();
 
@@ -130,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onStart() {
         super.onStart();
         updateSpinnerData();
+        dataManager = DataManager.getInstance(getApplicationContext());
         selectedDate = Calendar.getInstance();
         setInitialDate(selectedDate);
     }

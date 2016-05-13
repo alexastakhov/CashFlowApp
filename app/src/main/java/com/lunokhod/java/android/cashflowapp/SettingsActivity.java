@@ -41,7 +41,7 @@ public class SettingsActivity extends AppCompatActivity {
         dropDataBaseButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataManager.getInstance().dropDataBase();
+                DataManager.getInstance(getApplicationContext()).dropDataBase();
             }
         });
 
@@ -49,7 +49,7 @@ public class SettingsActivity extends AppCompatActivity {
         deleteAllRecsButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                DataManager.getInstance().deleteAllRecords();
+                DataManager.getInstance(getApplicationContext()).deleteAllRecords();
             }
         });
 

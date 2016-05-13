@@ -28,7 +28,7 @@ public class CategoryActivity extends AppCompatActivity {
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
-        dataManager = DataManager.getInstance();
+        dataManager = DataManager.getInstance(getApplicationContext());
 
         categoryListViewAdapter = new CategoryListViewAdapter(this.getApplicationContext());
         categoryListView = (ListView)findViewById(R.id.categoryListView);

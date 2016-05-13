@@ -17,7 +17,6 @@ import android.widget.Toast;
 public class RecordsActivity extends AppCompatActivity {
     private RecordListViewAdapter recordListViewAdapter;
     private ListView recordListView;
-    private IDataManager dataManager;
 
     @SuppressWarnings("unused")
     private static final String TAG = "RecordsActivity";
@@ -28,8 +27,6 @@ public class RecordsActivity extends AppCompatActivity {
         setContentView(R.layout.activity_records);
         Toolbar toolbar = (Toolbar)findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
-
-        dataManager = DataManager.getInstance();
 
         recordListViewAdapter = new RecordListViewAdapter(this.getApplicationContext());
         recordListView = (ListView)findViewById(R.id.recordListView);
@@ -98,7 +95,7 @@ public class RecordsActivity extends AppCompatActivity {
     }
 
     private void updateListAdapter() {
-        recordListViewAdapter.setDataObjects(dataManager.getAllRecords());
+        recordListViewAdapter.setDataObjects(DataManager.getInstance(getApplicationContext()).getAllRecords());
     }
 }
 

@@ -46,7 +46,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
     @SuppressWarnings("unused")
     private static final String TAG = "DataManager";
 
-    public DataManager(Context context) {
+    private DataManager(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
         this.context = context;
         instance = this;
@@ -54,7 +54,9 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         Log.i(TAG, "DataManager()");
     }
 
-    public static DataManager getInstance() {
+    public static DataManager getInstance(Context context) {
+        if (instance == null)
+            instance = new DataManager(context);
         return instance;
     }
 

@@ -90,7 +90,7 @@ public class CategoryEditDialog extends DialogFragment {
         deleteBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (DataManager.getInstance().getRecordsNumWithCategory(categoryId) > 0)
+                if (DataManager.getInstance(null).getRecordsNumWithCategory(categoryId) > 0)
                     showErrorText(R.string.category_dialog_category_in_use);
                 else {
                     deleteCategory(categoryId);
