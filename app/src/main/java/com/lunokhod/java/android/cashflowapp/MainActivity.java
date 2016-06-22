@@ -129,8 +129,8 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-        updateSpinnerData();
         dataManager = DataManager.getInstance(getApplicationContext());
+        updateSpinnerData();
         selectedDate = Calendar.getInstance();
         setInitialDate(selectedDate);
     }
@@ -259,8 +259,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
     private void hideKeyboard(View view) {
-        InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
+        }
+        else {
+            Toast.makeText(this, "Error : view == null", Toast.LENGTH_SHORT).show();
+        }
     }
 }
 

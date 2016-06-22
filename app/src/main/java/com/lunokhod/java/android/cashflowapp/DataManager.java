@@ -41,7 +41,7 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
 
     private static DataManager instance = null;
     private final Context context;
-    private ArrayList<CategoryItem> tmp_categories = new ArrayList<>();
+    private ArrayList<CategoryItem> categories = new ArrayList<>();
 
     @SuppressWarnings("unused")
     private static final String TAG = "DataManager";
@@ -72,8 +72,6 @@ public class DataManager extends SQLiteOpenHelper implements IDataManager {
         //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + CATEGORY_TABLE + ";");
         //sqLiteDatabase.execSQL("DROP TABLE IF EXISTS " + RECORD_TABLE + ";");
         //createTables(db);
-
-
     }
 
     private boolean isDataBaseAvailable() {
